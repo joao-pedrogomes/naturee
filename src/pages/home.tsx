@@ -1,54 +1,26 @@
-import { toast } from 'sonner'
+import { Link } from 'react-router-dom'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
 
 export default function Home() {
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <Badge variant="secondary">scaffold ready</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          React + TypeScript + shadcn/ui
-        </h1>
-        <p className="text-muted-foreground">
-          Vite, Tailwind v4, React Router and the shadcn component set are wired
-          up. Replace this page with the real UX flow.
-        </p>
+    <div className="space-y-6 py-10">
+      <Badge variant="secondary">Naturee Food Hub</Badge>
+      <h1 className="font-heading max-w-2xl text-4xl font-semibold tracking-tight">
+        Marcas artesanais selecionadas para o seu negócio
+      </h1>
+      <p className="text-muted-foreground max-w-xl">
+        Distribuímos produtos de pequenos produtores para restaurantes, mercados e
+        empórios. Monte sua lista e receba um orçamento da nossa equipe.
+      </p>
+      <div className="flex flex-wrap gap-3">
+        <Button asChild>
+          <Link to="/produtos">Ver marcas e produtos</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/processos">Como funciona a curadoria</Link>
+        </Button>
       </div>
-
-      <Card className="max-w-md">
-        <CardHeader>
-          <CardTitle>Smoke test</CardTitle>
-          <CardDescription>Confirms styling and interaction work.</CardDescription>
-          <CardAction>
-            <Badge>demo</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <Field>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input id="email" type="email" placeholder="you@example.com" />
-            <FieldDescription>Nothing is submitted anywhere.</FieldDescription>
-          </Field>
-        </CardContent>
-        <CardFooter className="justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button onClick={() => toast.success('Components are working')}>
-            Continue
-          </Button>
-        </CardFooter>
-      </Card>
     </div>
   )
 }
