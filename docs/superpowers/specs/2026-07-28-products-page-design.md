@@ -93,12 +93,21 @@ export type Product = {
 }
 ```
 
-Categories: `cogumelos-in-natura`, `pates`, `marinados`, `conservas`, `mel-e-doces`,
-`castanhas`, `laticinios-artesanais` (only those actually used by mock data).
+Categories (exactly these seven, all used by mock data): `cogumelos-in-natura`, `pates`,
+`marinados`, `conservas`, `mel-e-doces`, `castanhas`, `laticinios-artesanais`.
 
-Mock content: Sítio Pura Vida with its real 15 products, plus four invented hub brands
-(mel, conservas, castanhas, laticínios artesanais) bringing the total to ~24 products
-across 5 brands. Mock files are clearly named as mock; the UI never says "fictício".
+Mock content, 24 products across 5 brands:
+
+| Brand | Products | Categories |
+|---|---|---|
+| Sítio Pura Vida | 15 (10 in natura, 3 patês, 2 marinados) | cogumelos-in-natura, pates, marinados |
+| Mel do Vale | 3 | mel-e-doces |
+| Conservas da Serra | 3 | conservas |
+| Castanhas Boa Terra | 2 | castanhas |
+| Laticínios Vila Nova | 1 | laticinios-artesanais |
+
+The one-product brand exists deliberately, to prove singular/plural copy and a sparse
+brand card. Mock files are named as mock; the UI never says "fictício".
 
 ### Data layer
 
@@ -125,6 +134,11 @@ getBrandProductCount(brandId): number
 accent- and case-insensitive (`String.prototype.normalize('NFD')` with diacritics
 stripped) and matches product name, subtitle and brand name, so "pate" finds "Patê".
 `page` in the return value is the clamped page actually used.
+
+Sort definitions (all ties broken by product name ascending, `localeCompare('pt-BR')`):
+`az` product name ascending · `za` descending · `recentes` `createdAt` descending ·
+`marca` brand name ascending, then product name ascending. Multiple selected values
+within one facet are OR'd; different facets are AND'd.
 
 When the PHP backend exists, this module becomes fetch calls with identical signatures.
 No component imports mock data directly.
@@ -177,7 +191,9 @@ useQuotation() → {
   empty list. A corrupted value can never white-screen the page.
 - Cross-tab sync through the `storage` event.
 - Adding fires a sonner toast "Adicionado ao orçamento" with a "Desfazer" action.
-- Header shows a quotation button with a count badge, hidden at 0.
+- Header shows a quotation button with a count badge (hidden at 0) linking to `/orcamento`.
+- `setQty` accepts values ≥ 1; setting 0 or below removes the item. Adding an already
+  present product is a no-op on quantity, not a duplicate entry.
 
 ## Page composition
 
@@ -194,7 +210,10 @@ Blocks in order:
      count line sits below: "24 produtos · 5 marcas".
    - Mobile: tabs full width, search full width, one `Filtros (n)` button opening a Sheet
      containing both facets and sort, with `Aplicar` / `Limpar` in the footer.
-   - On the Marcas tab the Categoria popover is hidden and search matches brand names.
+   - On the Marcas tab the Categoria popover is hidden, search matches brand names, and
+     `Ordenar` offers only `az` / `za` (applied to brand names). The `categoria` and
+     `ordenar` params are preserved in the URL while on that tab, so switching back to
+     Produtos restores the previous product view exactly.
    - Active choices render as removable chips below the row, plus `Limpar tudo`.
 4. **Grid** — `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, `gap-5`,
    equal-height cards with footers pinned to the bottom.
@@ -204,8 +223,9 @@ Blocks in order:
      `Adicionar ao orçamento` (primary). When already added the primary flips to
      `Adicionado ✓` (secondary) and clicking it removes the item. Buttons stack full
      width on mobile.
-   - Brand card: cover, logo, name, tagline, "12 produtos · 3 categorias",
-     `Ver produtos` → Produtos tab filtered to that brand.
+   - Brand card: cover, logo, name, tagline, count line ("15 produtos · 3 categorias",
+     singular "1 produto · 1 categoria" when applicable), `Ver produtos` → Produtos tab
+     filtered to that brand.
 5. **Pagination** — 12 per page, prev/next plus numbered pages truncated with an ellipsis
    past 5 pages, and "Mostrando 1–12 de 24". Changing page scrolls to the top of the grid
    (not the page) and moves focus to the grid heading.
@@ -219,9 +239,10 @@ Blocks in order:
 ### Product dialog
 
 Rendered when the route carries a slug. Larger image, full description, specs table, MOQ,
-add/remove from quotation. Closing returns to `/produtos` with params intact (uses history
-back when the dialog was opened from the grid, otherwise navigates). An unknown slug shows
-a toast and redirects to `/produtos`. On mobile the dialog fills the viewport height.
+add/remove from quotation. Opening from a card navigates with `state: { fromCatalog: true }`;
+on close, that flag means `navigate(-1)`, and its absence (direct link, refresh) means
+`navigate('/produtos' + search)`. Either way the filter params survive. An unknown slug
+shows a toast and redirects to `/produtos`. On mobile the dialog fills the viewport height.
 
 ## File layout
 
