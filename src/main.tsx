@@ -13,7 +13,8 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <TooltipProvider>
         <QuotationProvider>
-          <BrowserRouter>
+          {/* BASE_URL keeps routes correct when served from a repository subpath. */}
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
             <App />
           </BrowserRouter>
         </QuotationProvider>
