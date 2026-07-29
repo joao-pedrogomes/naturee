@@ -56,14 +56,15 @@ describe('useQuotation', () => {
     expect(result.current.has('p-1')).toBe(false)
   })
 
-  it('adds a product with qty 1 and an ISO addedAt', () => {
+  it('adds a product at its minimum order quantity, with an ISO addedAt', () => {
     const { result } = setup()
 
     act(() => result.current.add(makeProduct('p-1')))
 
     expect(result.current.items).toHaveLength(1)
     expect(result.current.items[0].productId).toBe('p-1')
-    expect(result.current.items[0].qty).toBe(1)
+    // A line below the MOQ is not quotable, so that is where it starts.
+    expect(result.current.items[0].qty).toBe(12)
     expect(Number.isNaN(Date.parse(result.current.items[0].addedAt))).toBe(false)
     expect(result.current.has('p-1')).toBe(true)
   })
@@ -297,5 +298,78 @@ describe('useQuotation', () => {
     })
 
     expect(result.current.items).toEqual([])
+  })
+})
+
+describe('useQuotation — notes and restore', () => {
+  it('stores a trimmed note and persists it', () => {
+    const { result } = setup()
+
+    act(() => result.current.add(makeProduct('p-1')))
+    act(() => result.current.setNote('p-1', '  sem talo  '))
+
+    expect(result.current.items[0].note).toBe('sem talo')
+    expect(stored()[0].note).toBe('sem talo')
+  })
+
+  it('drops the note when it is cleared', () => {
+    const { result } = setup()
+
+    act(() => result.current.add(makeProduct('p-1')))
+    act(() => result.current.setNote('p-1', 'sem talo'))
+    act(() => result.current.setNote('p-1', '   '))
+
+    expect(result.current.items[0]).not.toHaveProperty('note')
+  })
+
+  it('caps the note at 120 characters', () => {
+    const { result } = setup()
+
+    act(() => result.current.add(makeProduct('p-1')))
+    act(() => result.current.setNote('p-1', 'x'.repeat(200)))
+
+    expect(result.current.items[0].note).toHaveLength(120)
+  })
+
+  it('hydrates items saved before notes existed', () => {
+    seed([{ productId: 'p-1', qty: 12, addedAt: '2026-01-01T00:00:00.000Z' }])
+
+    const { result } = setup()
+
+    expect(result.current.items).toHaveLength(1)
+    expect(result.current.items[0]).not.toHaveProperty('note')
+  })
+
+  it('ignores a non-string note in storage', () => {
+    seed([{ productId: 'p-1', qty: 12, addedAt: '2026-01-01T00:00:00.000Z', note: 42 }])
+
+    const { result } = setup()
+
+    expect(result.current.items[0]).not.toHaveProperty('note')
+  })
+
+  it('restores a removed item with its quantity and note', () => {
+    const { result } = setup()
+
+    act(() => result.current.add(makeProduct('p-1')))
+    act(() => result.current.setQty('p-1', 24))
+    act(() => result.current.setNote('p-1', 'sem talo'))
+
+    const removed = result.current.items[0]
+    act(() => result.current.remove('p-1'))
+    expect(result.current.items).toHaveLength(0)
+
+    act(() => result.current.restore(removed))
+    expect(result.current.items[0]).toEqual(removed)
+  })
+
+  it('does not duplicate on restore when the item came back another way', () => {
+    const { result } = setup()
+
+    act(() => result.current.add(makeProduct('p-1')))
+    act(() => result.current.restore({ productId: 'p-1', qty: 99, addedAt: '2026-01-01T00:00:00.000Z' }))
+
+    expect(result.current.items).toHaveLength(1)
+    expect(result.current.items[0].qty).toBe(12)
   })
 })

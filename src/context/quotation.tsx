@@ -7,10 +7,14 @@ import type { Product } from '@/types/catalog'
 /** Bumped whenever the persisted shape changes, so old values are simply ignored. */
 export const QUOTATION_STORAGE_KEY = 'naturee.quotation.v1'
 
+export const NOTE_MAX_LENGTH = 120
+
 export type QuotationItem = {
   productId: string
   qty: number
   addedAt: string
+  /** Buyer's remark for this line, e.g. packaging preference. */
+  note?: string
 }
 
 type QuotationContextValue = {
@@ -21,6 +25,9 @@ type QuotationContextValue = {
   add: (product: Product) => void
   remove: (productId: string) => void
   setQty: (productId: string, qty: number) => void
+  setNote: (productId: string, note: string) => void
+  /** Puts a removed line back, quantity and note intact (undo). */
+  restore: (item: QuotationItem) => void
   clear: () => void
 }
 
@@ -59,7 +66,7 @@ function sanitize(raw: unknown, knownProductIds: Set<string>): QuotationItem[] {
   for (const entry of raw) {
     if (typeof entry !== 'object' || entry === null) continue
 
-    const { productId, qty, addedAt } = entry as Partial<QuotationItem>
+    const { productId, qty, addedAt, note } = entry as Partial<QuotationItem>
     if (typeof productId !== 'string' || productId === '') continue
     if (typeof qty !== 'number' || !Number.isInteger(qty) || qty < 1) continue
     if (!knownProductIds.has(productId) || seen.has(productId)) continue
@@ -69,6 +76,10 @@ function sanitize(raw: unknown, knownProductIds: Set<string>): QuotationItem[] {
       productId,
       qty,
       addedAt: typeof addedAt === 'string' ? addedAt : new Date().toISOString(),
+      // A missing note is normal: the field was added after the first release.
+      ...(typeof note === 'string' && note.trim()
+        ? { note: note.trim().slice(0, NOTE_MAX_LENGTH) }
+        : {}),
     })
   }
 
@@ -122,7 +133,16 @@ export function QuotationProvider({
     setItems((prev) =>
       prev.some((item) => item.productId === product.id)
         ? prev
-        : [...prev, { productId: product.id, qty: 1, addedAt: new Date().toISOString() }],
+        : [
+            ...prev,
+            {
+              productId: product.id,
+              // Below the minimum order quantity the line is not quotable, so
+              // that is where a new line starts.
+              qty: product.moq.qty,
+              addedAt: new Date().toISOString(),
+            },
+          ],
     )
   }, [])
 
@@ -138,11 +158,31 @@ export function QuotationProvider({
     })
   }, [])
 
+  const setNote = useCallback((productId: string, note: string) => {
+    const trimmed = note.trim().slice(0, NOTE_MAX_LENGTH)
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.productId !== productId) return item
+        if (!trimmed) {
+          const { note: _dropped, ...rest } = item
+          return rest
+        }
+        return { ...item, note: trimmed }
+      }),
+    )
+  }, [])
+
+  const restore = useCallback((item: QuotationItem) => {
+    setItems((prev) =>
+      prev.some((current) => current.productId === item.productId) ? prev : [...prev, item],
+    )
+  }, [])
+
   const clear = useCallback(() => setItems([]), [])
 
   const value = useMemo<QuotationContextValue>(
-    () => ({ items, count: items.length, has, add, remove, setQty, clear }),
-    [items, has, add, remove, setQty, clear],
+    () => ({ items, count: items.length, has, add, remove, setQty, setNote, restore, clear }),
+    [items, has, add, remove, setQty, setNote, restore, clear],
   )
 
   return <QuotationContext.Provider value={value}>{children}</QuotationContext.Provider>

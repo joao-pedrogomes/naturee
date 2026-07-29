@@ -164,8 +164,23 @@ export function getProduct(slug: string, source: CatalogSource = defaultSource):
   return source.products.find((product) => product.slug === slug)
 }
 
+/** Quotation items reference ids, not slugs. */
+export function getProductById(
+  id: string,
+  source: CatalogSource = defaultSource,
+): Product | undefined {
+  return source.products.find((product) => product.id === id)
+}
+
 export function getBrand(slug: string, source: CatalogSource = defaultSource): Brand | undefined {
   return source.brands.find((brand) => brand.slug === slug)
+}
+
+export function getBrandById(
+  id: string,
+  source: CatalogSource = defaultSource,
+): Brand | undefined {
+  return source.brands.find((brand) => brand.id === id)
 }
 
 export function getCategories(source: CatalogSource = defaultSource): Category[] {
