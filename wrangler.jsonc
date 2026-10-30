@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "natureefoodhub",
+  "compatibility_date": "2026-10-30",
+  // Static assets only, no Worker script. Serves the temporary company page used for
+  // Meta business verification until the catalog app (./dist) replaces it.
+  "assets": {
+    "directory": "./verification-page"
+  },
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "natureefoodhub.com.br", "custom_domain": true },
+    { "pattern": "www.natureefoodhub.com.br", "custom_domain": true }
+  ]
+}

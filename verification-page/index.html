@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Naturee Food Hub · NATUREE COMERCIO DE ALIMENTOS LTDA</title>
+    <meta
+      name="description"
+      content="Naturee Food Hub: comércio atacadista de produtos alimentícios em São José/SC. Curadoria de marcas e produtos para o seu negócio."
+    />
+    <link rel="canonical" href="https://natureefoodhub.com.br/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Naturee Food Hub" />
+    <meta
+      property="og:description"
+      content="Comércio atacadista de produtos alimentícios em São José/SC."
+    />
+    <meta property="og:url" content="https://natureefoodhub.com.br/" />
+    <link rel="preload" href="/geist.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: 'Geist';
+        src: url('/geist.woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      /* Same palette as the catalog app (src/index.css). */
+      :root {
+        --background: oklch(0.985 0.008 95);
+        --foreground: oklch(0.24 0.02 145);
+        --card: oklch(1 0.003 95);
+        --primary: oklch(0.42 0.075 152);
+        --primary-foreground: oklch(0.985 0.01 95);
+        --muted-foreground: oklch(0.52 0.022 140);
+        --accent: oklch(0.94 0.02 110);
+        --clay: oklch(0.68 0.11 55);
+        --border: oklch(0.9 0.012 105);
+        --radius: 0.75rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: var(--primary);
+        text-underline-offset: 3px;
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      header {
+        border-bottom: 1px solid var(--border);
+      }
+
+      header .wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: 3.5rem;
+      }
+
+      .wordmark {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .wordmark-tag {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+
+      main {
+        flex: 1;
+      }
+
+      .hero {
+        display: grid;
+        gap: 2.5rem;
+        padding-block: 4rem 4.5rem;
+      }
+
+      @media (min-width: 900px) {
+        .hero {
+          grid-template-columns: 1.15fr 1fr;
+          align-items: start;
+          gap: 4rem;
+          padding-block: 6rem;
+        }
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin: 0 0 1.25rem;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--primary);
+        font-size: 0.8125rem;
+        font-weight: 500;
+      }
+
+      h1 {
+        margin: 0 0 1.25rem;
+        font-size: clamp(2rem, 4.5vw, 3.25rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--clay);
+      }
+
+      .lead {
+        margin: 0;
+        max-width: 34rem;
+        font-size: 1.0625rem;
+        color: var(--muted-foreground);
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) * 1.4);
+        padding: 1.75rem;
+      }
+
+      .card h2 {
+        margin: 0 0 1.25rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+
+      dl {
+        margin: 0;
+        display: grid;
+        gap: 1.125rem;
+      }
+
+      dt {
+        font-size: 0.8125rem;
+        color: var(--muted-foreground);
+      }
+
+      dd {
+        margin: 0.125rem 0 0;
+        font-weight: 500;
+      }
+
+      .contact-link {
+        font-size: 1.0625rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .contact-link:hover {
+        text-decoration: underline;
+      }
+
+      .card + .card {
+        margin-top: 1rem;
+      }
+
+      .legal {
+        background: transparent;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 0;
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <span class="wordmark">naturee</span>
+        <span class="wordmark-tag">food hub</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap hero">
+        <section aria-labelledby="sobre">
+          <p class="eyebrow">Atacado de alimentos · São José/SC</p>
+          <h1 id="sobre">Curadoria de marcas e produtos <em>para o seu negócio</em>.</h1>
+          <p class="lead">
+            A Naturee Food Hub é a marca da NATUREE COMERCIO DE ALIMENTOS LTDA, empresa de
+            comércio atacadista de produtos alimentícios em geral, com sede em São José, Santa
+            Catarina. Atendemos empresas que buscam fornecedores confiáveis para compor o seu
+            mix de produtos.
+          </p>
+        </section>
+
+        <div>
+          <section class="card" aria-labelledby="contato">
+            <h2 id="contato">Contato comercial</h2>
+            <dl>
+              <div>
+                <dt>Telefone</dt>
+                <dd><a class="contact-link" href="tel:+5548991963383">(48) 99196-3383</a></dd>
+              </div>
+              <div>
+                <dt>E-mail</dt>
+                <dd>
+                  <a class="contact-link" href="mailto:natureealimentos@gmail.com"
+                    >natureealimentos@gmail.com</a
+                  >
+                </dd>
+              </div>
+              <div>
+                <dt>Endereço</dt>
+                <dd>
+                  <address style="font-style: normal">
+                    Rua Manoel Loureiro, 1112 – Barreiros<br />
+                    São José/SC · CEP 88117-330
+                  </address>
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="card legal" aria-labelledby="empresa">
+            <h2 id="empresa">Dados da empresa</h2>
+            <dl>
+              <div>
+                <dt>Razão social</dt>
+                <dd>NATUREE COMERCIO DE ALIMENTOS LTDA</dd>
+              </div>
+              <div>
+                <dt>CNPJ</dt>
+                <dd>47.567.206/0001-61</dd>
+              </div>
+              <div>
+                <dt>Atividade principal</dt>
+                <dd>Comércio atacadista de produtos alimentícios em geral</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        © 2026 NATUREE COMERCIO DE ALIMENTOS LTDA · CNPJ 47.567.206/0001-61
+      </div>
+    </footer>
+  </body>
+</html>
