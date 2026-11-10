@@ -26,3 +26,7 @@ dist-ssr
 # Local verification screenshots
 .screenshots
 plan-assets/*.zip
+
+# Playwright
+test-results
+playwright-report
