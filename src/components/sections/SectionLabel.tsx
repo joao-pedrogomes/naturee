@@ -8,7 +8,7 @@ type SectionLabelProps = {
 
 const TONES = {
   olive: 'text-olive-deep',
-  cream: 'text-sand',
+  cream: 'text-white',
   teal: 'text-teal',
 }
 

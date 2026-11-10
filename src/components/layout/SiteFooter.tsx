@@ -8,7 +8,7 @@ import instagramIcon from '@/assets/logos/instagram.svg'
 import whatsappIcon from '@/assets/logos/whatsapp.svg'
 
 const CONTACT_LINK =
-  'inline-flex items-start gap-3 rounded text-small text-sand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand'
+  'inline-flex min-h-11 items-center gap-3 rounded py-2 text-small text-sand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand'
 
 function SiteFooter() {
   const { site, footer, footerLinks, trust } = useSiteContent()
@@ -29,12 +29,12 @@ function SiteFooter() {
             <h2 className="font-sans text-body font-semibold tracking-wide text-olive-light uppercase">
               {footer.quickLinksTitle}
             </h2>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-5 space-y-0">
               {links.map((link) => (
                 <li key={link.id}>
                   <Link
                     to={link.href}
-                    className="inline-flex min-h-6 items-center rounded text-small text-sand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand"
+                    className="inline-flex min-h-11 items-center rounded text-small text-sand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand"
                   >
                     {link.label}
                   </Link>
@@ -47,22 +47,22 @@ function SiteFooter() {
             <h2 className="font-sans text-body font-semibold tracking-wide text-olive-light uppercase">
               {footer.contactTitle}
             </h2>
-            <ul className="mt-5 space-y-4">
+            <ul className="mt-5 space-y-1">
               <li>
                 <a href={buildWhatsAppUrl(site.whatsapp)} target="_blank" rel="noopener" className={CONTACT_LINK}>
-                  <img src={whatsappIcon} alt="" width={18} height={18} aria-hidden="true" className="mt-0.5" />
+                  <img src={whatsappIcon} alt="" width={18} height={18} aria-hidden="true" />
                   <span>
                     WhatsApp <strong className="font-bold">{site.whatsappLabel}</strong>
                   </span>
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-small text-sand">
-                <MapPin aria-hidden="true" className="mt-0.5 size-[18px] shrink-0 text-olive-light" strokeWidth={1.5} />
+              <li className="flex min-h-11 items-center gap-3 py-2 text-small text-sand">
+                <MapPin aria-hidden="true" className="size-[18px] shrink-0 text-olive-light" strokeWidth={1.5} />
                 <span>{site.regionLine}</span>
               </li>
               <li>
                 <a href={site.instagramUrl} target="_blank" rel="noopener" className={CONTACT_LINK}>
-                  <img src={instagramIcon} alt="" width={18} height={18} aria-hidden="true" className="mt-0.5" />
+                  <img src={instagramIcon} alt="" width={18} height={18} aria-hidden="true" />
                   <span className="font-bold">
                     <span className="sr-only">Instagram </span>
                     {site.instagram}

@@ -9,15 +9,15 @@ type CategoryCardProps = {
 }
 
 const TONES = {
-  light: 'bg-olive-light text-teal',
-  dark: 'bg-olive text-white',
+  light: { card: 'bg-olive-light text-teal', title: 'text-teal' },
+  dark: { card: 'bg-olive text-white', title: 'text-white' },
 }
 
 function CategoryCard({ category, tone }: CategoryCardProps) {
   return (
-    <li className={cn('flex flex-col rounded-2xl p-6 lg:p-[7%]', TONES[tone])}>
+    <li className={cn('flex flex-col rounded-2xl p-6 lg:p-[7%]', TONES[tone].card)}>
       <Picture image={category.image} className="aspect-[1.04] w-full rounded-xl object-cover" />
-      <Heading as="h3" text={category.name} className="mt-6 text-card-title text-teal" />
+      <Heading as="h3" text={category.name} className={cn('mt-6 text-card-title', TONES[tone].title)} />
       <p className="mt-2 text-body">{category.blurb}</p>
     </li>
   )

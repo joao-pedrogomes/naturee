@@ -11,7 +11,7 @@ type ContactFieldProps = {
 function ContactField({ id, label, error, children }: ContactFieldProps) {
   return (
     <div className="flex flex-col gap-2">
-      <Label htmlFor={id} className="font-sans text-lead font-semibold text-sand">
+      <Label htmlFor={id} className="font-sans text-lead font-semibold text-white">
         {label}
       </Label>
       {children}

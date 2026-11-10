@@ -22,7 +22,7 @@ const BASE =
 const VARIANTS: Record<CtaVariant, string> = {
   olive: 'border-olive bg-olive text-white hover:bg-olive-deep focus-visible:outline-olive',
   teal: 'border-teal bg-teal text-sand hover:bg-teal/90 focus-visible:outline-teal',
-  outlineCream: 'border-sand bg-transparent text-sand hover:bg-sand/10 focus-visible:outline-sand',
+  outlineCream: 'border-sand bg-transparent text-white hover:bg-sand/10 focus-visible:outline-sand',
   outlineOlive: 'border-olive bg-transparent text-olive-deep hover:bg-olive/10 focus-visible:outline-olive',
   outlineTeal: 'border-teal bg-transparent text-teal hover:bg-teal/10 focus-visible:outline-teal',
   sand: 'border-sand bg-sand text-teal hover:bg-cream focus-visible:outline-sand',

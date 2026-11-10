@@ -16,7 +16,7 @@ function WhatsAppPill({ className }: WhatsAppPillProps) {
       target="_blank"
       rel="noopener"
       className={cn(
-        'inline-flex min-h-11 items-center gap-2 rounded-full bg-olive px-5 py-2 text-[0.8125rem] font-semibold tracking-wide text-sand uppercase transition-colors hover:bg-olive-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand',
+        'inline-flex min-h-11 items-center gap-2 rounded-full bg-olive px-5 py-2 text-[0.8125rem] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-olive-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand',
         className,
       )}
     >

@@ -12,7 +12,7 @@ import { usePage } from '@/content/siteContent'
 import { cn } from '@/lib/utils'
 import { pathFor } from '@/routes'
 
-const AUDIENCE_TONES = ['bg-olive text-sand', 'border border-olive bg-white text-olive-deep']
+const AUDIENCE_TONES = ['bg-olive text-white', 'border border-olive bg-white text-olive-deep']
 
 function Logistics() {
   const page = usePage('logistics')

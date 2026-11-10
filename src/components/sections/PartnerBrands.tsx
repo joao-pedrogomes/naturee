@@ -8,6 +8,7 @@ type PartnerBrandsProps = {
   layout: 'carousel' | 'grid'
   previousLabel?: string
   nextLabel?: string
+  trackLabel?: string
 }
 
 const ARROW =
@@ -39,7 +40,12 @@ function BrandGrid({ brands }: { brands: Brand[] }) {
   )
 }
 
-function BrandCarousel({ brands, previousLabel = 'Marcas anteriores', nextLabel = 'Próximas marcas' }: PartnerBrandsProps) {
+function BrandCarousel({
+  brands,
+  previousLabel = 'Marcas anteriores',
+  nextLabel = 'Próximas marcas',
+  trackLabel = 'Marcas parceiras',
+}: PartnerBrandsProps) {
   const trackRef = useRef<HTMLUListElement>(null)
 
   function scrollByPage(direction: 1 | -1) {
@@ -55,7 +61,9 @@ function BrandCarousel({ brands, previousLabel = 'Marcas anteriores', nextLabel 
       </button>
       <ul
         ref={trackRef}
-        className="scrollbar-none flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-2"
+        tabIndex={0}
+        aria-label={trackLabel}
+        className="scrollbar-none flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive"
       >
         {brands.map((brand) => (
           <li

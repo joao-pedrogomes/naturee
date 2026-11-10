@@ -23,7 +23,7 @@ function Products() {
       <section className="grid bg-olive text-sand md:grid-cols-2">
         <Picture image={page.hero.image} priority className="h-64 w-full object-cover object-left md:h-full md:min-h-[24rem] lg:min-h-[36vw]" />
         <div className="flex flex-col justify-center px-4 py-12 sm:px-6 lg:px-[6vw] lg:py-16">
-          <Heading as="h1" text={page.hero.title} className="max-w-[16ch] text-title text-teal [&_em]:text-teal" />
+          <Heading as="h1" text={page.hero.title} className="max-w-[16ch] text-title text-sand" />
           <p className="mt-6 max-w-[42ch] text-body text-white">{page.hero.text}</p>
           <div className="mt-8">
             <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" />
@@ -83,7 +83,7 @@ function Products() {
         <Container>
           <div className="relative top-8 rounded-2xl bg-olive px-6 py-10 text-center text-sand lg:px-[9%] lg:py-12">
             <SectionLabel tone="cream">{page.banner.label}</SectionLabel>
-            <Heading text={page.banner.title} className="mt-3 text-title text-teal" />
+            <Heading text={page.banner.title} className="mt-3 text-title text-sand" />
             <div className="mt-8">
               <CtaLink cta={page.banner.cta} variant="teal" icon="arrow" size="lg" className="w-full max-w-[46rem]" />
             </div>
