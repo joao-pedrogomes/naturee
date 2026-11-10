@@ -121,3 +121,67 @@
     }
   }
 }
+
+/* Fluid type scale tuned so a 1280px viewport matches the PDF render pixel for pixel. */
+@utility text-display {
+  font-size: clamp(2.375rem, 4.1vw, 4.75rem);
+  line-height: 1.05;
+}
+
+@utility text-title {
+  font-size: clamp(2rem, 3.6vw, 4.125rem);
+  line-height: 1.1;
+}
+
+@utility text-subtitle {
+  font-size: clamp(1.5rem, 2.35vw, 2.75rem);
+  line-height: 1.15;
+}
+
+@utility text-card-title {
+  font-size: clamp(1.375rem, 1.9vw, 2.25rem);
+  line-height: 1.15;
+}
+
+@utility text-lead {
+  font-size: clamp(1rem, 1.33vw, 1.5rem);
+  line-height: 1.45;
+}
+
+@utility text-body {
+  font-size: clamp(0.9375rem, 1.17vw, 1.3125rem);
+  line-height: 1.5;
+}
+
+@utility text-label {
+  font-size: clamp(0.8125rem, 1.1vw, 1.25rem);
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@utility text-small {
+  font-size: clamp(0.8125rem, 1.02vw, 1.125rem);
+  line-height: 1.45;
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 0;
+    width: min(76vw, 91rem);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
