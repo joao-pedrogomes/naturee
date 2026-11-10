@@ -5,9 +5,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 /**
- * GitHub Pages serves static files only: a deep link like /produtos?marca=x
- * would 404 on refresh. Pages falls back to 404.html, so shipping a copy of
- * index.html under that name hands the route back to the SPA router.
+ * Static hosts serve 404.html for unknown paths. A copy of index.html there
+ * hands deep links back to the client router.
  */
 function spaFallback(): Plugin {
   return {
@@ -16,21 +15,21 @@ function spaFallback(): Plugin {
     closeBundle() {
       const dist = path.resolve(__dirname, 'dist')
       const index = path.join(dist, 'index.html')
-      if (fs.existsSync(index)) {
-        fs.copyFileSync(index, path.join(dist, '404.html'))
-      }
+      if (!fs.existsSync(index)) return
+      fs.copyFileSync(index, path.join(dist, '404.html'))
     },
   }
 }
 
-// https://vite.dev/config/
-export default defineConfig(({ command }) => ({
-  // The project is served from a repository subpath on GitHub Pages.
-  base: command === 'build' ? '/naturee/' : '/',
+export default defineConfig({
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react(), tailwindcss(), spaFallback()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-}))
+  build: {
+    modulePreload: { polyfill: false },
+  },
+})
