@@ -1,5 +1,4 @@
 import { useRef, useState, type FormEvent } from 'react'
-import { toast } from 'sonner'
 import ContactField from '@/components/contact/ContactField'
 import Heading from '@/components/sections/Heading'
 import { Input } from '@/components/ui/input'
@@ -40,6 +39,7 @@ function ContactForm() {
   const [errors, setErrors] = useState<ContactErrors>({})
   const [status, setStatus] = useState<FormStatus>('idle')
   const [whatsappUrl, setWhatsappUrl] = useState<string>()
+  const [apiFailed, setApiFailed] = useState(false)
 
   function updateField(key: ContactFieldKey, value: string) {
     setFields((current) => ({ ...current, [key]: value }))
@@ -64,7 +64,7 @@ function ContactForm() {
 
     setStatus('submitting')
     const result = await submitContact(fields, { apiUrl: import.meta.env.VITE_CONTACT_API_URL })
-    if (result.status === 'failed') toast.error(copy.errors.apiFailed)
+    setApiFailed(result.status === 'failed')
 
     const url = buildWhatsAppUrl(site.whatsapp, buildContactMessage(fields))
     setWhatsappUrl(url)
@@ -77,6 +77,11 @@ function ContactForm() {
       <div role="status" className="text-center">
         <Heading as="h2" text={copy.success.title} className="text-title text-sand" />
         <p className="mx-auto mt-4 max-w-[40ch] text-body text-white">{copy.success.text}</p>
+        {apiFailed ? (
+          <p role="alert" className="mx-auto mt-4 max-w-[44ch] rounded-xl bg-teal/40 px-4 py-3 text-small font-semibold text-white">
+            {copy.errors.apiFailed}
+          </p>
+        ) : null}
         <a
           href={whatsappUrl}
           target="_blank"

@@ -2,18 +2,18 @@ import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import App from '@/App'
-import SiteContentProvider from '@/content/SiteContentProvider'
+import AppProviders from '@/AppProviders'
 import { defaultContent } from '@/content/defaultContent'
 import { enabledRoutes } from '@/content/siteContent'
 
 export function render(url: string): string {
   return renderToString(
     <StrictMode>
-      <SiteContentProvider>
+      <AppProviders>
         <StaticRouter location={url}>
           <App />
         </StaticRouter>
-      </SiteContentProvider>
+      </AppProviders>
     </StrictMode>,
   )
 }

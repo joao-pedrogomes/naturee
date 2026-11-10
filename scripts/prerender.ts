@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { buildSitemap, extractHead, fontPreloads, injectPage, outputPathFor } from './prerenderLib.ts'
+import { buildSitemap, extractHead, fontPreloads, injectPage, outputPathsFor } from './prerenderLib.ts'
 
 type ServerBundle = {
   render: (url: string) => string
@@ -32,7 +32,7 @@ async function run(): Promise<void> {
   for (const route of routes) {
     const page = extractHead(bundle.render(route))
     const html = injectPage(template, page, preloads)
-    writeFile(outputPathFor(DIST_DIR, route), html)
+    for (const file of outputPathsFor(DIST_DIR, route)) writeFile(file, html)
     console.log(`prerendered ${route}`)
   }
 

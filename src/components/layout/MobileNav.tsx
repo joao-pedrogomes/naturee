@@ -28,7 +28,7 @@ function MobileNav() {
       >
         <Menu aria-hidden="true" className="size-7" />
       </SheetTrigger>
-      <SheetContent side="right" className="w-[min(100vw,22rem)] border-l-0 bg-teal text-sand">
+      <SheetContent side="right" closeLabel={footer.menuClose} className="w-[min(100vw,22rem)] border-l-0 bg-teal text-sand">
         <SheetHeader>
           <SheetTitle className="text-sand">{footer.menuTitle}</SheetTitle>
           <SheetDescription className="text-sand/70">{site.name}</SheetDescription>

@@ -40,9 +40,14 @@ export function injectPage(template: string, page: RenderedPage, extraHead: stri
     .replace('<div id="root"></div>', `<div id="root">${page.body}</div>`)
 }
 
-export function outputPathFor(distDir: string, route: string): string {
-  if (route === '/') return path.join(distDir, 'index.html')
-  return path.join(distDir, route.replace(/^\//, ''), 'index.html')
+/**
+ * Static hosts differ on whether `/sobre` maps to `sobre.html` or `sobre/index.html`,
+ * so both files are written and either URL form serves the prerendered page.
+ */
+export function outputPathsFor(distDir: string, route: string): string[] {
+  if (route === '/') return [path.join(distDir, 'index.html')]
+  const slug = route.replace(/^\//, '')
+  return [path.join(distDir, slug, 'index.html'), path.join(distDir, `${slug}.html`)]
 }
 
 export function buildSitemap(routes: string[], siteUrl: string, lastmod: string): string {

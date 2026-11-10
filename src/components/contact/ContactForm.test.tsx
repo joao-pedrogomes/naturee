@@ -4,10 +4,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import ContactForm from '@/components/contact/ContactForm'
 import SiteContentProvider from '@/content/SiteContentProvider'
 
-vi.mock('sonner', () => ({ toast: { error: vi.fn() } }))
-
-const { toast } = await import('sonner')
-
 function renderForm() {
   return render(
     <SiteContentProvider>
@@ -60,7 +56,7 @@ describe('ContactForm', () => {
     expect(url).toContain('https://wa.me/5548991963383?text=')
     expect(decodeURIComponent(url)).toContain('Ana Souza')
     expect(screen.getByRole('link', { name: 'Abrir WhatsApp' })).toHaveAttribute('href', url)
-    expect(toast.error).not.toHaveBeenCalled()
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
   it('still opens WhatsApp and warns when the API fails', async () => {
@@ -73,6 +69,6 @@ describe('ContactForm', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar' }))
     expect(await screen.findByRole('status')).toBeInTheDocument()
     expect(open).toHaveBeenCalledTimes(1)
-    expect(toast.error).toHaveBeenCalledWith(expect.stringContaining('WhatsApp'))
+    expect(screen.getByRole('alert')).toHaveTextContent('Não conseguimos registrar sua mensagem')
   })
 })

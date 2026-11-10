@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { buildSitemap, extractHead, fontPreloads, injectPage, outputPathFor } from './prerenderLib.ts'
+import { buildSitemap, extractHead, fontPreloads, injectPage, outputPathsFor } from './prerenderLib.ts'
 
 const tempDirs: string[] = []
 
@@ -52,10 +52,10 @@ describe('injectPage', () => {
   })
 })
 
-describe('outputPathFor', () => {
-  it('maps routes to nested index files', () => {
-    expect(outputPathFor('/d', '/')).toBe(path.join('/d', 'index.html'))
-    expect(outputPathFor('/d', '/sobre')).toBe(path.join('/d', 'sobre', 'index.html'))
+describe('outputPathsFor', () => {
+  it('maps routes to nested index files plus a flat html twin', () => {
+    expect(outputPathsFor('/d', '/')).toEqual([path.join('/d', 'index.html')])
+    expect(outputPathsFor('/d', '/sobre')).toEqual([path.join('/d', 'sobre', 'index.html'), path.join('/d', 'sobre.html')])
   })
 })
 
