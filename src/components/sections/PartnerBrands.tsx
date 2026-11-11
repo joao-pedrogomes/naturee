@@ -37,7 +37,7 @@ function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
 
 function BrandGrid({ brands }: { brands: Brand[] }) {
   return (
-    <ul className="grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-12 md:grid-cols-3 lg:gap-y-[calc(48*var(--u))]">
+    <ul className="grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-12 md:grid-cols-3 lg:auto-rows-[calc(116*var(--u))] lg:gap-y-[calc(116*var(--u))]">
       {brands.map((brand) => (
         <li key={brand.id} className="flex max-w-[13rem] items-center justify-center lg:max-w-none">
           <BrandLogo brand={brand} />

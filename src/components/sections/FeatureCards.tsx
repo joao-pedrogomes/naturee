@@ -25,12 +25,12 @@ function FeatureCards({ cards, variant }: FeatureCardsProps) {
           className={cn(
             'flex flex-col overflow-hidden rounded-3xl md:last:col-span-2 md:last:mx-auto md:last:w-[calc(50%-0.75rem)] lg:rounded-[calc(32*var(--u))] lg:last:col-span-1 lg:last:mx-0 lg:last:w-auto',
             tone.card,
-            variant === 'dark' ? 'lg:h-[calc(703*var(--u))]' : 'lg:h-[calc(435*var(--u))]',
+            'lg:h-[calc(703*var(--u))]',
           )}
         >
           <Picture
             image={card.image}
-            className={cn('w-full object-cover', variant === 'dark' ? 'aspect-[4/3] lg:aspect-auto lg:h-[calc(352*var(--u))]' : 'aspect-[4/3] lg:aspect-auto lg:h-[calc(190*var(--u))]')}
+            className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-[calc(352*var(--u))]"
           />
           <div className="flex flex-1 flex-col px-8 pt-8 pb-8 lg:pr-[calc(40*var(--u))] lg:pb-[calc(40*var(--u))] lg:pl-[calc(80*var(--u))] lg:pt-[calc(45*var(--u))]">
             <Heading as="h3" text={card.title} className={cn('text-card-title lg:leading-[1.09]', tone.title)} />

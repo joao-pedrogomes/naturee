@@ -7,7 +7,7 @@ type RichTextProps = {
 }
 
 function RichText({ text, className }: RichTextProps) {
-  return <p className={cn('[&_strong]:font-bold', className)}>{renderRichText(text)}</p>
+  return <p className={cn('[&_strong]:font-semibold', className)}>{renderRichText(text)}</p>
 }
 
 export default RichText

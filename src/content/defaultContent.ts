@@ -145,11 +145,11 @@ export const defaultContent: SiteContent = {
   ],
   categories: [
     { id: 'frescos', name: 'Frescos & Naturais', blurb: 'Ingredientes frescos e selecionados.', image: card('Cogumelos, tomates e hortaliças frescas sobre uma mesa de madeira', [categoryFrescos800, categoryFrescos480]) },
-    { id: 'antepastos', name: 'Antepastos & Conservas', blurb: 'Sabores especiais para diferentes preparos.', image: card('Potes de patês e conservas Sítio Pura Vida sobre fundo verde', [categoryAntepastos800, categoryAntepastos480]) },
+    { id: 'antepastos', name: 'Antepastos\n& Conservas', blurb: 'Sabores especiais para diferentes preparos.', image: card('Potes de patês e conservas Sítio Pura Vida sobre fundo verde', [categoryAntepastos800, categoryAntepastos480]) },
     { id: 'laticinios', name: 'Laticínios', blurb: 'Variedade para compor seu cardápio.', image: card('Queijo, iogurtes e leite Salubi sobre uma tábua de madeira', [categoryLaticinios800, categoryLaticinios480]) },
     { id: 'massas', name: 'Massas Artesanais', blurb: 'Tradição e sabor em cada preparo.', image: card('Mãos preparando massa fresca artesanal com farinha e ovos', [categoryMassas800, categoryMassas480]) },
-    { id: 'charcutaria', name: 'Charcutaria Artesanal', blurb: 'Cortes e sabores que fazem a diferença.', image: card('Tábua de charcutaria com embutidos, queijos e uma taça de vinho', [categoryCharcutaria800, categoryCharcutaria480]) },
-    { id: 'gourmet', name: 'Especialidades Gourmet', blurb: 'Ingredientes especiais para novas criações.', image: card('Molho de tomate Confit Haus, azeite trufado, figos e trufas', [categoryGourmet800, categoryGourmet480]) },
+    { id: 'charcutaria', name: 'Charcutaria\nArtesanal', blurb: 'Cortes e sabores que fazem a diferença.', image: card('Tábua de charcutaria com embutidos, queijos e uma taça de vinho', [categoryCharcutaria800, categoryCharcutaria480]) },
+    { id: 'gourmet', name: 'Especialidades\nGourmet', blurb: 'Ingredientes especiais para novas criações.', image: card('Molho de tomate Confit Haus, azeite trufado, figos e trufas', [categoryGourmet800, categoryGourmet480]) },
   ],
   pages: {
     home: {
@@ -276,7 +276,7 @@ export const defaultContent: SiteContent = {
         description: 'Marcas parceiras e categorias de produtos especiais — frescos, antepastos, laticínios, massas, charcutaria e gourmet — para o food service.',
       },
       hero: {
-        title: 'Uma seleção de\n*boas origens* e\n*grandes sabores*.',
+        title: 'Uma seleção de *boas*\n*origens* e *grandes*\n*sabores*.',
         text: 'Conheça as marcas e categorias que fazem parte da Naturee Food Hub, reunidas para trazer mais variedade, qualidade e praticidade à sua operação.',
         image: banner('Colher retirando patê de cogumelos de um pote Sítio Pura Vida', [productsHero1440, productsHero960, productsHero640]),
         cta: { label: 'Acessar catálogo', href: '#catalog' },
@@ -284,13 +284,13 @@ export const defaultContent: SiteContent = {
       categories: {
         label: 'Categorias de produtos',
         title: 'Produtos especiais para diferentes\nnecessidades.',
-        text: 'Uma curadoria que reúne ingredientes frescos, produtos artesanais e especialidades gastronômicas para o food service.',
+        text: 'Uma curadoria que reúne ingredientes frescos, produtos artesanais e\nespecialidades gastronômicas para o food service.',
         cta: { label: 'Baixar catálogo', href: '#catalog' },
       },
       brands: {
         label: 'Marcas parceiras',
         title: '*Boas marcas* fazem parte da nossa rede.',
-        text: 'Trabalhamos com produtores e fornecedores selecionados, reunindo diferentes especialidades em uma curadoria pensada para o mercado gastronômico.',
+        text: 'Trabalhamos com produtores e fornecedores selecionados, reunindo diferentes\nespecialidades em uma curadoria pensada para o mercado gastronômico.',
         partner: {
           label: 'Faça parte da nossa rede',
           title: 'Sua marca pode estar aqui.',
