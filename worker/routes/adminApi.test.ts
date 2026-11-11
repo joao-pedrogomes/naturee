@@ -35,6 +35,15 @@ describe('admin API guard', () => {
   })
 })
 
+describe('forced password change', () => {
+  it('blocks admin data routes until the password is changed', async () => {
+    const { env, cookie } = await adminEnv()
+    await env.DB.prepare('UPDATE users SET must_change = 1').run()
+    expect((await call(env, 'GET', '/api/admin/leads', undefined, { cookie })).status).toBe(403)
+    expect((await call(env, 'GET', '/api/admin/me', undefined, { cookie })).status).toBe(200)
+  })
+})
+
 describe('leads', () => {
   it('lists, filters, searches and counts', async () => {
     const { env, cookie } = await adminEnv()

@@ -19,6 +19,25 @@ async function sitemap(env: Env): Promise<Response> {
   return new Response(xml, { headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' } })
 }
 
+const ADMIN_CSP =
+  "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+
+async function adminShell(env: Env, request: Request): Promise<Response> {
+  const shell = await env.ASSETS.fetch(new Request(new URL('/ssrTemplate.html', request.url)))
+  return new Response(shell.body, {
+    status: shell.status,
+    headers: {
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'no-store',
+      'content-security-policy': ADMIN_CSP,
+      'x-robots-tag': 'noindex, nofollow',
+      'x-frame-options': 'DENY',
+      'x-content-type-options': 'nosniff',
+      'referrer-policy': 'no-referrer',
+    },
+  })
+}
+
 async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const { pathname } = new URL(request.url)
 
@@ -29,6 +48,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
     if (response) return response
     const session = await requireAdmin(request, env)
     if (session instanceof Response) return session
+    if (session.mustChange) return error(403, 'password_change_required')
     const admin =
       (await handleLeads(request, env, pathname)) ??
       (await handleContent(request, env, pathname, session)) ??
@@ -36,6 +56,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
       (await handleMedia(request, env, pathname))
     return admin ?? error(404, 'not_found')
   }
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) return adminShell(env, request)
   if (pathname.startsWith('/media/')) return handlePublicMedia(request, env, ctx, pathname)
   if (pathname.startsWith('/api/')) return error(404, 'not_found')
 

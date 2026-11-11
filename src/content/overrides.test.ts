@@ -71,6 +71,24 @@ describe('validateOverride', () => {
     expect(validateOverride(fields, 'site.email', 5)).toBe('expected text')
     expect(validateOverride(fields, 'pages.home.enabled', 'no')).toBe('expected boolean')
     expect(validateOverride(fields, 'pages.home.hero.image', { mediaId: '' })).toBe('expected image reference')
-    expect(validateOverride(fields, 'site.email', 'x'.repeat(MAX_TEXT_LENGTH + 1))).toBe('text too long')
+    expect(validateOverride(fields, 'site.tagline', 'x'.repeat(MAX_TEXT_LENGTH + 1))).toBe('text too long')
+  })
+
+  it('only lets links use safe schemes', () => {
+    const hrefPath = fields.find((field) => field.path.endsWith('.href'))!.path
+    for (const ok of ['/contato', '#whatsapp', 'https://exemplo.com/x', 'mailto:a@b.com']) {
+      expect(validateOverride(fields, hrefPath, ok), ok).toBeNull()
+    }
+    for (const bad of ['javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'data:text/html,x', '//evil.com', 'vbscript:x']) {
+      expect(validateOverride(fields, hrefPath, bad), bad).toBe('unsafe link')
+    }
+    expect(validateOverride(fields, 'site.instagramUrl', 'javascript:1')).toBe('unsafe link')
+  })
+
+  it('validates phone numbers and e-mail addresses', () => {
+    expect(validateOverride(fields, 'site.whatsapp', '48 99196-3383')).toBeNull()
+    expect(validateOverride(fields, 'site.whatsapp', '123')).toBe('invalid phone')
+    expect(validateOverride(fields, 'site.formWhatsapp', 'abc')).toBe('invalid phone')
+    expect(validateOverride(fields, 'site.email', 'nope')).toBe('invalid email')
   })
 })

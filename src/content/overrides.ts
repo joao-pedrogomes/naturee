@@ -82,6 +82,19 @@ export function imageFromOverride(override: ImageOverride, current: Image): Imag
   }
 }
 
+const LINK_PATH = /(^|\.)(href|instagramUrl|catalogPdfUrl)$/
+const SAFE_LINK = /^(\/(?!\/)|#|https?:\/\/|mailto:|tel:)/i
+const PHONE_PATH = /^site\.(whatsapp|formWhatsapp)$/
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
+function textProblem(path: string, value: string): string | null {
+  if (value.length > MAX_TEXT_LENGTH) return 'text too long'
+  if (LINK_PATH.test(path) && !SAFE_LINK.test(value.trim())) return 'unsafe link'
+  if (PHONE_PATH.test(path) && !/^\d{10,13}$/.test(value.replace(/\D/g, ''))) return 'invalid phone'
+  if (path === 'site.email' && !EMAIL_PATTERN.test(value.trim())) return 'invalid email'
+  return null
+}
+
 /** Returns an error message, or null when the value fits the field at `path`. */
 export function validateOverride(fields: EditableField[], path: string, value: unknown): string | null {
   const field = fields.find((candidate) => candidate.path === path)
@@ -89,7 +102,7 @@ export function validateOverride(fields: EditableField[], path: string, value: u
   if (field.kind === 'boolean') return typeof value === 'boolean' ? null : 'expected boolean'
   if (field.kind === 'image') return isImageOverride(value) ? null : 'expected image reference'
   if (typeof value !== 'string') return 'expected text'
-  return value.length <= MAX_TEXT_LENGTH ? null : 'text too long'
+  return textProblem(path, value)
 }
 
 function walkTo(root: unknown, segments: string[]): { parent: Record<string, unknown>; key: string } | null {
