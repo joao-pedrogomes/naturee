@@ -11,6 +11,7 @@ const NAV = [
   { to: '/admin/conteudo', label: copy.nav.content },
   { to: '/admin/configuracoes', label: copy.nav.settings },
   { to: '/admin/imagens', label: copy.nav.media },
+  { to: '/admin/catalogo', label: copy.nav.catalog },
   { to: '/admin/usuarios', label: copy.nav.users },
   { to: '/admin/conta', label: copy.nav.account },
 ]

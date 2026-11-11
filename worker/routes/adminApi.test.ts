@@ -227,3 +227,39 @@ describe('content', () => {
     expect((await fields(env, cookie)).byPath.get('site.tagline')?.value).toBe(hostile)
   })
 })
+
+describe('built-in pictures', () => {
+  it('lists every shipped picture once, with where it is used', async () => {
+    const { env, cookie } = await adminEnv()
+    const body = (await (await call(env, 'GET', '/api/admin/media', undefined, { cookie })).json()) as {
+      builtin: { ref: string; src: string; usedBy: string[] }[]
+    }
+    expect(body.builtin.length).toBeGreaterThan(10)
+    expect(new Set(body.builtin.map((item) => item.src)).size).toBe(body.builtin.length)
+    expect(body.builtin.every((item) => item.usedBy.length > 0)).toBe(true)
+  })
+
+  it('lets a field reuse a shipped picture, and the page renders it', async () => {
+    const { env, cookie } = await adminEnv()
+    const media = (await (await call(env, 'GET', '/api/admin/media', undefined, { cookie })).json()) as {
+      builtin: { ref: string; src: string }[]
+    }
+    const aboutImage = media.builtin.find((item) => item.ref === 'pages.about.hero.image')
+    expect(aboutImage).toBeDefined()
+    const saved = await call(env, 'PUT', '/api/admin/content', { changes: { 'pages.home.hero.image': { ref: 'pages.about.hero.image', alt: 'Reaproveitada', src: 'ignored' } } }, { cookie })
+    expect(saved.status).toBe(200)
+
+    const content = (await (await call(env, 'GET', '/api/admin/content', undefined, { cookie })).json()) as {
+      fields: { path: string; value: { src: string; alt: string } }[]
+    }
+    const field = content.fields.find((candidate) => candidate.path === 'pages.home.hero.image')
+    expect(field?.value.src).toBe(aboutImage?.src)
+    expect(field?.value.alt).toBe('Reaproveitada')
+  })
+
+  it('rejects a reference that is not a picture', async () => {
+    const { env, cookie } = await adminEnv()
+    const response = await call(env, 'PUT', '/api/admin/content', { changes: { 'pages.home.hero.image': { ref: 'pages.home.hero.title', alt: 'x' } } }, { cookie })
+    expect(response.status).toBe(422)
+  })
+})

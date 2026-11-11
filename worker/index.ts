@@ -6,9 +6,11 @@ import { loadContent } from './content/loadContent'
 import { handleAdminAuth, requireAdmin } from './routes/adminAuth'
 import { handleContent } from './routes/adminContent'
 import { handleLeads } from './routes/adminLeads'
+import { handleFiles } from './routes/adminFiles'
 import { handleMedia } from './routes/adminMedia'
 import { handleSettings } from './routes/adminSettings'
 import { handleUsers } from './routes/adminUsers'
+import { handlePublicFile } from './routes/files'
 import { handlePublicMedia } from './routes/media'
 import { handleContact } from './routes/contact'
 import { matchPageRoute, renderPage } from './render/renderPage'
@@ -58,11 +60,13 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
       (await handleContent(request, env, pathname, session)) ??
       (await handleSettings(request, env, pathname)) ??
       (await handleUsers(request, env, pathname, session)) ??
-      (await handleMedia(request, env, pathname))
+      (await handleMedia(request, env, pathname)) ??
+      (await handleFiles(request, env, pathname))
     return admin ?? error(404, 'not_found')
   }
   if (pathname === '/admin' || pathname.startsWith('/admin/')) return adminShell(env, request)
   if (pathname.startsWith('/media/')) return handlePublicMedia(request, env, ctx, pathname)
+  if (pathname.startsWith('/catalogo/')) return handlePublicFile(request, env, ctx, pathname)
   if (pathname.startsWith('/api/')) return error(404, 'not_found')
 
   const route = matchPageRoute(pathname)

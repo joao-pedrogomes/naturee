@@ -30,6 +30,12 @@ describe('buildWhatsAppUrl', () => {
 })
 
 describe('resolveHref', () => {
+  it('treats worker-served files as external so they are not routed in the app', () => {
+    expect(resolveHref('/catalogo/0123456789abcdef/catalogo.pdf', site)).toEqual({ href: '/catalogo/0123456789abcdef/catalogo.pdf', external: true })
+    expect(resolveHref('/media/0123456789abcdef', site).external).toBe(true)
+    expect(resolveHref('/contato', site).external).toBe(false)
+  })
+
   it('resolves the whatsapp sentinel with an optional message', () => {
     expect(resolveHref('#whatsapp', site, 'Oi')).toEqual({
       href: 'https://wa.me/5548991963383?text=Oi',

@@ -8,7 +8,7 @@ describe('wrangler config', () => {
   it('routes every page, the sitemap, the admin, the API and media through the Worker', () => {
     const patterns = config.assets.run_worker_first
     for (const route of ROUTES) expect(patterns).toContain(route.path)
-    for (const required of ['/sitemap.xml', '/admin', '/admin/*', '/api/*', '/media/*']) {
+    for (const required of ['/sitemap.xml', '/admin', '/admin/*', '/api/*', '/media/*', '/catalogo/*']) {
       expect(patterns).toContain(required)
     }
   })

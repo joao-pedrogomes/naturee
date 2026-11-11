@@ -52,6 +52,10 @@ function ImagePicker({ id, label, image, onChange }: ImagePickerProps) {
                 onChange({ mediaId: item.id, alt: item.alt || image.alt })
                 setOpen(false)
               }}
+              onPickBuiltin={(item) => {
+                onChange({ ref: item.ref, alt: item.alt, src: item.src, srcSet: item.srcSet })
+                setOpen(false)
+              }}
             />
           </div>
         </SheetContent>

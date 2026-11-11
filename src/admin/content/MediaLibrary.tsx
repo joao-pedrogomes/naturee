@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { ApiError, adminApi } from '@/admin/api/adminApi'
-import type { MediaItem } from '@/admin/api/types'
+import type { BuiltinImageItem, MediaItem } from '@/admin/api/types'
 import { copy } from '@/admin/copy'
 import { formatBytes } from '@/admin/format'
 import { ImageProblem, prepareImage } from '@/admin/imageProcessing'
@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label'
 
 type MediaLibraryProps = {
   onPick?: (item: MediaItem) => void
+  onPickBuiltin?: (item: BuiltinImageItem) => void
 }
 
 function uploadProblem(error: unknown): string {
@@ -21,16 +22,19 @@ function uploadProblem(error: unknown): string {
   return copy.media.failed
 }
 
-function MediaLibrary({ onPick }: MediaLibraryProps) {
+function MediaLibrary({ onPick, onPickBuiltin }: MediaLibraryProps) {
   const fileInput = useRef<HTMLInputElement>(null)
   const [items, setItems] = useState<MediaItem[]>()
+  const [builtin, setBuiltin] = useState<BuiltinImageItem[]>()
   const [alt, setAlt] = useState('')
   const [busy, setBusy] = useState(false)
   const [problem, setProblem] = useState<string>()
 
   const load = useCallback(async () => {
     try {
-      setItems((await adminApi.listMedia()).media)
+      const loaded = await adminApi.listMedia()
+      setItems(loaded.media)
+      setBuiltin(loaded.builtin)
     } catch (failure) {
       console.error('could not load media', failure)
       setProblem(copy.media.loadFailed)
@@ -84,6 +88,7 @@ function MediaLibrary({ onPick }: MediaLibraryProps) {
       </div>
 
       {problem ? <Notice tone="error">{problem}</Notice> : null}
+      <h2 className="font-heading text-2xl">{copy.media.uploadedTitle}</h2>
       {items && items.length === 0 ? <Notice tone="info">{copy.media.empty}</Notice> : null}
 
       <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -105,6 +110,30 @@ function MediaLibrary({ onPick }: MediaLibraryProps) {
           </li>
         ))}
       </ul>
+
+      {builtin && builtin.length > 0 ? (
+        <>
+          <h2 className="font-heading text-2xl">{copy.media.builtinTitle}</h2>
+          <p className="text-sm text-teal/70">{copy.media.builtinHint}</p>
+          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {builtin.map((item) => (
+              <li key={item.ref} className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
+                <img src={item.src} srcSet={item.srcSet} sizes="240px" alt={item.alt} width={item.width} height={item.height} loading="lazy" className="aspect-[3/2] w-full bg-white object-contain" />
+                <div className="flex flex-1 flex-col gap-2 p-3 text-sm">
+                  <p className="text-xs font-semibold text-olive">
+                    {item.usedBy.length > 0 ? `${copy.media.originalIn}: ${item.usedBy.map(fieldLabel).join(', ')}` : copy.media.notShown}
+                  </p>
+                  {onPickBuiltin ? (
+                    <div className="mt-auto">
+                      <Button onClick={() => onPickBuiltin(item)}>{copy.media.pick}</Button>
+                    </div>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
     </div>
   )
 }

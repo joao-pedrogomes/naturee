@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import AdminLayout from '@/admin/AdminLayout'
 import AdminSessionProvider from '@/admin/auth/AdminSessionProvider'
 import AccountPage from '@/admin/pages/AccountPage'
+import CatalogPage from '@/admin/pages/CatalogPage'
 import ContentPage from '@/admin/pages/ContentPage'
 import LeadsPage from '@/admin/pages/LeadsPage'
 import LoginPage from '@/admin/pages/LoginPage'
@@ -20,6 +21,7 @@ function AdminApp() {
           <Route path="conteudo" element={<ContentPage />} />
           <Route path="configuracoes" element={<SettingsPage />} />
           <Route path="imagens" element={<MediaPage />} />
+          <Route path="catalogo" element={<CatalogPage />} />
           <Route path="usuarios" element={<UsersPage />} />
           <Route path="conta" element={<AccountPage />} />
           <Route path="*" element={<Navigate to="/admin" replace />} />

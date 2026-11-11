@@ -1,3 +1,5 @@
+import { defaultContent } from '@ssr'
+import { builtinImages } from '../../src/content/overrides'
 import { loadOverrides } from '../content/loadContent'
 import type { Env } from '../env'
 import { error, json } from '../http'
@@ -28,12 +30,34 @@ async function usageById(env: Env): Promise<Map<string, string[]>> {
   return usage
 }
 
+/** Places that show a shipped picture right now: its own default spots, minus replaced ones, plus spots that point to it. */
+async function builtinList(env: Env) {
+  const overrides = await loadOverrides(env)
+  const images = builtinImages(defaultContent)
+  return images.map((entry) => {
+    const kept = entry.paths.filter((path) => !(path in overrides))
+    const pointing = Object.entries(overrides)
+      .filter(([, value]) => (value as { ref?: unknown } | null)?.ref === entry.ref)
+      .map(([path]) => path)
+    return { ...entry, usedBy: [...kept, ...pointing.filter((path) => !kept.includes(path))] }
+  })
+}
+
 async function list(env: Env): Promise<Response> {
   const { results } = await env.DB.prepare(
     'SELECT id, width, height, size, alt, created_at FROM media ORDER BY created_at DESC, id DESC',
   ).all<MediaRow>()
   const usage = await usageById(env)
   return json({
+    builtin: (await builtinList(env)).map((entry) => ({
+      ref: entry.ref,
+      src: entry.image.src,
+      srcSet: entry.image.srcSet,
+      alt: entry.image.alt,
+      width: entry.image.width,
+      height: entry.image.height,
+      usedBy: entry.usedBy,
+    })),
     media: results.map((row) => ({
       id: row.id,
       width: row.width,

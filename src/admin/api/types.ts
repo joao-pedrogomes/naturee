@@ -36,7 +36,10 @@ export type ContentField = {
 export type ContentResponse = { fields: ContentField[]; version: string }
 
 /** `null` restores the default; an image change references an uploaded file. */
-export type ContentChange = string | boolean | { mediaId: string; alt: string } | null
+export type UploadedImageChange = { mediaId: string; alt: string }
+/** `src` and `srcSet` only drive the preview; the server rebuilds the picture from `ref`. */
+export type BuiltinImageChange = { ref: string; alt: string; src: string; srcSet?: string }
+export type ContentChange = string | boolean | UploadedImageChange | BuiltinImageChange | null
 
 export type HistoryEntry = { version: number; createdAt: string; createdBy: string; edits: number }
 
@@ -49,6 +52,18 @@ export type MediaItem = {
   createdAt: string
   usedBy: string[]
 }
+
+export type BuiltinImageItem = {
+  ref: string
+  src: string
+  srcSet?: string
+  alt: string
+  width: number
+  height: number
+  usedBy: string[]
+}
+
+export type FileItem = { id: string; name: string; size: number; createdAt: string; url: string; inUse: boolean }
 
 export type AdminSettings = { leadNotifyEmail: string; emailEnabled: boolean; mailConfigured: boolean }
 

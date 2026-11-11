@@ -20,6 +20,10 @@ function isImageValue(value: unknown): value is { mediaId: string; alt: string }
   return typeof value === 'object' && value !== null && typeof (value as { mediaId?: unknown }).mediaId === 'string'
 }
 
+function isBuiltinValue(value: unknown): value is { ref: string; alt: string } {
+  return typeof value === 'object' && value !== null && typeof (value as { ref?: unknown }).ref === 'string'
+}
+
 async function mediaDimensions(env: Env, ids: string[]): Promise<Map<string, MediaRow>> {
   if (ids.length === 0) return new Map()
   const { results } = await env.DB.prepare('SELECT id, width, height FROM media WHERE id IN (SELECT value FROM json_each(?1))')
@@ -102,6 +106,7 @@ async function write(request: Request, env: Env, session: AdminSession): Promise
       }
       stored = { mediaId: row.id, alt: value.alt, width: row.width, height: row.height } satisfies ImageOverride
     }
+    if (isBuiltinValue(value)) stored = { ref: value.ref, alt: value.alt } satisfies ImageOverride
     const problem = validateOverride(fields, path, stored)
     if (problem) invalid[path] = problem
     else rows.push({ p: path, v: JSON.stringify(stored) })

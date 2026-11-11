@@ -2,7 +2,9 @@ import type {
   AdminSettings,
   AdminUser,
   TemporaryAccess,
+  BuiltinImageItem,
   ContentChange,
+  FileItem,
   ContentResponse,
   HistoryEntry,
   LeadList,
@@ -37,12 +39,12 @@ export function setUnauthorizedHandler(handler: UnauthorizedHandler | undefined)
 const AUTH_PATHS = ['/api/admin/login', '/api/admin/me', '/api/admin/logout']
 
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
-  const isForm = body instanceof FormData
+  const sendsRaw = body instanceof FormData || body instanceof Blob
   const response = await fetch(path, {
     method,
     credentials: 'same-origin',
-    headers: body === undefined || isForm ? undefined : { 'Content-Type': 'application/json' },
-    body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
+    headers: body === undefined || sendsRaw ? undefined : { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : sendsRaw ? (body as BodyInit) : JSON.stringify(body),
   })
   const payload = (await response.json().catch(() => ({}))) as { error?: string }
   if (response.status === 401 && !AUTH_PATHS.includes(path)) onUnauthorized?.()
@@ -59,6 +61,15 @@ function query(params: Record<string, string | number | undefined>): string {
   return text ? `?${text}` : ''
 }
 
+function withoutPreview(changes: Record<string, ContentChange>): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(changes).map(([path, change]) => [
+      path,
+      change !== null && typeof change === 'object' && 'ref' in change ? { ref: change.ref, alt: change.alt } : change,
+    ]),
+  )
+}
+
 export const adminApi = {
   me: () => request<SessionUser>('GET', '/api/admin/me'),
   login: (email: string, password: string) => request<SessionUser>('POST', '/api/admin/login', { email, password }),
@@ -72,7 +83,7 @@ export const adminApi = {
 
   readContent: () => request<ContentResponse>('GET', '/api/admin/content'),
   saveContent: (changes: Record<string, ContentChange>) =>
-    request<{ ok: true; version: string }>('PUT', '/api/admin/content', { changes }),
+    request<{ ok: true; version: string }>('PUT', '/api/admin/content', { changes: withoutPreview(changes) }),
   contentHistory: () => request<{ history: HistoryEntry[] }>('GET', '/api/admin/content/history'),
   restoreContent: (version: number) => request<{ ok: true; skipped: number }>('POST', '/api/admin/content/restore', { version }),
 
@@ -85,7 +96,7 @@ export const adminApi = {
   resetUser: (id: number) => request<TemporaryAccess>('POST', `/api/admin/users/${id}/reset`, {}),
   deleteUser: (id: number) => request<{ ok: true }>('DELETE', `/api/admin/users/${id}`),
 
-  listMedia: () => request<{ media: MediaItem[] }>('GET', '/api/admin/media'),
+  listMedia: () => request<{ media: MediaItem[]; builtin: BuiltinImageItem[] }>('GET', '/api/admin/media'),
   uploadMedia: (image: PreparedImage, alt: string) => {
     const form = new FormData()
     form.set('file', image.full, 'image.webp')
@@ -95,5 +106,13 @@ export const adminApi = {
     form.set('alt', alt)
     return request<MediaItem>('POST', '/api/admin/media', form)
   },
+  listFiles: () => request<{ files: FileItem[]; maxBytes: number }>('GET', '/api/admin/files'),
+  uploadFile: (file: File) =>
+    request<{ id: string; name: string; size: number; url: string }>(
+      'POST',
+      `/api/admin/files?name=${encodeURIComponent(file.name)}`,
+      file,
+    ),
+  deleteFile: (id: string) => request<{ ok: true }>('DELETE', `/api/admin/files/${id}`),
   deleteMedia: (id: string) => request<{ ok: true }>('DELETE', `/api/admin/media/${id}`),
 }

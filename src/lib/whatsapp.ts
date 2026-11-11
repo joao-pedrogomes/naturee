@@ -4,6 +4,9 @@ const BRAZIL_COUNTRY_CODE = '55'
 const WHATSAPP_SENTINEL = '#whatsapp'
 const CATALOG_SENTINEL = '#catalog'
 
+/** Files served by the Worker, not routes of the single-page app. */
+const FILE_PATH = /^\/(catalogo|media)\//
+
 export type ResolvedHref = { href: string; external: boolean }
 
 /** Keeps digits only and prefixes Brazil's country code when it is missing. */
@@ -26,7 +29,7 @@ export function resolveHref(href: string, site: SiteInfo, message?: string): Res
   if (href === CATALOG_SENTINEL) {
     return { href: site.catalogPdfUrl, external: true }
   }
-  if (/^https?:\/\//.test(href)) {
+  if (/^https?:\/\//.test(href) || FILE_PATH.test(href)) {
     return { href, external: true }
   }
   return { href, external: false }

@@ -1,6 +1,11 @@
 import type { Image, SiteContent } from '@/content/types'
 
-export type ImageOverride = { mediaId: string; alt: string; width: number; height: number }
+/** An uploaded picture. */
+export type MediaImageOverride = { mediaId: string; alt: string; width: number; height: number }
+/** One of the pictures that ship with the site, named by the path where the default content uses it. */
+export type BuiltinImageOverride = { ref: string; alt: string }
+export type ImageOverride = MediaImageOverride | BuiltinImageOverride
+export type BuiltinImage = { ref: string; image: Image; paths: string[] }
 export type Overrides = Record<string, unknown>
 export type FieldKind = 'text' | 'boolean' | 'image'
 export type EditableField = { path: string; kind: FieldKind; value: string | boolean | Image }
@@ -24,7 +29,13 @@ function isImage(value: unknown): value is Image {
   )
 }
 
-function isImageOverride(value: unknown): value is ImageOverride {
+function isBuiltinOverride(value: unknown): value is BuiltinImageOverride {
+  if (typeof value !== 'object' || value === null) return false
+  const candidate = value as Record<string, unknown>
+  return typeof candidate.ref === 'string' && candidate.ref !== '' && typeof candidate.alt === 'string'
+}
+
+function isMediaOverride(value: unknown): value is MediaImageOverride {
   if (typeof value !== 'object' || value === null) return false
   const candidate = value as Record<string, unknown>
   return (
@@ -68,11 +79,28 @@ export function flattenEditable(content: SiteContent): EditableField[] {
   return out
 }
 
+function isImageOverride(value: unknown): value is ImageOverride {
+  return isMediaOverride(value) || isBuiltinOverride(value)
+}
+
+/** The distinct pictures of the default content, each with every place that uses it. */
+export function builtinImages(content: SiteContent): BuiltinImage[] {
+  const bySource = new Map<string, BuiltinImage>()
+  for (const field of flattenEditable(content)) {
+    if (field.kind !== 'image') continue
+    const image = field.value as Image
+    const known = bySource.get(image.src)
+    if (known) known.paths.push(field.path)
+    else bySource.set(image.src, { ref: field.path, image, paths: [field.path] })
+  }
+  return [...bySource.values()]
+}
+
 export function mediaUrl(mediaId: string, small = false): string {
   return small ? `/media/${mediaId}?w=${SMALL_IMAGE_WIDTH}` : `/media/${mediaId}`
 }
 
-export function imageFromOverride(override: ImageOverride, current: Image): Image {
+export function imageFromOverride(override: MediaImageOverride, current: Image): Image {
   const small = SMALL_IMAGE_WIDTH < override.width
   return {
     src: mediaUrl(override.mediaId),
@@ -104,7 +132,9 @@ export function validateOverride(fields: EditableField[], path: string, value: u
   if (field.kind === 'boolean') return typeof value === 'boolean' ? null : 'expected_boolean'
   if (field.kind === 'image') {
     if (!isImageOverride(value)) return 'expected_image'
-    return value.alt.length <= MAX_ALT_LENGTH ? null : 'text_too_long'
+    if (value.alt.length > MAX_ALT_LENGTH) return 'text_too_long'
+    if ('ref' in value && !fields.some((candidate) => candidate.kind === 'image' && candidate.path === value.ref)) return 'unknown_image'
+    return null
   }
   if (typeof value !== 'string') return 'expected_text'
   return textProblem(path, value)
@@ -130,8 +160,13 @@ export function applyOverrides(base: SiteContent, overrides: Overrides): SiteCon
     const target = walkTo(content, path.split('.'))
     if (!target) continue
     const current = target.parent[target.key]
-    if (isImage(current) && isImageOverride(value)) {
+    if (isImage(current) && isMediaOverride(value)) {
       target.parent[target.key] = imageFromOverride(value, current)
+      continue
+    }
+    if (isImage(current) && isBuiltinOverride(value)) {
+      const source = walkTo(base, value.ref.split('.'))?.parent[value.ref.split('.').at(-1) as string]
+      if (isImage(source)) target.parent[target.key] = { ...source, sizes: current.sizes, alt: value.alt }
       continue
     }
     if (typeof current === 'string' && typeof value === 'string') target.parent[target.key] = value
