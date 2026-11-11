@@ -21,7 +21,7 @@ import { buildWhatsAppUrl } from '@/lib/whatsapp'
 type FormStatus = 'idle' | 'submitting' | 'done'
 
 const INPUT_CLASS =
-  'h-14 rounded-xl border-0 bg-sand px-5 text-body text-teal shadow-none placeholder:text-teal/60 focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white'
+  'h-14 rounded-xl border-0 bg-sand px-5 text-base text-teal shadow-none placeholder:text-[#a9a995] focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white md:text-base lg:h-[calc(81*var(--u))] lg:rounded-[calc(14*var(--u))] lg:px-[calc(27*var(--u))] lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)] md:lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)]'
 
 function firstInvalid(errors: ContactErrors): ContactFieldKey | undefined {
   return CONTACT_FIELD_ORDER.find((key) => errors[key] !== undefined)
@@ -97,8 +97,8 @@ function ContactForm() {
   const hasErrors = firstInvalid(errors) !== undefined
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <Heading as="h2" text={copy.title} className="text-title text-sand" />
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 lg:gap-[calc(31*var(--u))]">
+      <Heading as="h2" text={copy.title} className="text-display text-sand lg:mb-[calc(10*var(--u))] lg:ml-[calc(24*var(--u))] lg:leading-[0.935] [&_em]:font-medium" />
       {hasErrors ? (
         <p role="alert" className="rounded-xl bg-teal/40 px-4 py-3 text-small font-semibold text-white">
           {copy.errors.summary}
@@ -124,7 +124,7 @@ function ContactForm() {
               <Textarea
                 {...shared}
                 rows={6}
-                className={cn(INPUT_CLASS, 'min-h-44 py-4')}
+                className={cn(INPUT_CLASS, 'min-h-44 py-4 lg:h-[calc(210*var(--u))] lg:py-[calc(22*var(--u))]')}
                 onChange={(event) => updateField(key, event.target.value)}
               />
             ) : (
@@ -140,11 +140,11 @@ function ContactForm() {
         )
       })}
 
-      <div className="flex justify-end">
+      <div className="flex justify-end lg:mt-[calc(20*var(--u))] lg:pr-[calc(0*var(--u))]">
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="inline-flex min-h-11 min-w-[11rem] items-center justify-center rounded-full bg-sand px-8 text-small font-semibold tracking-wide text-teal uppercase transition-colors hover:bg-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60"
+          className="inline-flex min-h-11 min-w-[11rem] items-center justify-center rounded-full bg-teal px-8 text-btn font-medium text-sand uppercase transition-colors hover:bg-teal/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 lg:h-[calc(46*var(--u))] lg:w-[calc(255*var(--u))] lg:min-w-0 lg:px-0"
         >
           {status === 'submitting' ? copy.submitting : copy.submit}
         </button>

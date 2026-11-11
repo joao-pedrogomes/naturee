@@ -376,7 +376,7 @@ export const defaultContent: SiteContent = {
       hero: {
         label: 'Fale com a Naturee',
         title: 'Boas conexões começam\ncom uma conversa.',
-        text: 'Quer conhecer nossos produtos, consultar entregas ou propor uma parceria? Nossa equipe está pronta para conversar com você.',
+        text: 'Quer conhecer nossos produtos, consultar entregas ou\npropor uma parceria? Nossa equipe está pronta para\nconversar com você.',
       },
       form: {
         title: 'Envie sua *mensagem*',
