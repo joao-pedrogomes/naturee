@@ -1,0 +1,16 @@
+# Naturee Food Hub
+
+> Curadoria e distribuição refrigerada de produtos especiais para restaurantes, hotéis, empórios e supermercados no litoral de Santa Catarina, de Itajaí a Araranguá.
+
+## Páginas
+
+- [Início](https://natureefoodhub.com.br/): visão geral da curadoria, diferenciais, marcas parceiras e categorias mais vendidas.
+- [Sobre](https://natureefoodhub.com.br/sobre): história, propósito e pilares (curadoria, logística, relacionamento).
+- [Marcas & Produtos](https://natureefoodhub.com.br/marcas-e-produtos): categorias de produtos, marcas parceiras e catálogo em PDF.
+- [Logística](https://natureefoodhub.com.br/logistica): como funciona a distribuição, regiões atendidas, rotas programadas e prazos.
+- [Contato](https://natureefoodhub.com.br/contato): formulário e WhatsApp comercial.
+
+## Contato
+
+- WhatsApp: +55 48 99196-3383
+- Instagram: @natureealimentos

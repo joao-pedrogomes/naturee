@@ -1,7 +1,7 @@
 # Products Page (Marcas & Produtos) — Design
 
 Date: 2026-07-28
-Status: approved
+Status: superseded by 2026-11-10-site-pages-design.md (catalog and quotation removed)
 Project: naturee Food Hub — institutional site (SPA catalog, quotation instead of checkout)
 
 ## Context

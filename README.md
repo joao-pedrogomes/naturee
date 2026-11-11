@@ -1,32 +1,80 @@
-# React + TypeScript + Vite
+# Naturee Food Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Institutional site for Naturee Food Hub, built from the client's PDF wireframe
+(`plan-assets/Site/`). Five pages: Início, Sobre, Marcas & Produtos, Logística, Contato.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Vite 8, React 19, TypeScript, react-router 7
+- Tailwind CSS v4 with the PDF palette as design tokens (`src/index.css`)
+- shadcn/ui primitives kept to `input`, `textarea`, `label`, `sheet`
+- Playfair Display (headings) and Mulish (body) via `@fontsource-variable`
+- Vitest + Testing Library for unit tests, Playwright + axe for end-to-end
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server with HMR |
+| `npm run build` | Typecheck, client build, SSR build, prerender every route into `dist/` |
+| `npm run preview` | Serve `dist/` locally on port 4173 |
+| `npm test` | Unit tests |
+| `npm run e2e` | Playwright on Chromium, Firefox, WebKit, Pixel 7 and iPhone 14 (needs `npx playwright install`) |
+| `npm run lint` | oxlint |
+| `npm run images` | Regenerate optimized webp variants from `plan-assets/Site/` with sharp |
 
-## Expanding the Oxlint configuration
+## How the site is put together
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Content model
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+Nothing user-visible lives in JSX. All copy, links, images, contact details and page
+flags come from one `SiteContent` object (`src/content/types.ts`). Version 1 serves the
+static defaults in `src/content/defaultContent.ts` through `SiteContentProvider`; the
+admin backend planned for version 2 stores the same shape in a database and the provider
+fetches it instead. Headings accept `*italic*` and `**bold**` markup, rendered by
+`src/lib/richText.tsx`.
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+CTA hrefs may be a route, an absolute URL, or a sentinel: `#whatsapp` resolves to a
+`wa.me` link using the configured number, `#catalog` to the catalog PDF.
+
+### Pages and sections
+
+`src/pages/*` compose shared blocks from `src/components/sections/*` and read content via
+`usePage()`. `PageGate` renders the 404 page when a page is disabled in content, and that
+page also drops out of the nav, sitemap and prerender.
+
+### Prerender
+
+`npm run build` renders every enabled route with `react-dom/server` and writes
+`dist/<route>/index.html` plus `dist/<route>.html`, each with its own `<title>`,
+description, canonical and Open Graph tags, font preloads and the hero image preload.
+Crawlers and WhatsApp link previews get real HTML; the client then hydrates. The script
+lives in `scripts/prerender.ts`; `dist/404.html` stays a bare shell for client routing.
+
+### Images
+
+Source photos (500 KB to 1 MB each) are converted by `scripts/optimizeImages.ts` into
+`src/assets/images/*-<width>.webp` (1440/960/640 for banners, 800/480 for cards). Every
+image has width, height, alt text and `srcset`; only the hero loads eagerly.
+
+### Contact form
+
+Validates on the client, then calls `POST $VITE_CONTACT_API_URL` when that variable is
+set, and always opens WhatsApp with the message prefilled. Without the variable the API
+step is skipped. See `src/lib/contact.ts`.
+
+## Environment variables
+
+| Variable | Purpose |
+|---|---|
+| `VITE_BASE` | Base path for a subpath deploy (GitHub Pages uses `/naturee/`) |
+| `VITE_CONTACT_API_URL` | Contact endpoint; unset means WhatsApp only |
+
+## Conventions
+
+- PascalCase component files, camelCase for everything else.
+- Declare before use, early returns, one component per file.
+- Code and comments in English; every user-facing string in Portuguese and in the content file.
+- Desktop at 1280px matches the PDF; everything is responsive down to 360px.
+
+Design spec: `docs/superpowers/specs/2026-11-10-site-pages-design.md`.
