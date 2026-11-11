@@ -3,6 +3,7 @@ import { buildSitemap } from '../scripts/htmlShell'
 import type { Env } from './env'
 import { error } from './http'
 import { loadContent } from './content/loadContent'
+import { handleAdminAuth } from './routes/adminAuth'
 import { handleContact } from './routes/contact'
 import { matchPageRoute, renderPage } from './render/renderPage'
 
@@ -18,6 +19,10 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
 
   if (pathname === '/sitemap.xml') return sitemap(env)
   if (pathname === '/api/contact') return handleContact(request, env, ctx)
+  if (pathname.startsWith('/api/admin/')) {
+    const response = await handleAdminAuth(request, env, pathname)
+    if (response) return response
+  }
   if (pathname.startsWith('/api/')) return error(404, 'not_found')
 
   const route = matchPageRoute(pathname)
