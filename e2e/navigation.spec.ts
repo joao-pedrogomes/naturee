@@ -67,3 +67,14 @@ test('unknown paths show the not found page', async ({ page }) => {
   await page.getByRole('link', { name: 'Voltar ao início' }).click()
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Curadoria/)
 })
+
+test('header follows the scroll and returns to its place at the top', async ({ page }) => {
+  await page.goto('/sobre')
+  const header = page.locator('header')
+  const resting = await header.boundingBox()
+  expect(resting?.y).toBe(0)
+  await page.evaluate(() => window.scrollTo(0, 1200))
+  await expect.poll(async () => (await header.boundingBox())?.y).toBe(0)
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await expect.poll(async () => (await header.boundingBox())?.height).toBe(resting?.height)
+})
