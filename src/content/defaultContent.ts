@@ -319,30 +319,30 @@ export const defaultContent: SiteContent = {
       },
       hero: {
         title: 'Cuidado em cada\n**rota.**',
-        text: 'Distribuição especializada e logística refrigerada para conectar produtos especiais à sua operação.',
+        text: 'Distribuição especializada e logística\nrefrigerada para conectar produtos\nespeciais à sua operação.',
         image: banner('Van refrigerada da Naturee em frente ao galpão', [logisticsHero1440, logisticsHero960, logisticsHero640]),
         cta: { label: 'Fazer pedido', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de fazer um pedido.' },
       },
       how: {
         label: 'Como funciona nossa distribuição',
         title: 'Uma operação pensada para *facilitar*\n*sua rotina.*',
-        text: 'A Naturee reúne produtos de diferentes fornecedores e organiza sua distribuição por meio de rotas programadas, trazendo mais praticidade e organização ao abastecimento de operações gastronômicas.',
+        text: 'A Naturee reúne produtos de diferentes fornecedores e organiza sua\ndistribuição por meio de rotas programadas, trazendo mais praticidade e\norganização ao abastecimento de operações gastronômicas.',
         steps: [
-          { title: 'Curadoria', text: 'Produtos de diferentes marcas e fornecedores.' },
-          { title: 'Organização', text: 'Pedidos alinhados à programação das rotas.' },
-          { title: 'Distribuição', text: 'Logística refrigerada e cuidado no transporte.' },
+          { title: 'Curadoria', text: 'Produtos de diferentes\nmarcas e fornecedores.' },
+          { title: 'Organização', text: 'Pedidos alinhados à\nprogramação das rotas.' },
+          { title: 'Distribuição', text: 'Logística refrigerada e\ncuidado no transporte.' },
         ],
       },
       regions: {
         label: 'Regiões atendidas',
         title: 'Estamos *em*\n*movimento* pelo litoral\ncatarinense!',
-        text: 'Atendemos o **litoral de Santa Catarina**, *de Itajaí (extremo norte) a Araranguá (extremo sul)*, com entregas organizadas conforme as rotas de cada região.',
+        text: 'Atendemos o **litoral de Santa Catarina**, *de Itajaí*\n*(extremo norte) a Araranguá (extremo sul)*, com\nentregas organizadas conforme as rotas de cada\nregião.',
         image: banner('Mapa de Santa Catarina destacando o litoral de Itajaí a Araranguá', [logisticsMap1440, logisticsMap960, logisticsMap640]),
       },
       audience: {
         label: 'Para quem distribuímos?',
         title: 'Produtos especiais para *diferentes*\n*operações*.',
-        text: 'Nossa distribuição atende negócios que buscam qualidade, variedade e praticidade no abastecimento.',
+        text: 'Nossa distribuição atende negócios que buscam qualidade,\nvariedade e praticidade no abastecimento.',
         items: [
           { icon: 'utensils', label: 'Restaurantes' },
           { icon: 'building', label: 'Hotéis' },
@@ -353,16 +353,16 @@ export const defaultContent: SiteContent = {
       planning: {
         label: 'Entregas e planejamento',
         title: 'Cada região, uma *rota*\n*planejada*.',
-        text: 'Trabalhamos com dias fixos de entrega, definidos conforme a região atendida. Para facilitar a organização, os pedidos devem ser realizados com pelo menos dois dias de antecedência, respeitando a programação das rotas.',
+        text: 'Trabalhamos com dias fixos de entrega, definidos\nconforme a região atendida. Para facilitar a\norganização, os pedidos devem ser realizados\ncom pelo menos dois dias de antecedência,\nrespeitando a programação das rotas.',
         boxes: [
-          { icon: 'calendar', title: 'Rotas programadas', text: '*Consulte os dias* de entrega disponíveis para a sua região.' },
-          { icon: 'clock', title: 'Pedidos com antecedência', text: 'Planeje seus pedidos com **pelo menos dois dias de antecedência**.' },
+          { icon: 'calendar', title: 'Rotas programadas', text: '*Consulte os dias* de entrega disponíveis\npara a sua região.' },
+          { icon: 'clock', title: 'Pedidos com antecedência', text: 'Planeje seus pedidos com **pelo menos**\n**dois dias de antecedência**.' },
         ],
       },
       banner: {
         label: 'Fale com a Naturee',
         title: 'O próximo destino\npode ser *o seu negócio.*',
-        text: 'Saiba mais sobre regiões atendidas, dias de entrega e disponibilidade de produtos.',
+        text: 'Saiba mais sobre regiões atendidas, dias de entrega e\ndisponibilidade de produtos.',
         image: card('Atendente da Naturee sorrindo com fone de ouvido', [logisticsContact800, logisticsContact480], HALF_SIZES),
         cta: { label: 'Consultar minha região', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de saber se vocês atendem a minha região e os dias de entrega.' },
       },
