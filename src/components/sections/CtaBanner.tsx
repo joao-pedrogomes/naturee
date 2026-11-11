@@ -37,7 +37,7 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
         </SectionLabel>
         <Heading
           text={title}
-          className={cn('mt-4 text-display text-sand', withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium [&_em]:text-teal' : 'lg:mt-[calc(26*var(--u))]')}
+          className={cn('mt-4 text-display text-teal', withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]')}
         />
         {text ? (
           <RichText

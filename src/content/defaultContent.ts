@@ -184,9 +184,9 @@ export const defaultContent: SiteContent = {
       features: {
         label: 'Diferenciais',
         cards: [
-          { title: 'Curadoria', text: 'Seleção de marcas e produtos especiais.', image: card('Mesa com queijos, embutidos, conservas e laticínios selecionados', [featureCuradoria800, featureCuradoria480]) },
-          { title: 'Logística\nRefrigerada', text: 'Cuidado no transporte e no frescor.', image: card('Funcionário organizando caixas dentro de uma câmara refrigerada', [featureLogistica800, featureLogistica480]) },
-          { title: 'Rede\nOrganizada', text: 'Diferentes fornecedores em uma operação.', image: card('Funcionária conferindo estoque com prancheta em um armazém', [featureRede800, featureRede480]) },
+          { title: 'Curadoria', text: 'Seleção de marcas e\nprodutos especiais.', image: card('Mesa com queijos, embutidos, conservas e laticínios selecionados', [featureCuradoria800, featureCuradoria480]) },
+          { title: 'Logística\nRefrigerada', text: 'Cuidado no transporte\ne no frescor.', image: card('Funcionário organizando caixas dentro de uma câmara refrigerada', [featureLogistica800, featureLogistica480]) },
+          { title: 'Rede\nOrganizada', text: 'Diferentes fornecedores\nem uma operação.', image: card('Funcionária conferindo estoque com prancheta em um armazém', [featureRede800, featureRede480]) },
         ],
       },
       brands: {
@@ -247,20 +247,20 @@ export const defaultContent: SiteContent = {
         label: 'Nossa história',
         title: 'Uma história em *movimento*.',
         paragraphs: [
-          'A Naturee nasceu da necessidade de levar os cogumelos do Sítio Pura Vida a diferentes operações gastronômicas. Com o crescimento da distribuição, novos produtores e marcas passaram a fazer parte desse caminho, ampliando a variedade de produtos e as possibilidades de atendimento.',
-          'O que começou como uma solução logística evoluiu para uma rede de curadoria, distribuição e relacionamento. Hoje, a Naturee Food Hub conecta boas origens a negócios gastronômicos por meio de uma operação mais organizada, próxima e especializada.',
+          'A Naturee nasceu da necessidade de levar os cogumelos do Sítio Pura Vida a diferentes\noperações gastronômicas. Com o crescimento da distribuição, novos produtores e\nmarcas passaram a fazer parte desse caminho, ampliando a variedade de produtos e\nas possibilidades de atendimento.',
+          'O que começou como uma solução logística evoluiu para uma rede de curadoria,\ndistribuição e relacionamento. Hoje, a Naturee Food Hub conecta boas origens a\nnegócios gastronômicos por meio de uma operação mais organizada, próxima e\nespecializada.',
         ],
       },
       purpose: {
         label: 'Nosso propósito',
         title: '*Boas* origens merecem\nchegar *mais longe*.',
-        text: 'Nosso propósito é *criar conexões* entre quem produz e quem transforma ingredientes em experiências gastronômicas, valorizando qualidade, frescor e relações de confiança.',
+        text: 'Nosso propósito é *criar conexões* entre quem produz\ne quem transforma ingredientes em experiências\ngastronômicas, valorizando qualidade, frescor e\nrelações de confiança.',
         image: card('Caminhão da Naturee em uma estrada à beira-mar', [aboutPurpose800, aboutPurpose480], HALF_SIZES),
       },
       features: [
-        { title: 'Curadoria', text: 'Seleção de marcas e produtos especiais.', image: card('Mesa com queijos, embutidos, conservas e laticínios selecionados', [featureCuradoria800, featureCuradoria480]) },
-        { title: 'Logística', text: 'Distribuição refrigerada e rotas organizadas.', image: card('Entregador da Naturee fechando a porta do caminhão refrigerado', [featureEntrega800, featureEntrega480]) },
-        { title: 'Relacionamento', text: 'Proximidade com clientes e parceiros.', image: card('Aperto de mãos entre parceiros comerciais', [featureRelacionamento800, featureRelacionamento480]) },
+        { title: 'Curadoria', text: 'Seleção de marcas e\nprodutos especiais.', image: card('Mesa com queijos, embutidos, conservas e laticínios selecionados', [featureCuradoria800, featureCuradoria480]) },
+        { title: 'Logística', text: 'Distribuição refrigerada\ne rotas organizadas.', image: card('Entregador da Naturee fechando a porta do caminhão refrigerado', [featureEntrega800, featureEntrega480]) },
+        { title: 'Relacionamento', text: 'Proximidade com clientes\ne parceiros.', image: card('Aperto de mãos entre parceiros comerciais', [featureRelacionamento800, featureRelacionamento480]) },
       ],
       banner: {
         label: 'Faça parte da nossa rede',

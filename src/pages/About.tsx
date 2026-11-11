@@ -2,6 +2,7 @@ import Container from '@/components/sections/Container'
 import CtaBanner from '@/components/sections/CtaBanner'
 import FeatureCards from '@/components/sections/FeatureCards'
 import Heading from '@/components/sections/Heading'
+import JustifiedLines from '@/components/sections/JustifiedLines'
 import Picture from '@/components/sections/Picture'
 import RichText from '@/components/sections/RichText'
 import SectionLabel from '@/components/sections/SectionLabel'
@@ -55,11 +56,9 @@ function About() {
         <Container className="text-center lg:flex lg:flex-col lg:items-center">
           <SectionLabel>{page.history.label}</SectionLabel>
           <Heading text={page.history.title} className="mt-4 text-title text-teal lg:mt-[calc(37*var(--u))]" />
-          <div className="mx-auto mt-8 max-w-[62ch] space-y-5 lg:mt-[calc(52*var(--u))] lg:max-w-none lg:w-[calc(1160*var(--u))] lg:space-y-[calc(44*var(--u))]">
+          <div className="mx-auto mt-8 max-w-[62ch] space-y-5 lg:mt-[calc(52*var(--u))] lg:max-w-none lg:w-[calc(1150*var(--u))] lg:translate-x-[calc(7*var(--u))] lg:space-y-[calc(44*var(--u))]">
             {page.history.paragraphs.map((paragraph) => (
-              <p key={paragraph} className={`${PARAGRAPH} lg:[text-align-last:center]`}>
-                {paragraph}
-              </p>
+              <JustifiedLines key={paragraph} text={paragraph} lastLine="center" className={PARAGRAPH} />
             ))}
           </div>
         </Container>
@@ -75,7 +74,7 @@ function About() {
             <div className="lg:w-[calc(713*var(--u))] lg:pt-[calc(24*var(--u))]">
               <SectionLabel>{page.purpose.label}</SectionLabel>
               <Heading text={page.purpose.title} className="mt-8 text-display text-teal lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
-              <RichText text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] ${PARAGRAPH} lg:leading-[1.3] [&_em]:font-bold`} />
+              <JustifiedLines text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] ${PARAGRAPH} lg:leading-[1.3] [&_em]:font-bold`} />
             </div>
           </div>
           <div className="mt-16 lg:mt-[calc(153*var(--u))]">
@@ -84,7 +83,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="bg-sand pb-16 pt-16 lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(238*var(--u)),white_0)] lg:pt-[calc(63*var(--u))] lg:pb-[calc(37*var(--u))]">
+      <section className="bg-sand pb-16 pt-16 lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(301*var(--u)),white_0)] lg:pt-[calc(63*var(--u))] lg:pb-[calc(37*var(--u))]">
         <Container>
           <CtaBanner label={page.banner.label} title={page.banner.title} primary={page.banner.primary} secondary={page.banner.secondary} />
         </Container>

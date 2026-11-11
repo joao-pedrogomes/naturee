@@ -2,12 +2,15 @@ import type { ReactNode } from 'react'
 
 const MARKUP_PATTERN = /\*\*([^*]+)\*\*|\*([^*]+)\*/g
 
-/** A newline becomes a <br> that only applies on desktop, to reproduce the artboard's line breaks. */
+/**
+ * A newline becomes a space plus a <br> that only applies on desktop, to reproduce the
+ * artboard's line breaks. The space keeps words apart wherever the <br> is hidden.
+ */
 function withBreaks(text: string, keyPrefix: number): ReactNode[] {
   const lines = text.split('\n')
   return lines.flatMap((line, index) => {
     if (index === 0) return [line]
-    return [<br key={`${keyPrefix}-${index}`} className="hidden lg:inline" />, line]
+    return [' ', <br key={`${keyPrefix}-${index}`} className="hidden lg:inline" />, line]
   })
 }
 

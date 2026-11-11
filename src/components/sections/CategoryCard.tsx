@@ -20,9 +20,9 @@ function CategoryCard({ category, tone }: CategoryCardProps) {
         image={category.image}
         className="aspect-[1.02] w-full rounded-xl object-cover lg:aspect-auto lg:h-[calc(371*var(--u))] lg:rounded-[calc(28*var(--u))]"
       />
-      <div className="flex flex-1 flex-col justify-center">
+      <div className="flex flex-1 flex-col justify-center lg:pl-[calc(14*var(--u))]">
         <Heading as="h3" text={category.name} className="mt-6 text-category text-teal lg:mt-0" />
-        <p className="mt-2 text-body text-sand lg:mt-[calc(12*var(--u))] lg:max-w-[calc(310*var(--u))] lg:leading-[1.13]">{category.blurb}</p>
+        <p className="mt-2 text-body text-sand lg:mt-[calc(12*var(--u))] lg:max-w-[calc(350*var(--u))] lg:leading-[1.13]">{category.blurb}</p>
       </div>
     </li>
   )

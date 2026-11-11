@@ -54,11 +54,11 @@ function Home() {
             {page.ticker.map((item, index) => (
               <li key={item.label} className="flex items-center font-semibold text-lead text-olive">
                 {index > 0 ? (
-                  <span aria-hidden="true" className="hidden text-sand lg:mx-[calc(55*var(--u))] lg:inline lg:text-[length:calc(30*var(--u))]">
+                  <span aria-hidden="true" className="hidden text-sand lg:mx-[calc(55*var(--u))] lg:inline lg:text-[length:calc(22*var(--u))]">
                     •
                   </span>
                 ) : null}
-                <span className="flex items-center gap-3 whitespace-nowrap lg:gap-[calc(14*var(--u))]">
+                <span className="flex items-center gap-3 lg:gap-[calc(14*var(--u))] lg:whitespace-nowrap">
                   <Icon name={item.icon} className="h-6 w-auto lg:h-[calc(40*var(--u))]" />
                   <span>{item.label}</span>
                 </span>
