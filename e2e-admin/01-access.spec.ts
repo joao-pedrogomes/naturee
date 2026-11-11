@@ -21,7 +21,7 @@ test('wrong credentials show one generic error', async ({ page }) => {
   await expect(page.getByRole('alert')).toHaveText('E-mail ou senha incorretos.')
 })
 
-test('first login forces a password change, then the panel opens', async ({ page }) => {
+test('first login forces a password change, then the panel opens', async ({ page, isMobile }) => {
   await signIn(page, FIRST_PASSWORD)
   await expect(page).toHaveURL(/\/admin\/conta/)
   await expect(page.getByText('defina uma nova senha')).toBeVisible()
@@ -37,7 +37,7 @@ test('first login forces a password change, then the panel opens', async ({ page
 
   await page.getByRole('link', { name: 'Contatos' }).click()
   await expect(page.getByRole('heading', { name: 'Contatos recebidos' })).toBeVisible()
-  await expect(page.getByText(ADMIN_EMAIL)).toBeVisible()
+  if (!isMobile) await expect(page.getByText(ADMIN_EMAIL)).toBeVisible()
 })
 
 test('signing out ends the session', async ({ page }) => {

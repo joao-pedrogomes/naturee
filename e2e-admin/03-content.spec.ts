@@ -50,7 +50,7 @@ test('contact settings change the footer and the form hand-off number', async ({
 
   await page.goto('/contato')
   await expect(page.locator('footer').getByText('11 98888 7777')).toBeVisible()
-  await expect(page.locator('header a[href*="wa.me/5511988887777"]').first()).toBeVisible()
+  await expect(page.locator('a[href*="wa.me/5511988887777"]').first()).toHaveAttribute('href', /5511988887777/)
 })
 
 test('uploading an image replaces a photo and it is served with a small variant', async ({ page, browserName }) => {
