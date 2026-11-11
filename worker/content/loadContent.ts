@@ -24,8 +24,8 @@ export function rememberContentVersion(value: string): void {
 }
 
 /** Page caches are keyed by this value, so a publish invalidates every colo without purging. */
-export async function loadContentVersion(env: Env): Promise<string> {
-  if (versionMemo && Date.now() - versionMemo.at < VERSION_MEMO_MS) return versionMemo.value
+export async function loadContentVersion(env: Env, fresh = false): Promise<string> {
+  if (!fresh && versionMemo && Date.now() - versionMemo.at < VERSION_MEMO_MS) return versionMemo.value
   const row = await env.DB.prepare("SELECT value FROM settings WHERE key = 'contentVersion'").first<{ value: string }>()
   const value = row?.value ?? '0'
   rememberContentVersion(value)
