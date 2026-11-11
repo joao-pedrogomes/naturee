@@ -104,7 +104,7 @@ export const defaultContent: SiteContent = {
     instagramUrl: 'https://www.instagram.com/natureealimentos',
     regionLine: REGION_LINE,
     catalogPdfUrl: '/catalogoNaturee.pdf',
-    url: 'https://naturee.com.br',
+    url: 'https://natureefoodhub.com.br',
     ogImage: '/ogDefault.jpg',
   },
   nav: [

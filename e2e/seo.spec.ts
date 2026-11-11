@@ -23,7 +23,7 @@ for (const route of ROUTE_CASES) {
 test('sitemap lists every route and robots is served', async ({ request }) => {
   const sitemap = await (await request.get('/sitemap.xml')).text()
   for (const route of ROUTE_CASES) {
-    expect(sitemap).toContain(`<loc>https://naturee.com.br${route.path === '/' ? '/' : route.path}</loc>`)
+    expect(sitemap).toContain(`<loc>https://natureefoodhub.com.br${route.path === '/' ? '/' : route.path}</loc>`)
   }
   const robots = await request.get('/robots.txt')
   expect(robots.status()).toBe(200)
