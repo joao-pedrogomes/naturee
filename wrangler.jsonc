@@ -21,6 +21,6 @@
   },
   "version_metadata": { "binding": "CF_VERSION" },
   "d1_databases": [
-    { "binding": "DB", "database_name": "naturee", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
+    { "binding": "DB", "database_name": "naturee", "database_id": "d6f467ec-95b8-40a4-9936-4bef9d4f6ae6", "migrations_dir": "migrations" }
   ]
 }
