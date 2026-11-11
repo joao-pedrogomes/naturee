@@ -29,7 +29,7 @@ function Home() {
 
       <section className="relative isolate overflow-hidden bg-teal text-sand lg:h-[calc(949*var(--u))]">
         <Picture image={page.hero.image} priority className="absolute inset-0 -z-10 h-full w-full object-cover object-[70%_center] lg:object-[43%_center]" />
-        <div className="absolute inset-0 -z-10 bg-linear-to-r from-black/45 via-black/15 to-transparent lg:hidden" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-black/55 lg:hidden" aria-hidden="true" />
         <Container className="pt-36 pb-14 lg:pt-[calc(336*var(--u))] lg:pb-0">
           <div className="max-w-[24rem] lg:max-w-none">
             <Heading
