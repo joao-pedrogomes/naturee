@@ -21,7 +21,7 @@ function SiteHeader() {
     <header
       className={cn(
         'z-30 w-full text-sand lg:h-[calc(306*var(--u))]',
-        overlaysHero ? 'absolute inset-x-0 top-0 bg-linear-to-b from-black/60 to-transparent' : 'bg-teal',
+        overlaysHero ? 'absolute inset-x-0 top-0 bg-linear-to-b from-black/60 to-transparent' : 'bg-teal shadow-[0_1px_0_0_var(--teal)]',
       )}
     >
       <div className="relative flex h-full min-h-20 items-center justify-between px-4 py-3 sm:px-6 lg:py-0 lg:pr-[calc(129*var(--u))] lg:pl-[calc(231*var(--u))]">

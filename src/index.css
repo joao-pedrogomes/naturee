@@ -6,6 +6,9 @@
 @import "@fontsource-variable/mulish";
 @import "@fontsource-variable/mulish/wght-italic.css";
 
+/* Single light theme: without this, `dark:` utilities follow the visitor's OS setting. */
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --font-heading: 'Playfair Display Variable', Georgia, serif;
   --font-sans: 'Mulish Variable', system-ui, sans-serif;

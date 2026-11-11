@@ -18,7 +18,7 @@ function SiteFooter() {
   const links = footerLinks.filter((link) => link.enabled)
 
   return (
-    <footer className="bg-teal text-sand">
+    <footer className="bg-teal text-sand shadow-[0_-1px_0_0_var(--teal)]">
       <div className="container-site py-14 lg:w-full lg:pt-[calc(52*var(--u))] lg:pb-[calc(93*var(--u))]">
         <TrustStrip items={trust} />
 
