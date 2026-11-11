@@ -42,22 +42,22 @@ function Home() {
               {page.hero.text}
             </p>
             <div className="mt-8 flex flex-wrap gap-3 lg:mt-[calc(58*var(--u))] lg:gap-[calc(15*var(--u))]">
-              <CtaLink cta={page.hero.primary} variant="teal" icon="catalog" size="sm" className="lg:w-[calc(255*var(--u))]" />
-              <CtaLink cta={page.hero.secondary} variant="outlineCream" size="sm" className="border-2 lg:w-[calc(255*var(--u))]" />
+              <CtaLink cta={page.hero.primary} variant="teal" icon="catalog" size="sm" className="lg:px-[calc(40*var(--u))]" />
+              <CtaLink cta={page.hero.secondary} variant="outlineCream" size="sm" className="border-2 lg:px-[calc(40*var(--u))]" />
             </div>
           </div>
         </Container>
       </section>
 
-      <section aria-label="Diferenciais em destaque" className="bg-teal py-4 lg:flex lg:h-[calc(84*var(--u))] lg:items-center lg:py-0">
+      <section aria-label="Diferenciais em destaque" className="bg-teal py-2.5 lg:flex lg:h-[calc(56*var(--u))] lg:items-center lg:py-0">
         <Marquee>
           {page.ticker.map((item) => (
-            <li key={item.label} className="flex items-center font-semibold text-lead text-olive">
+            <li key={item.label} className="flex items-center text-[0.8rem] font-semibold text-olive">
               <span className="flex items-center gap-3 whitespace-nowrap lg:gap-[calc(14*var(--u))]">
-                <Icon name={item.icon} className="h-6 w-auto lg:h-[calc(40*var(--u))]" />
+                <Icon name={item.icon} className="h-4 w-auto" />
                 <span>{item.label}</span>
               </span>
-              <span aria-hidden="true" className="mx-8 text-sand lg:mx-[calc(55*var(--u))] lg:text-[length:calc(22*var(--u))]">
+              <span aria-hidden="true" className="mx-6 text-sand lg:mx-[calc(48*var(--u))]">
                 •
               </span>
             </li>
