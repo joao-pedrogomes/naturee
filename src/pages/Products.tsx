@@ -8,6 +8,7 @@ import Picture from '@/components/sections/Picture'
 import SectionLabel from '@/components/sections/SectionLabel'
 import Seo from '@/components/seo/Seo'
 import { usePage, useSiteContent } from '@/content/siteContent'
+import { renderRichText } from '@/lib/richText'
 import { pathFor } from '@/routes'
 
 const CARD_TONES = ['dark', 'light', 'dark', 'light', 'dark', 'light'] as const
@@ -28,7 +29,7 @@ function Products() {
         <div className="flex flex-col justify-start px-4 py-12 sm:px-6 lg:py-0 lg:pt-[calc(125*var(--u))] lg:pr-0 lg:pl-[calc(111*var(--u))]">
           <Heading as="h1" text={page.hero.title} className="text-display text-teal lg:leading-[0.935]" />
           <p className={`mt-6 max-w-[42ch] text-sand lg:mt-[calc(11*var(--u))] lg:max-w-[calc(640*var(--u))] lg:text-[length:clamp(1rem,calc(30*var(--u)),3.5rem)] lg:leading-[1.17]`}>
-            {page.hero.text}
+            {renderRichText(page.hero.text)}
           </p>
           <div className="mt-8 lg:mt-[calc(40*var(--u))]">
             <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" className="lg:w-[calc(255*var(--u))]" />
@@ -64,7 +65,7 @@ function Products() {
             <div className="flex-1">
               <SectionLabel className="lg:text-[length:calc(17*var(--u))]">{page.brands.partner.label}</SectionLabel>
               <Heading as="h3" text={page.brands.partner.title} className="mt-2 text-card-title text-teal lg:mt-[calc(6*var(--u))] lg:text-[length:calc(31*var(--u))]" />
-              <p className="mt-1 text-small text-black lg:mt-[calc(10*var(--u))] lg:text-[length:calc(17*var(--u))]">{page.brands.partner.text}</p>
+              <p className="mt-1 text-small text-black lg:mt-[calc(10*var(--u))] lg:text-[length:calc(17*var(--u))]">{renderRichText(page.brands.partner.text)}</p>
             </div>
             <CtaLink cta={page.brands.partner.cta} variant="teal" icon="arrow" size="sm" className="normal-case lg:mt-[calc(40*var(--u))] lg:h-[calc(44*var(--u))] lg:w-[calc(250*var(--u))] lg:text-[length:calc(21*var(--u))]" />
           </div>
@@ -78,7 +79,7 @@ function Products() {
             <div className="lg:ml-[calc(2*var(--u))] lg:pt-[calc(44*var(--u))]">
               <SectionLabel>{page.catalog.label}</SectionLabel>
               <Heading text={page.catalog.title} className="mt-8 text-display text-teal lg:mt-[calc(64*var(--u))] lg:leading-[0.935]" />
-              <p className={`mt-5 ${PARAGRAPH} lg:mt-[calc(25*var(--u))] lg:max-w-[calc(690*var(--u))]`}>{page.catalog.text}</p>
+              <p className={`mt-5 ${PARAGRAPH} lg:mt-[calc(25*var(--u))] lg:max-w-[calc(690*var(--u))]`}>{renderRichText(page.catalog.text)}</p>
               <div className="mt-8 lg:mt-[calc(25*var(--u))]">
                 <CtaLink cta={page.catalog.cta} variant="olive" icon="download" size="lg" className="lg:h-[calc(66*var(--u))] lg:w-[calc(322*var(--u))]" />
               </div>

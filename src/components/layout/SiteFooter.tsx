@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
+import { holdLine } from '@/lib/layout'
 import { renderRichText } from '@/lib/richText'
 import TrustStrip from '@/components/sections/TrustStrip'
-import { useSiteContent } from '@/content/siteContent'
+import { useSiteContent, visibleLinks } from '@/content/siteContent'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import footerLogo from '@/assets/logos/natureeFooter.svg'
 import footerInstagram from '@/assets/icons/footerInstagram.svg'
@@ -13,9 +14,21 @@ const CONTACT_LINK =
 const FOOTER_HEADING =
   'font-sans text-[1.0625rem] font-medium tracking-wide text-olive uppercase lg:text-[length:clamp(1.0625rem,calc(25*var(--u)),2.75rem)] lg:font-normal lg:tracking-normal'
 
+/** Bolds everything after the first space, whatever format the editor typed. */
+function areaCode(label: string): string {
+  const space = label.indexOf(' ')
+  return space === -1 ? '' : label.slice(0, space)
+}
+
+function localNumber(label: string): string {
+  const space = label.indexOf(' ')
+  return space === -1 ? label : label.slice(space + 1)
+}
+
 function SiteFooter() {
-  const { site, footer, footerLinks, trust } = useSiteContent()
-  const links = footerLinks.filter((link) => link.enabled)
+  const content = useSiteContent()
+  const { site, footer, footerLinks, trust } = content
+  const links = visibleLinks(content, footerLinks)
 
   return (
     <footer className="bg-teal text-sand shadow-[0_-1px_0_0_var(--teal)]">
@@ -32,7 +45,7 @@ function SiteFooter() {
               loading="lazy"
               className="h-[5.75rem] w-auto lg:h-[calc(135*var(--u))]"
             />
-            <p className="mt-6 max-w-[16rem] font-light text-foot text-sand lg:mt-[calc(35*var(--u))] lg:max-w-none lg:whitespace-nowrap lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]">
+            <p className={`mt-6 max-w-[16rem] font-light text-foot text-sand lg:mt-[calc(35*var(--u))] lg:max-w-none ${holdLine(site.tagline)} lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]`}>
               {renderRichText(site.tagline)}
             </p>
           </div>
@@ -60,7 +73,7 @@ function SiteFooter() {
                 <a href={buildWhatsAppUrl(site.whatsapp)} target="_blank" rel="noopener" className={CONTACT_LINK}>
                   <img src={footerWhatsapp} alt="" aria-hidden="true" className="size-[1.1em] lg:size-[calc(20*var(--u))]" />
                   <span className="text-foot">
-                    {site.whatsappLabel.slice(0, 2)} <strong className="font-bold">{site.whatsappLabel.slice(3)}</strong>
+                    {areaCode(site.whatsappLabel)} <strong className="font-bold">{localNumber(site.whatsappLabel)}</strong>
                     <span className="sr-only"> (WhatsApp)</span>
                   </span>
                 </a>

@@ -20,11 +20,19 @@ import { buildWhatsAppUrl } from '@/lib/whatsapp'
 
 type FormStatus = 'idle' | 'submitting' | 'done'
 
+/** The backend lives on the Worker host only; subpath builds (GitHub Pages) have none. */
+const CONTACT_API_URL = import.meta.env.BASE_URL === '/' ? '/api/contact' : undefined
+
 const INPUT_CLASS =
   'h-14 rounded-xl border-0 bg-sand px-5 text-base text-teal shadow-none placeholder:text-[#a9a995] focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white md:text-base lg:h-[calc(81*var(--u))] lg:rounded-[calc(14*var(--u))] lg:px-[calc(27*var(--u))] lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)] md:lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)]'
 
 function firstInvalid(errors: ContactErrors): ContactFieldKey | undefined {
   return CONTACT_FIELD_ORDER.find((key) => errors[key] !== undefined)
+}
+
+function honeypotValue(form: HTMLFormElement | null): string {
+  const field = form?.elements.namedItem('website')
+  return field instanceof HTMLInputElement ? field.value : ''
 }
 
 function openWhatsApp(url: string): void {
@@ -35,6 +43,7 @@ function ContactForm() {
   const { site, pages } = useSiteContent()
   const copy = pages.contact.form
   const formRef = useRef<HTMLFormElement>(null)
+  const mountedAt = useRef(Date.now())
   const [fields, setFields] = useState<ContactFields>(EMPTY_CONTACT)
   const [errors, setErrors] = useState<ContactErrors>({})
   const [status, setStatus] = useState<FormStatus>('idle')
@@ -63,10 +72,14 @@ function ContactForm() {
     }
 
     setStatus('submitting')
-    const result = await submitContact(fields, { apiUrl: import.meta.env.VITE_CONTACT_API_URL })
+    const result = await submitContact(fields, {
+      apiUrl: import.meta.env.VITE_CONTACT_API_URL ?? CONTACT_API_URL,
+      honeypot: honeypotValue(formRef.current),
+      elapsedMs: Date.now() - mountedAt.current,
+    })
     setApiFailed(result.status === 'failed')
 
-    const url = buildWhatsAppUrl(site.whatsapp, buildContactMessage(fields))
+    const url = buildWhatsAppUrl(site.formWhatsapp || site.whatsapp, buildContactMessage(fields))
     setWhatsappUrl(url)
     openWhatsApp(url)
     setStatus('done')
@@ -99,6 +112,9 @@ function ContactForm() {
   return (
     <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 lg:gap-[calc(31*var(--u))]">
       <Heading as="h2" text={copy.title} className="text-display text-sand lg:mb-[calc(10*var(--u))] lg:ml-[calc(24*var(--u))] lg:leading-[0.935] [&_em]:font-medium" />
+      <div inert className="sr-only">
+        <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" aria-hidden="true" />
+      </div>
       {hasErrors ? (
         <p role="alert" className="rounded-xl bg-teal/40 px-4 py-3 text-small font-semibold text-white">
           {copy.errors.summary}

@@ -1,6 +1,7 @@
 import Heading from '@/components/sections/Heading'
 import Picture from '@/components/sections/Picture'
 import type { Category } from '@/content/types'
+import { renderRichText } from '@/lib/richText'
 import { cn } from '@/lib/utils'
 
 type CategoryCardProps = {
@@ -22,7 +23,7 @@ function CategoryCard({ category, tone }: CategoryCardProps) {
       />
       <div className="flex flex-1 flex-col justify-center lg:pl-[calc(14*var(--u))]">
         <Heading as="h3" text={category.name} className="mt-6 text-category text-teal lg:mt-0" />
-        <p className="mt-2 text-body text-sand lg:mt-[calc(12*var(--u))] lg:max-w-[calc(350*var(--u))] lg:leading-[1.13]">{category.blurb}</p>
+        <p className="mt-2 text-body text-sand lg:mt-[calc(12*var(--u))] lg:max-w-[calc(350*var(--u))] lg:leading-[1.13]">{renderRichText(category.blurb)}</p>
       </div>
     </li>
   )

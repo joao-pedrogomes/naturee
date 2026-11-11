@@ -45,7 +45,8 @@ describe('ContactForm', () => {
     expect(screen.getByText('Informe um e-mail válido.')).toBeInTheDocument()
   })
 
-  it('opens WhatsApp with the message and shows the success state without an API', async () => {
+  it('opens WhatsApp with the message and shows the success state once the lead is saved', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201 }))
     const user = userEvent.setup()
     const open = vi.spyOn(window, 'open').mockImplementation(() => null)
     renderForm()

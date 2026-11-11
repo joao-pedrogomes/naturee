@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import SiteLayout from '@/components/layout/SiteLayout'
 import PageGate from '@/components/pages/PageGate'
@@ -10,6 +11,8 @@ import NotFound from '@/pages/NotFound'
 import Products from '@/pages/Products'
 import { ROUTES } from '@/routes'
 
+const AdminApp = lazy(() => import('@/admin/AdminApp'))
+
 const PAGES: Record<PageKey, () => React.JSX.Element> = {
   home: Home,
   about: About,
@@ -21,6 +24,14 @@ const PAGES: Record<PageKey, () => React.JSX.Element> = {
 function App() {
   return (
     <Routes>
+      <Route
+        path="/admin/*"
+        element={
+          <Suspense fallback={null}>
+            <AdminApp />
+          </Suspense>
+        }
+      />
       <Route element={<SiteLayout />}>
         {ROUTES.map((route) => {
           const Page = PAGES[route.key]

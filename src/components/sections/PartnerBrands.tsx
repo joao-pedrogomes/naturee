@@ -21,6 +21,8 @@ function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
   return (
     <img
       src={brand.logo.src}
+      srcSet={brand.logo.srcSet}
+      sizes="(min-width: 1024px) 20vw, 50vw"
       alt={brand.logo.alt}
       width={brand.logo.width}
       height={brand.logo.height}
@@ -28,7 +30,7 @@ function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
       decoding="async"
       style={style}
       className={cn(
-        'h-16 w-auto max-w-full object-contain sm:h-20 lg:h-[calc(var(--h)*var(--u)*var(--k,1.04))] lg:w-[calc(var(--w)*var(--u)*var(--k,1.04))]',
+        'h-16 w-auto max-w-full object-contain sm:h-20 lg:h-[calc(var(--h)*var(--u)*var(--k,1.04))] lg:w-[calc(var(--w)*var(--u)*var(--k,1.04))] lg:max-h-[calc(180*var(--u))] lg:max-w-[calc(420*var(--u))]',
         className,
       )}
     />

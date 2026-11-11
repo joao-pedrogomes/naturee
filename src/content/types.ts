@@ -53,6 +53,7 @@ export type SiteInfo = {
   tagline: string
   whatsapp: string
   whatsappLabel: string
+  formWhatsapp: string
   whatsappCta: string
   email: string
   instagram: string

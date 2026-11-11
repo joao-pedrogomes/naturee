@@ -5,11 +5,12 @@ import App from '@/App'
 import AppProviders from '@/AppProviders'
 import { defaultContent } from '@/content/defaultContent'
 import { enabledRoutes } from '@/content/siteContent'
+import type { SiteContent } from '@/content/types'
 
-export function render(url: string): string {
+export function render(url: string, content: SiteContent = defaultContent): string {
   return renderToString(
     <StrictMode>
-      <AppProviders>
+      <AppProviders content={content}>
         <StaticRouter location={url}>
           <App />
         </StaticRouter>
@@ -23,3 +24,5 @@ export function routesToPrerender(): string[] {
 }
 
 export const siteUrl = defaultContent.site.url
+
+export { defaultContent, enabledRoutes }

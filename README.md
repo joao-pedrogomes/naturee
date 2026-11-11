@@ -10,6 +10,7 @@ Institutional site for Naturee Food Hub, built from the client's PDF wireframe
 - shadcn/ui primitives kept to `input`, `textarea`, `label`, `sheet`
 - Playfair Display (headings) and Mulish (body) via `@fontsource-variable`
 - Vitest + Testing Library for unit tests, Playwright + axe for end-to-end
+- Cloudflare Worker + D1 (SQLite) behind the site: lead capture, admin dashboard, editable content
 
 ## Scripts
 
@@ -21,6 +22,12 @@ Institutional site for Naturee Food Hub, built from the client's PDF wireframe
 | `npm test` | Unit tests |
 | `npm run e2e` | Playwright on Chromium, Firefox, WebKit, Pixel 7 and iPhone 14 (needs `npx playwright install`) |
 | `npm run lint` | oxlint |
+| `npm run dev:worker` | Build, migrate the local D1 and run the Worker on :8787 (`wrangler dev`) |
+| `npm run db:local` | Apply `migrations/` to the local D1 |
+| `npm run seed:admin -- <email> [--remote]` | Create or reset an admin; random password saved to `~/.naturee_admin_password` (mode 600) |
+| `npm run e2e:admin` | Admin and API end-to-end against `wrangler dev` with a throwaway D1 |
+| `npm run typecheck:worker` | Typecheck `worker/` |
+| `npm run deploy` | Build and `wrangler deploy` (production, needs `CLOUDFLARE_API_TOKEN`) |
 | `npm run images` | Regenerate optimized webp variants from `plan-assets/Site/` with sharp |
 
 ## How the site is put together
@@ -59,16 +66,42 @@ image has width, height, alt text and `srcset`; only the hero loads eagerly.
 
 ### Contact form
 
-Validates on the client, then calls `POST $VITE_CONTACT_API_URL` when that variable is
-set, and always opens WhatsApp with the message prefilled. Without the variable the API
-step is skipped. See `src/lib/contact.ts`.
+Validates on the client, posts to `/api/contact` (override with `VITE_CONTACT_API_URL`) and always
+opens WhatsApp with the message prefilled, even when the API fails. See `src/lib/contact.ts`.
+
+## Backend (Cloudflare Worker + D1)
+
+One Worker (`worker/index.ts`) serves the static assets and the dynamic routes. Only the page
+routes, `/sitemap.xml`, `/admin/*`, `/api/*` and `/media/*` run through it (`run_worker_first`
+in `wrangler.jsonc`); JS, CSS, fonts and images are served straight from assets.
+
+- **Public pages** are server-rendered per request from `defaultContent` plus the overrides stored in D1,
+  using the same SSR bundle the prerender uses (`dist-ssr/entryServer.js`, imported as `@ssr`).
+  The result is cached in the edge cache per Worker version and content version, so a publish
+  invalidates it without purging. Any failure falls back to the prerendered static page.
+- **Content model:** the admin never stores a full copy. D1 `content_overrides` holds only edited leaves
+  (`pages.home.hero.title`, image references, flags); `applyOverrides` merges them over the defaults
+  (`src/content/overrides.ts`). New builds with new asset hashes keep working.
+- **Leads:** `POST /api/contact` validates, rejects honeypot/too-fast posts silently, rate limits per IP,
+  stores the lead and, when enabled in settings and `RESEND_API_KEY` is set, emails the company.
+  The site then still opens WhatsApp with the prefilled message.
+- **Admin:** `/admin` (noindex, strict CSP). PBKDF2-SHA256 hashes, hashed session tokens in D1, `__Host-`
+  HttpOnly SameSite=Strict cookie, Origin check on every write, login throttling, forced password change
+  after seeding. The panel code is a separate lazy chunk and does not load on public pages.
+- **Images** are resized to WebP in the browser (1440 px and 720 px) and stored as D1 blobs, served
+  from `/media/<id>` with immutable caching. No R2 bucket, so no payment method is needed.
+- **Limits worth knowing:** workerd caps PBKDF2 at 100,000 iterations; the free plan allows 10 ms of CPU
+  per request, so rendering happens only on cache misses.
+
+Secrets are never in the repo: `RESEND_API_KEY` and `IP_PEPPER` are set with `wrangler secret put`,
+and the Cloudflare token is read from `~/.ssh/naturee_cloudflare_token`.
 
 ## Environment variables
 
 | Variable | Purpose |
 |---|---|
 | `VITE_BASE` | Base path for a subpath deploy (GitHub Pages uses `/naturee/`) |
-| `VITE_CONTACT_API_URL` | Contact endpoint; unset means WhatsApp only |
+| `VITE_CONTACT_API_URL` | Contact endpoint; defaults to `/api/contact` |
 
 ## Conventions
 

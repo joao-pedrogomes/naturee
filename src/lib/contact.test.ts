@@ -64,6 +64,7 @@ describe('submitContact', () => {
       assunto: 'Parceria',
       mensagem: 'Quero conhecer os produtos.',
       origem: 'site',
+      website: '',
     })
   })
 
@@ -72,5 +73,15 @@ describe('submitContact', () => {
     await expect(submitContact(valid, { apiUrl: '/api', fetchFn: bad })).resolves.toEqual({ status: 'failed' })
     const thrown = vi.fn().mockRejectedValue(new Error('offline'))
     await expect(submitContact(valid, { apiUrl: '/api', fetchFn: thrown })).resolves.toEqual({ status: 'failed' })
+  })
+})
+
+describe('submitContact anti-spam fields', () => {
+  it('forwards the honeypot value and the fill time', async () => {
+    const fetchFn = vi.fn().mockResolvedValue({ ok: true, status: 201 })
+    await submitContact(valid, { apiUrl: '/api/contact', fetchFn, honeypot: 'bot', elapsedMs: 4200 })
+    const body = JSON.parse(fetchFn.mock.calls[0][1].body)
+    expect(body.website).toBe('bot')
+    expect(body.elapsedMs).toBe(4200)
   })
 })
