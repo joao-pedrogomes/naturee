@@ -15,7 +15,7 @@ export const SMALL_IMAGE_WIDTH = 720
 
 const SKIPPED_KEYS = new Set(['id', 'ids', 'icon', 'url', 'ogImage'])
 /** Editable in the data model but never shown on the site, so the admin would mislead. */
-const SKIPPED_PATH = /^(site\.email|brands\.\d+\.name)$/
+const SKIPPED_PATH = /^brands\.\d+\.name$/
 export const MAX_ALT_LENGTH = 300
 
 function isImage(value: unknown): value is Image {
@@ -116,11 +116,14 @@ export function imageFromOverride(override: MediaImageOverride, current: Image):
 
 const LINK_PATH = /(^|\.)(href|instagramUrl|catalogPdfUrl)$/
 const SAFE_LINK = /^(\/(?!\/)|#|https?:\/\/|mailto:|tel:)/i
+const EMAIL_PATH = /^site\.email$/
+const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const PHONE_PATH = /^site\.(whatsapp|formWhatsapp)$/
 
 function textProblem(path: string, value: string): string | null {
   if (value.length > MAX_TEXT_LENGTH) return 'text_too_long'
   if (LINK_PATH.test(path) && !SAFE_LINK.test(value.trim())) return 'unsafe_link'
+  if (EMAIL_PATH.test(path) && !EMAIL_SHAPE.test(value.trim())) return 'invalid_email'
   if (PHONE_PATH.test(path) && !/^\d{10,13}$/.test(value.replace(/\D/g, ''))) return 'invalid_phone'
   return null
 }

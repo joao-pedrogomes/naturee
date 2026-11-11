@@ -38,7 +38,7 @@ function Home() {
             <Heading
               as="h1"
               text={page.hero.title}
-              className="font-normal text-display text-sand lg:leading-[0.935] [&_em]:font-semibold [&_strong]:text-olive-bright [&_strong]:font-semibold"
+              className="font-normal text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-sand lg:leading-[0.935] [&_em]:font-semibold [&_strong]:text-olive-bright [&_strong]:font-semibold"
             />
             <p className="mt-6 text-body text-sand lg:mt-[calc(29*var(--u))] lg:max-w-[calc(500*var(--u))] lg:leading-[1.17]">
               {renderRichText(page.hero.text)}
@@ -67,12 +67,12 @@ function Home() {
         </Marquee>
       </section>
 
-      <section className="py-16 lg:pt-[calc(77*var(--u))] lg:pb-[calc(118*var(--u))]">
+      <section className="py-16 lg:pt-[calc(118*var(--u))] lg:pb-[calc(118*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             <div>
               <SectionLabel className="lg:leading-[1.3]">{page.about.label}</SectionLabel>
-              <Heading text={page.about.title} className="mt-5 text-title text-teal lg:mt-[calc(43*var(--u))] lg:leading-[0.985]" />
+              <Heading text={page.about.title} className="mt-5 text-[length:clamp(1.8rem,calc(62.1*var(--u)),7.2rem)] leading-[1.02] text-teal lg:mt-[calc(43*var(--u))] lg:leading-[0.985]" />
               <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
                 {page.about.paragraphs.map((paragraph) => (
                   <RichText key={paragraph} text={paragraph} className={PARAGRAPH} />
@@ -90,7 +90,7 @@ function Home() {
         </Container>
       </section>
 
-      <section className="pb-16 lg:pb-[calc(186*var(--u))]">
+      <section className="pb-16 lg:pb-[calc(156*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.features.label}</SectionLabel>
           <div className="mt-10 lg:mt-[calc(73*var(--u))]">
@@ -99,10 +99,10 @@ function Home() {
         </Container>
       </section>
 
-      <section className="pb-16 lg:pb-[calc(31*var(--u))]">
+      <section className="pb-16 lg:pb-[calc(62*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.brands.label}</SectionLabel>
-          <Heading text={page.brands.title} className="mx-auto mt-4 max-w-[22ch] text-center text-title text-teal lg:mt-[calc(18*var(--u))] lg:max-w-none lg:leading-[1.02]" />
+          <Heading text={page.brands.title} className="mx-auto mt-4 max-w-[22ch] text-center text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none lg:leading-[1.02]" />
           <div className="mt-10 lg:mt-[calc(78*var(--u))]">
             <PartnerBrands brands={brands} layout="carousel" />
           </div>
@@ -113,7 +113,7 @@ function Home() {
         <Container>
           <SectionLabel>{page.categories.label}</SectionLabel>
           <Heading text={page.categories.title} className="mt-3 text-title text-teal lg:mt-[calc(18*var(--u))]" />
-          <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:mx-auto lg:mt-[calc(68*var(--u))] lg:w-[calc(1638*var(--u))] lg:grid-cols-3 lg:justify-items-center lg:gap-0">
+          <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:mt-[calc(68*var(--u))] lg:w-[calc(1638*var(--u))] lg:grid-cols-3 lg:justify-items-center lg:gap-0">
             {highlighted.map((category) => (
               <HighlightCard key={category.id} category={category} label="Categoria" />
             ))}
@@ -125,8 +125,8 @@ function Home() {
       </section>
 
       <section className="py-16 lg:pt-[calc(88*var(--u))] lg:pb-[calc(70*var(--u))]">
-        <div className="container-site lg:w-full lg:pr-0 lg:pl-[calc(228*var(--u))]">
-          <div className="grid items-start gap-10 lg:grid-cols-[calc(668*var(--u))_calc(697*var(--u))] lg:gap-[calc(96*var(--u))]">
+        <Container>
+          <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             <Picture
               image={page.logistics.image}
               className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(499*var(--u))] lg:rounded-[calc(36*var(--u))]"
@@ -140,19 +140,19 @@ function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section>
         <div className="mx-auto w-full bg-sand px-4 py-12 sm:px-6 lg:w-[calc(1662*var(--u))] lg:px-0 lg:py-0 lg:h-[calc(710*var(--u))]">
           <div className="grid gap-10 lg:h-full lg:grid-cols-[calc(759*var(--u))_calc(702*var(--u))] lg:gap-0 lg:pl-[calc(104*var(--u))]">
             <div className="lg:pt-[calc(84*var(--u))]">
-              <SectionLabel>{page.closing.label}</SectionLabel>
-              <Heading text={page.closing.title} className="mt-5 text-display text-teal lg:mt-[calc(41*var(--u))] lg:leading-[1.01]" />
-              <p className={`mt-4 lg:mt-[calc(10*var(--u))] lg:max-w-[calc(720*var(--u))] ${PARAGRAPH} lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
+              <SectionLabel className="text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase">{page.closing.label}</SectionLabel>
+              <Heading text={page.closing.title} className="mt-5 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(41*var(--u))] lg:leading-[1.01]" />
+              <p className={`mt-4 lg:mt-[calc(30*var(--u))] lg:max-w-[calc(648*var(--u))] ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
               <ul className="mt-6 space-y-3 lg:mt-[calc(26*var(--u))] lg:space-y-[calc(18*var(--u))]">
                 {page.closing.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-3 font-semibold text-body text-olive lg:gap-[calc(14*var(--u))]">
+                  <li key={bullet} className="flex items-center gap-3 font-semibold text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
                     <Icon name="circleCheck" className="size-5 shrink-0 lg:size-[calc(32*var(--u))]" />
                     <span>{renderRichText(bullet)}</span>
                   </li>

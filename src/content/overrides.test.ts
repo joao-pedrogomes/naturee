@@ -27,9 +27,9 @@ describe('flattenEditable', () => {
     expect(paths).not.toContain('site.ogImage')
   })
 
-  it('does not offer fields that are never rendered', () => {
+  it('only offers fields the site renders', () => {
     const paths = fields.map((field) => field.path)
-    expect(paths).not.toContain('site.email')
+    expect(paths).toContain('site.email')
     expect(paths.some((path) => /^brands\.\d+\.name$/.test(path))).toBe(false)
   })
 
@@ -96,6 +96,7 @@ describe('validateOverride', () => {
     expect(validateOverride(fields, 'site.whatsapp', '48 99196-3383')).toBeNull()
     expect(validateOverride(fields, 'site.whatsapp', '123')).toBe('invalid_phone')
     expect(validateOverride(fields, 'site.formWhatsapp', 'abc')).toBe('invalid_phone')
-    expect(validateOverride(fields, 'site.email', 'a@b.com')).toBe('unknown_field')
+    expect(validateOverride(fields, 'site.email', 'a@b.com')).toBeNull()
+    expect(validateOverride(fields, 'site.email', 'sem arroba')).toBe('invalid_email')
   })
 })

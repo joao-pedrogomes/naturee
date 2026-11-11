@@ -175,6 +175,7 @@ export const copy = {
   fieldErrors: {
     text_too_long: 'Texto longo demais.',
     unsafe_link: 'Use um endereço que comece com /, # ou https://.',
+    invalid_email: 'Informe um e-mail válido, por exemplo contato@empresa.com.br.',
     invalid_phone: 'Informe um número com DDD, por exemplo 48 99999 0000.',
     unknown_field: 'Este campo não existe mais.',
     unknown_media: 'A imagem escolhida não existe mais.',

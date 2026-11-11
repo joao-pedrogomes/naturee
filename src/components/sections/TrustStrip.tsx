@@ -13,10 +13,10 @@ function TrustStrip({ items }: TrustStripProps) {
       {items.map((item) => (
         <li
           key={item.title}
-          className="flex flex-col items-center border-b border-olive pb-7 text-center lg:pb-[calc(42*var(--u))]"
+          className="flex min-w-0 flex-col items-center border-b border-olive pb-7 text-center lg:pb-[calc(42*var(--u))]"
         >
           <Icon name={item.icon} className="size-7 text-sand lg:size-[calc(36*var(--u))]" />
-          <h3 className="mt-3 font-sans text-[1.0625rem] font-extrabold text-sand lg:mt-[calc(22*var(--u))] lg:text-[length:clamp(1.0625rem,calc(25*var(--u)),2.75rem)]">
+          <h3 className={`mt-3 font-sans text-[1.0625rem] font-extrabold text-sand lg:mt-[calc(22*var(--u))] lg:text-[length:clamp(1.0625rem,calc(25*var(--u)),2.75rem)] ${holdLine(item.title)}`}>
             {item.title}
           </h3>
           <p className={`mt-1 max-w-[16rem] text-foot text-sand lg:mt-[calc(8*var(--u))] lg:max-w-none ${holdLine(item.text)}`}>{renderRichText(item.text)}</p>

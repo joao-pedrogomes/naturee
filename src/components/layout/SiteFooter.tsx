@@ -5,6 +5,7 @@ import TrustStrip from '@/components/sections/TrustStrip'
 import { useSiteContent, visibleLinks } from '@/content/siteContent'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import footerLogo from '@/assets/logos/natureeFooter.svg'
+import footerMail from '@/assets/icons/footerMail.svg'
 import footerInstagram from '@/assets/icons/footerInstagram.svg'
 import footerPin from '@/assets/icons/footerPin.svg'
 import footerWhatsapp from '@/assets/icons/footerWhatsapp.svg'
@@ -35,7 +36,7 @@ function SiteFooter() {
       <div className="container-site py-14 lg:w-full lg:pt-[calc(52*var(--u))] lg:pb-[calc(93*var(--u))]">
         <TrustStrip items={trust} />
 
-        <div className="mt-14 grid gap-12 lg:mt-[calc(67*var(--u))] lg:ml-[calc(239*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
+        <div className="mt-14 grid gap-12 lg:mt-[calc(67*var(--u))] lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
           <div>
             <img
               src={footerLogo}
@@ -80,7 +81,7 @@ function SiteFooter() {
               </li>
               <li className="flex min-h-11 items-start gap-3 py-2 text-sand lg:min-h-0 lg:gap-[calc(14*var(--u))] lg:py-0">
                 <img src={footerPin} alt="" aria-hidden="true" className="mt-0.5 size-[1.1em] shrink-0 lg:size-[calc(20*var(--u))]" />
-                <span className="text-foot font-medium text-[#e9e3ba] lg:max-w-[calc(290*var(--u))]">{site.regionLine}</span>
+                <span className="text-foot font-medium text-[#e9e3ba] lg:w-max lg:max-w-[max(calc(340*var(--u)),17rem)] lg:shrink-0">{site.regionLine}</span>
               </li>
               <li>
                 <a href={site.instagramUrl} target="_blank" rel="noopener" className={CONTACT_LINK}>
@@ -91,6 +92,17 @@ function SiteFooter() {
                   </span>
                 </a>
               </li>
+              {site.email ? (
+                <li>
+                  <a href={`mailto:${site.email}`} className={CONTACT_LINK}>
+                    <img src={footerMail} alt="" aria-hidden="true" className="size-[1.1em] lg:size-[calc(20*var(--u))]" />
+                    <span className="text-foot">
+                      <span className="sr-only">E-mail </span>
+                      {site.email}
+                    </span>
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>
