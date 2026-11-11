@@ -7,6 +7,7 @@ import { loadContent, loadContentVersion } from '../content/loadContent'
 
 const TEMPLATE_PATH = '/ssrTemplate.html'
 const CACHE_SECONDS = 86_400
+const PRISTINE_VERSION = '0'
 
 export function matchPageRoute(pathname: string): RouteDef | undefined {
   const normalized = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
@@ -47,6 +48,7 @@ export async function renderPage(
 
   try {
     const version = await loadContentVersion(env)
+    if (version === PRISTINE_VERSION) return staticFallback(env, request)
     const cacheKey = new Request(`${url.origin}/__page/${env.CF_VERSION?.id ?? 'dev'}/${version}${route.path}`)
     if (!bypassCache) {
       const hit = await cache.match(cacheKey)

@@ -1,8 +1,8 @@
 import { validateContact, type ContactFields } from '../../src/lib/contact'
 import { sendMail } from '../email/resend'
 import type { Env } from '../env'
-import { clientIp, error, isSameOrigin, json, readJson, sha256Hex } from '../http'
-import { registerHit } from '../rateLimit'
+import { clientHash, error, isSameOrigin, json, readJson } from '../http'
+import { pruneRateLimits, registerHit } from '../rateLimit'
 import { getSetting } from '../settings'
 
 const MIN_FILL_MS = 1500
@@ -57,7 +57,7 @@ export async function handleContact(request: Request, env: Env, ctx: ExecutionCo
   const errors = validateContact(fields)
   if (Object.keys(errors).length > 0) return json({ error: 'invalid_fields', fields: errors }, 422)
 
-  const ipHash = (await sha256Hex(`${clientIp(request)}:${env.IP_PEPPER ?? 'dev'}`)).slice(0, 32)
+  const ipHash = await clientHash(request, env.IP_PEPPER)
   const allowed = await registerHit(env, `contact:${ipHash}`, HOURLY_LIMIT, 3600)
   if (!allowed) return error(429, 'too_many_requests')
 
@@ -68,5 +68,6 @@ export async function handleContact(request: Request, env: Env, ctx: ExecutionCo
     .run()
   const id = Number(result.meta.last_row_id)
   ctx.waitUntil(notify(env, id, fields))
+  ctx.waitUntil(pruneRateLimits(env))
   return json({ ok: true, id }, 201)
 }

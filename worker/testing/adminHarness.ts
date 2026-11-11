@@ -16,23 +16,24 @@ export async function adminEnv(): Promise<{ env: TestEnv; cookie: string }> {
   return { env, cookie: (login.headers.get('set-cookie') ?? '').split(';')[0] }
 }
 
-export function call(
+export async function call(
   env: TestEnv,
   method: string,
   path: string,
   body?: unknown,
   headers: Record<string, string> = {},
 ): Promise<Response> {
-  const isForm = body instanceof FormData
+  const form = body instanceof FormData ? new Response(body) : undefined
+  const formBody = form ? await form.arrayBuffer() : undefined
   const request = new Request(`${ORIGIN}${path}`, {
     method,
     headers: {
       origin: ORIGIN,
       'cf-connecting-ip': '8.8.8.8',
-      ...(body === undefined || isForm ? {} : { 'content-type': 'application/json' }),
+      ...(body === undefined ? {} : form ? { 'content-type': form.headers.get('content-type') ?? '', 'content-length': String(formBody?.byteLength) } : { 'content-type': 'application/json' }),
       ...headers,
     },
-    body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
+    body: body === undefined ? undefined : form ? formBody : JSON.stringify(body),
   })
   return worker.fetch(request, env, testContext())
 }

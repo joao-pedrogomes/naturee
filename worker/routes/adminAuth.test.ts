@@ -65,6 +65,25 @@ describe('admin login', () => {
     expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(429)
   })
 
+  it('lets only five of many parallel wrong guesses reach the password check', async () => {
+    const env = await setup()
+    const statuses = await Promise.all(
+      Array.from({ length: 12 }, () => call(env, '/api/admin/login', { email: EMAIL, password: 'bad bad bad bad' }).then((response) => response.status)),
+    )
+    expect(statuses.filter((status) => status === 401)).toHaveLength(5)
+    expect(statuses.filter((status) => status === 429)).toHaveLength(7)
+  })
+
+  it('limits one account across many addresses', async () => {
+    const env = await setup()
+    let blocked = 0
+    for (let i = 0; i < 110; i += 1) {
+      const response = await call(env, '/api/admin/login', { email: EMAIL, password: 'bad bad bad bad' }, { 'cf-connecting-ip': `10.0.${Math.floor(i / 250)}.${i % 250}` })
+      if (response.status === 429) blocked += 1
+    }
+    expect(blocked).toBe(10)
+  })
+
   it('does not count successful logins against the limit', async () => {
     const env = await setup()
     for (let i = 0; i < 8; i += 1) expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(200)

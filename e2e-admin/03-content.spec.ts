@@ -7,7 +7,6 @@ test('editing a headline publishes it with matching SEO and keeps hydration clea
 
   await signInReady(page)
   await page.getByRole('link', { name: 'Conteúdo' }).click()
-  await page.getByRole('button', { name: 'Topo' }).first().click()
   const title = page.getByLabel('Título')
   await title.fill('Frase editada *no painel*')
   await page.getByRole('button', { name: 'Salvar alterações' }).click()
@@ -19,7 +18,6 @@ test('editing a headline publishes it with matching SEO and keeps hydration clea
   expect(errors.filter((text) => /hydrat|#418|#423|#425/i.test(text))).toEqual([])
 
   await page.goto('/admin/conteudo')
-  await page.getByRole('button', { name: 'Topo' }).first().click()
   await page.getByRole('button', { name: 'Restaurar padrão' }).first().click()
   await page.getByRole('button', { name: 'Salvar alterações' }).click()
   await expect(page.getByRole('status')).toContainText('Alterações publicadas')
@@ -30,7 +28,6 @@ test('editing a headline publishes it with matching SEO and keeps hydration clea
 test('unsafe links are rejected with a field error', async ({ page }) => {
   await signInReady(page)
   await page.goto('/admin/conteudo')
-  await page.getByRole('button', { name: 'Topo' }).first().click()
   const link = page.getByLabel('Botão principal › Link')
   await link.fill('javascript:alert(1)')
   await page.getByRole('button', { name: 'Salvar alterações' }).click()
@@ -57,7 +54,6 @@ test('uploading an image replaces a photo and it is served with a small variant'
   test.skip(browserName === 'webkit', 'WebKit cannot encode WebP')
   await signInReady(page)
   await page.getByRole('link', { name: 'Conteúdo' }).click()
-  await page.getByRole('button', { name: 'Topo' }).first().click()
   await page.getByRole('button', { name: 'Trocar imagem' }).first().click()
   await page.getByLabel('Descrição da imagem (para acessibilidade)').fill('Foto enviada no teste')
   await page.locator('input[type=file]').setInputFiles({ name: 'foto.png', mimeType: 'image/png', buffer: TINY_PNG })

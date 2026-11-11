@@ -181,6 +181,45 @@ describe('content', () => {
     expect((await call(env, 'POST', '/api/admin/content/restore', { version: 9999 }, { cookie })).status).toBe(404)
   })
 
+  it('saves and restores dozens of fields while staying far below the D1 query limit', async () => {
+    const { env, cookie } = await adminEnv()
+    const all = (await (await call(env, 'GET', '/api/admin/content', undefined, { cookie })).json()) as { fields: Field[] }
+    const paths = all.fields.filter((field) => field.path.startsWith('pages.') && typeof field.value === 'string' && !/href/i.test(field.path)).slice(0, 120).map((field) => field.path)
+    expect(paths.length).toBeGreaterThan(100)
+
+    let queries = 0
+    const prepare = env.DB.prepare.bind(env.DB)
+    env.DB.prepare = ((sql: string) => {
+      queries += 1
+      return prepare(sql)
+    }) as typeof env.DB.prepare
+
+    const changes = Object.fromEntries(paths.map((path, index) => [path, `valor ${index}`]))
+    expect((await call(env, 'PUT', '/api/admin/content', { changes }, { cookie })).status).toBe(200)
+    expect(queries).toBeLessThan(15)
+    expect((await fields(env, cookie)).fields.filter((field) => field.overridden)).toHaveLength(paths.length)
+
+    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.email': 'novo@x.com' } }, { cookie })
+    queries = 0
+    const history = (await (await call(env, 'GET', '/api/admin/content/history', undefined, { cookie })).json()) as { history: { version: number; edits: number }[] }
+    const withMany = history.history.find((entry) => entry.edits === paths.length)!
+    expect((await call(env, 'POST', '/api/admin/content/restore', { version: withMany.version }, { cookie })).status).toBe(200)
+    expect(queries).toBeLessThan(15)
+    expect((await fields(env, cookie)).fields.filter((field) => field.overridden)).toHaveLength(paths.length)
+  })
+
+  it('never hands two concurrent saves the same version', async () => {
+    const { env, cookie } = await adminEnv()
+    const results = await Promise.all(
+      ['a', 'b', 'c'].map(async (suffix) =>
+        ((await (await call(env, 'PUT', '/api/admin/content', { changes: { 'site.tagline': `texto ${suffix}` } }, { cookie })).json()) as { version: string }).version,
+      ),
+    )
+    const final = (await fields(env, cookie)).version
+    expect(Number(final)).toBe(3)
+    expect(results).toContain('3')
+  })
+
   it('stores hostile text as inert data', async () => {
     const { env, cookie } = await adminEnv()
     const hostile = '</script><img src=x onerror=alert(1)>'

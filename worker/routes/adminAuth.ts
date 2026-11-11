@@ -9,11 +9,12 @@ import {
   type AdminSession,
 } from '../auth/session'
 import type { Env } from '../env'
-import { clientIp, error, isSameOrigin, json, readJson, sha256Hex } from '../http'
-import { clearHits, isLimited, registerHit } from '../rateLimit'
+import { clientHash, error, isSameOrigin, json, readJson } from '../http'
+import { clearHits, registerHit } from '../rateLimit'
 
 const LOGIN_ATTEMPTS = 5
 const LOGIN_IP_ATTEMPTS = 20
+const LOGIN_ACCOUNT_ATTEMPTS = 100
 const LOGIN_WINDOW_SECONDS = 15 * 60
 
 type UserRow = { id: number; email: string; password_hash: string; salt: string; iterations: number; must_change: number }
@@ -45,24 +46,21 @@ async function login(request: Request, env: Env): Promise<Response> {
   const password = asText(body?.password)
   if (!email || !password || password.length > 200) return error(400, 'invalid_body')
 
-  const ipHash = (await sha256Hex(`${clientIp(request)}:${env.IP_PEPPER ?? 'dev'}`)).slice(0, 32)
+  const ipHash = await clientHash(request, env.IP_PEPPER)
   const accountKey = `login:${ipHash}:${email}`
-  const ipKey = `login-ip:${ipHash}`
-  const limited =
-    (await isLimited(env, accountKey, LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)) ||
-    (await isLimited(env, ipKey, LOGIN_IP_ATTEMPTS, LOGIN_WINDOW_SECONDS))
-  if (limited) return error(429, 'too_many_attempts')
+  // Counting before verifying keeps parallel guesses from slipping past the limit.
+  const allowed =
+    (await registerHit(env, accountKey, LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)) &&
+    (await registerHit(env, `login-ip:${ipHash}`, LOGIN_IP_ATTEMPTS, LOGIN_WINDOW_SECONDS)) &&
+    (await registerHit(env, `login-acct:${email}`, LOGIN_ACCOUNT_ATTEMPTS, LOGIN_WINDOW_SECONDS))
+  if (!allowed) return error(429, 'too_many_attempts')
 
   const user = await env.DB.prepare('SELECT * FROM users WHERE email = ?1').bind(email).first<UserRow>()
   const record: PasswordRecord = user
     ? { hash: user.password_hash, salt: user.salt, iterations: user.iterations }
     : DUMMY_RECORD
   const valid = await verifyPassword(password, record)
-  if (!user || !valid) {
-    await registerHit(env, accountKey, LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)
-    await registerHit(env, ipKey, LOGIN_IP_ATTEMPTS, LOGIN_WINDOW_SECONDS)
-    return error(401, 'invalid_credentials')
-  }
+  if (!user || !valid) return error(401, 'invalid_credentials')
   await clearHits(env, accountKey)
 
   const token = await createSession(env, user.id)

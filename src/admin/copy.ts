@@ -49,6 +49,7 @@ export const copy = {
   },
   content: {
     title: 'Conteúdo do site',
+    section: 'Seção para editar',
     intro: 'Edite textos, links e imagens. As mudanças aparecem no site em até 30 segundos.',
     save: 'Salvar alterações',
     saving: 'Salvando…',

@@ -14,14 +14,16 @@ export async function handlePublicMedia(request: Request, env: Env, ctx: Executi
   const match = /^\/media\/([a-f0-9]{16})$/.exec(pathname)
   if (!match) return error(404, 'not_found')
 
+  const wantsSmallVariant = new URL(request.url).searchParams.get('w') === '720'
+  const cacheKey = new Request(`${new URL(request.url).origin}/media/${match[1]}${wantsSmallVariant ? '?w=720' : ''}`)
   const cache = typeof caches === 'undefined' ? undefined : caches.default
-  const cached = await cache?.match(request)
+  const cached = await cache?.match(cacheKey)
   if (cached) return cached
 
   const row = await env.DB.prepare('SELECT data, data_small FROM media WHERE id = ?1').bind(match[1]).first<BlobRow>()
   if (!row) return error(404, 'not_found')
 
-  const wantsSmall = new URL(request.url).searchParams.get('w') === '720' && row.data_small
+  const wantsSmall = wantsSmallVariant && row.data_small
   const response = new Response(toBytes(wantsSmall ? (row.data_small as BlobRow['data']) : row.data), {
     headers: {
       'content-type': 'image/webp',
@@ -29,6 +31,6 @@ export async function handlePublicMedia(request: Request, env: Env, ctx: Executi
       'x-content-type-options': 'nosniff',
     },
   })
-  if (cache) ctx.waitUntil(cache.put(request, response.clone()))
+  if (cache) ctx.waitUntil(cache.put(cacheKey, response.clone()))
   return response
 }

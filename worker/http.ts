@@ -20,11 +20,38 @@ export function isSameOrigin(request: Request): boolean {
   return origin === new URL(request.url).origin
 }
 
+/** Reads at most `maxBytes`; a larger or oversized-chunked body yields undefined without buffering it all. */
+export async function readText(request: Request, maxBytes: number): Promise<string | undefined> {
+  const declared = Number(request.headers.get('content-length'))
+  if (Number.isFinite(declared) && declared > maxBytes) return undefined
+  const reader = request.body?.getReader()
+  if (!reader) return ''
+  const chunks: Uint8Array[] = []
+  let total = 0
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    total += value.byteLength
+    if (total > maxBytes) {
+      await reader.cancel()
+      return undefined
+    }
+    chunks.push(value)
+  }
+  const bytes = new Uint8Array(total)
+  let offset = 0
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset)
+    offset += chunk.byteLength
+  }
+  return new TextDecoder().decode(bytes)
+}
+
 export async function readJson(request: Request, maxBytes = 16_384): Promise<unknown> {
   const type = request.headers.get('content-type') ?? ''
   if (!type.includes('application/json')) return undefined
-  const text = await request.text()
-  if (text.length > maxBytes) return undefined
+  const text = await readText(request, maxBytes)
+  if (text === undefined) return undefined
   try {
     return JSON.parse(text)
   } catch {
@@ -39,4 +66,21 @@ export function clientIp(request: Request): string {
 export async function sha256Hex(value: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
+}
+
+/** Groups IPv6 addresses by their /64 so rotating the host part does not reset a limit. */
+export function ipPrefix(ip: string): string {
+  if (!ip.includes(':')) return ip
+  const [head, tail = ''] = ip.split('::')
+  const headParts = head ? head.split(':') : []
+  const tailParts = tail ? tail.split(':') : []
+  const gap = ip.includes('::') ? Array<string>(Math.max(0, 8 - headParts.length - tailParts.length)).fill('0') : []
+  return [...headParts, ...gap, ...tailParts]
+    .slice(0, 4)
+    .map((group) => group.toLowerCase().replace(/^0+(?=.)/, ''))
+    .join(':')
+}
+
+export async function clientHash(request: Request, pepper = 'dev'): Promise<string> {
+  return (await sha256Hex(`${ipPrefix(clientIp(request))}:${pepper}`)).slice(0, 32)
 }

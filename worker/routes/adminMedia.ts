@@ -47,7 +47,8 @@ async function list(env: Env): Promise<Response> {
 }
 
 async function upload(request: Request, env: Env): Promise<Response> {
-  const length = Number(request.headers.get('content-length') ?? 0)
+  const length = Number(request.headers.get('content-length'))
+  if (!Number.isFinite(length) || length <= 0) return error(411, 'length_required')
   if (length > MAX_FULL_BYTES + MAX_SMALL_BYTES + 20_000) return error(413, 'too_large')
   if (!(request.headers.get('content-type') ?? '').includes('multipart/form-data')) return error(400, 'invalid_body')
 

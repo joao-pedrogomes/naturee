@@ -26,14 +26,14 @@ function AdminLayout() {
       <header className="bg-teal text-sand">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3">
           <img src={logo} alt="Naturee Food Hub" width={161} height={147} className="h-12 w-auto" />
-          <nav aria-label="Painel" className="flex flex-1 flex-wrap gap-1">
+          <nav aria-label="Painel" className="order-3 -mx-1 flex w-full gap-1 overflow-x-auto sm:order-none sm:mx-0 sm:w-auto sm:flex-1 sm:flex-wrap">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    'inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand',
+                    'inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-sm font-semibold transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand',
                     isActive && 'bg-sand text-teal hover:bg-sand',
                   )
                 }
@@ -42,7 +42,7 @@ function AdminLayout() {
               </NavLink>
             ))}
           </nav>
-          <div className="flex items-center gap-3 text-sm">
+          <div className="ml-auto flex items-center gap-3 text-sm">
             <span className="hidden sm:inline">{state.user.email}</span>
             <Button variant="secondary" onClick={() => void signOut()}>
               {copy.signOut}

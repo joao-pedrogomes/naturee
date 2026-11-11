@@ -9,14 +9,23 @@ const HISTORY_LIMIT = 20
 const MAX_CHANGES = 300
 
 type MediaRow = { id: string; width: number; height: number }
+type StoredRow = { p: string; v: string }
+
+/** One statement per kind keeps every save far below D1's per-invocation query limit. */
+const UPSERT_SQL = `INSERT INTO content_overrides (path, value, updated_by)
+  SELECT json_extract(value, '$.p'), json_extract(value, '$.v'), ?2 FROM json_each(?1) WHERE true
+  ON CONFLICT(path) DO UPDATE SET value = excluded.value, updated_by = excluded.updated_by, updated_at = datetime('now')`
+
+function isImageValue(value: unknown): value is { mediaId: string; alt: string } {
+  return typeof value === 'object' && value !== null && typeof (value as { mediaId?: unknown }).mediaId === 'string'
+}
 
 async function mediaDimensions(env: Env, ids: string[]): Promise<Map<string, MediaRow>> {
-  const found = new Map<string, MediaRow>()
-  for (const id of ids) {
-    const row = await env.DB.prepare('SELECT id, width, height FROM media WHERE id = ?1').bind(id).first<MediaRow>()
-    if (row) found.set(id, row)
-  }
-  return found
+  if (ids.length === 0) return new Map()
+  const { results } = await env.DB.prepare('SELECT id, width, height FROM media WHERE id IN (SELECT value FROM json_each(?1))')
+    .bind(JSON.stringify(ids))
+    .all<MediaRow>()
+  return new Map(results.map((row) => [row.id, row]))
 }
 
 async function read(env: Env): Promise<Response> {
@@ -41,12 +50,24 @@ function historyStatements(env: Env, overrides: Overrides, email: string): D1Pre
   ]
 }
 
-async function bumpVersion(env: Env): Promise<{ statement: D1PreparedStatement; next: string }> {
-  const next = String(Number(await loadContentVersion(env, true)) + 1)
-  const statement = env.DB.prepare(
-    "INSERT INTO settings (key, value) VALUES ('contentVersion', ?1) ON CONFLICT(key) DO UPDATE SET value = ?1",
-  ).bind(next)
-  return { statement, next }
+/** Incremented inside the same batch, so concurrent saves can never share a version. */
+function bumpVersionStatement(env: Env): D1PreparedStatement {
+  return env.DB.prepare(
+    `INSERT INTO settings (key, value) VALUES ('contentVersion', '1')
+     ON CONFLICT(key) DO UPDATE SET value = CAST(value AS INTEGER) + 1`,
+  )
+}
+
+async function publish(env: Env, statements: D1PreparedStatement[]): Promise<string> {
+  await env.DB.batch([...statements, bumpVersionStatement(env)])
+  const version = await loadContentVersion(env, true)
+  rememberContentVersion(version)
+  return version
+}
+
+function upsertStatement(env: Env, rows: StoredRow[], email: string): D1PreparedStatement[] {
+  if (rows.length === 0) return []
+  return [env.DB.prepare(UPSERT_SQL).bind(JSON.stringify(rows), email)]
 }
 
 async function write(request: Request, env: Env, session: AdminSession): Promise<Response> {
@@ -57,17 +78,19 @@ async function write(request: Request, env: Env, session: AdminSession): Promise
   if (entries.length === 0 || entries.length > MAX_CHANGES) return error(400, 'invalid_body')
 
   const fields = flattenEditable(defaultContent)
-  const imageIds = entries.flatMap(([, value]) => (isImageValue(value) ? [value.mediaId] : []))
-  const media = await mediaDimensions(env, imageIds)
+  const media = await mediaDimensions(
+    env,
+    entries.flatMap(([, value]) => (isImageValue(value) ? [value.mediaId] : [])),
+  )
 
   const invalid: Record<string, string> = {}
-  const statements: D1PreparedStatement[] = []
-  const current = await loadOverrides(env)
+  const rows: StoredRow[] = []
+  const removals: string[] = []
 
   for (const [path, value] of entries) {
     if (value === null) {
-      if (!fields.some((field) => field.path === path)) invalid[path] = 'unknown field'
-      else statements.push(env.DB.prepare('DELETE FROM content_overrides WHERE path = ?1').bind(path))
+      if (fields.some((field) => field.path === path)) removals.push(path)
+      else invalid[path] = 'unknown field'
       continue
     }
     let stored = value
@@ -80,27 +103,19 @@ async function write(request: Request, env: Env, session: AdminSession): Promise
       stored = { mediaId: row.id, alt: value.alt, width: row.width, height: row.height } satisfies ImageOverride
     }
     const problem = validateOverride(fields, path, stored)
-    if (problem) {
-      invalid[path] = problem
-      continue
-    }
-    statements.push(
-      env.DB.prepare(
-        `INSERT INTO content_overrides (path, value, updated_by) VALUES (?1, ?2, ?3)
-         ON CONFLICT(path) DO UPDATE SET value = ?2, updated_by = ?3, updated_at = datetime('now')`,
-      ).bind(path, JSON.stringify(stored), session.email),
-    )
+    if (problem) invalid[path] = problem
+    else rows.push({ p: path, v: JSON.stringify(stored) })
   }
   if (Object.keys(invalid).length > 0) return json({ error: 'invalid_changes', fields: invalid }, 422)
 
-  const bump = await bumpVersion(env)
-  await env.DB.batch([...historyStatements(env, current, session.email), ...statements, bump.statement])
-  rememberContentVersion(bump.next)
-  return json({ ok: true, version: bump.next })
-}
-
-function isImageValue(value: unknown): value is { mediaId: string; alt: string } {
-  return typeof value === 'object' && value !== null && typeof (value as { mediaId?: unknown }).mediaId === 'string'
+  const current = await loadOverrides(env)
+  const statements = [...historyStatements(env, current, session.email), ...upsertStatement(env, rows, session.email)]
+  if (removals.length > 0) {
+    statements.push(
+      env.DB.prepare('DELETE FROM content_overrides WHERE path IN (SELECT value FROM json_each(?1))').bind(JSON.stringify(removals)),
+    )
+  }
+  return json({ ok: true, version: await publish(env, statements) })
 }
 
 async function history(env: Env): Promise<Response> {
@@ -124,32 +139,25 @@ async function restore(request: Request, env: Env, session: AdminSession): Promi
   if (!row) return error(404, 'not_found')
 
   const snapshot = JSON.parse(row.json) as Overrides
-  const ids = Object.values(snapshot).flatMap((value) => (isImageValue(value) ? [value.mediaId] : []))
-  const media = await mediaDimensions(env, ids)
+  const media = await mediaDimensions(
+    env,
+    Object.values(snapshot).flatMap((value) => (isImageValue(value) ? [value.mediaId] : [])),
+  )
   const fields = flattenEditable(defaultContent)
-  const current = await loadOverrides(env)
-
-  const inserts: D1PreparedStatement[] = []
+  const rows: StoredRow[] = []
   for (const [path, value] of Object.entries(snapshot)) {
     if (isImageValue(value) && !media.has(value.mediaId)) continue
     if (validateOverride(fields, path, value) !== null) continue
-    inserts.push(
-      env.DB.prepare('INSERT INTO content_overrides (path, value, updated_by) VALUES (?1, ?2, ?3)').bind(
-        path,
-        JSON.stringify(value),
-        session.email,
-      ),
-    )
+    rows.push({ p: path, v: JSON.stringify(value) })
   }
-  const bump = await bumpVersion(env)
-  await env.DB.batch([
+
+  const current = await loadOverrides(env)
+  const statements = [
     ...historyStatements(env, current, session.email),
     env.DB.prepare('DELETE FROM content_overrides'),
-    ...inserts,
-    bump.statement,
-  ])
-  rememberContentVersion(bump.next)
-  return json({ ok: true, version: bump.next })
+    ...upsertStatement(env, rows, session.email),
+  ]
+  return json({ ok: true, version: await publish(env, statements) })
 }
 
 export async function handleContent(

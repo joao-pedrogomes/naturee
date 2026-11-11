@@ -113,7 +113,24 @@ function ContentPage() {
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-[16rem_1fr]">
-        <nav aria-label={copy.content.title} className="space-y-3">
+        <div className="space-y-2 lg:hidden">
+          <label htmlFor="sectionPicker" className="text-sm font-semibold">{copy.content.section}</label>
+          <select
+            id="sectionPicker"
+            value={selected}
+            onChange={(event) => setSelected(event.target.value)}
+            className="h-12 w-full rounded-lg border border-input bg-white px-3 text-base"
+          >
+            {pages.map((item) => (
+              <optgroup key={item.id} label={item.title}>
+                {item.groups.map((entry) => (
+                  <option key={entry.id} value={entry.id}>{entry.title}</option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+        <nav aria-label={copy.content.title} className="hidden space-y-3 lg:block">
           {pages.map((item) => (
             <details key={item.id} open={selected.startsWith(`${item.id}.`)} className="rounded-2xl bg-white p-2">
               <summary className="min-h-11 cursor-pointer rounded-xl px-3 py-2.5 font-semibold">{item.title}</summary>
