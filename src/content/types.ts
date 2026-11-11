@@ -31,6 +31,8 @@ export type IconName =
   | 'zap'
   | 'shieldCheck'
   | 'package'
+  | 'trustRoute'
+  | 'trustCheck'
   | 'star'
   | 'circleCheck'
   | 'mapPin'

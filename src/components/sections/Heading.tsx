@@ -10,7 +10,7 @@ type HeadingProps = {
 
 function Heading({ as: Tag = 'h2', text, className, id }: HeadingProps) {
   return (
-    <Tag id={id} className={cn('font-heading [&_em]:font-semibold', className)}>
+    <Tag id={id} className={cn('font-heading lg:whitespace-nowrap [&_em]:font-medium [&_strong]:font-semibold', className)}>
       {renderRichText(text)}
     </Tag>
   )

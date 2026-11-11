@@ -95,7 +95,7 @@ const REGION_LINE = 'Atendemos o litoral catarinense, de Itajaí a Araranguá.'
 export const defaultContent: SiteContent = {
   site: {
     name: 'Naturee Food Hub',
-    tagline: 'Conectamos produtores, marcas e gastronomia com uma operação organizada, próxima e refrigerada.',
+    tagline: 'Conectamos produtores, marcas e\ngastronomia com uma operação\norganizada, próxima e refrigerada.',
     whatsapp: WHATSAPP_NUMBER,
     whatsappLabel: '48 99196 3383',
     whatsappCta: 'Fale com a Naturee',
@@ -130,10 +130,10 @@ export const defaultContent: SiteContent = {
     skipLink: 'Pular para o conteúdo',
   },
   trust: [
-    { icon: 'package', title: '100% Seguro', text: 'Seus pedidos são processados com total segurança' },
-    { icon: 'truck', title: 'Entrega em toda SC', text: 'Rápida, rastreável, no endereço cadastrado' },
-    { icon: 'circleCheck', title: 'Produtos selecionados', text: 'Seleção exclusiva direto dos melhores produtores de SC' },
-    { icon: 'star', title: 'Garantia de qualidade', text: 'Garantia de originalidade e segurança' },
+    { icon: 'package', title: '100% Seguro', text: 'Seus pedidos são processados\ncom total segurança' },
+    { icon: 'trustRoute', title: 'Entrega em toda SC', text: 'Rápida, rastreável, no\nendereço cadastrado' },
+    { icon: 'trustCheck', title: 'Produtos selecionados', text: 'Seleção exclusiva direto dos\nmelhores produtores de SC' },
+    { icon: 'star', title: 'Garantia de qualidade', text: 'Garantia de originalidade e\nsegurança' },
   ],
   brands: [
     { id: 'sitio-pura-vida', name: 'Sítio Pura Vida', logo: { src: brandSitioPuraVida, alt: 'Logotipo Sítio Pura Vida', width: 280, height: 114 } },
@@ -159,7 +159,7 @@ export const defaultContent: SiteContent = {
         description: 'Curadoria e distribuição refrigerada de produtos especiais para restaurantes, hotéis, empórios e supermercados no litoral catarinense.',
       },
       hero: {
-        title: '*Curadoria & distribuição* para produtos especiais',
+        title: '*Curadoria &\ndistribuição* para\n**produtos especiais**',
         text: 'Conectamos produtores, marcas e gastronomia com uma operação organizada, próxima e refrigerada.',
         image: banner('Queijos, patês e conservas Sítio Pura Vida sobre uma mesa escura', [homeHero1440, homeHero960, homeHero640]),
         primary: { label: 'Acessar catálogo', href: '#catalog' },
@@ -173,7 +173,7 @@ export const defaultContent: SiteContent = {
       ],
       about: {
         label: 'Sobre nós',
-        title: 'Mais do que distribuir, *conectamos.*',
+        title: 'Mais do que distribuir,\n*conectamos*.',
         paragraphs: [
           'A **Naturee Food Hub** conecta produtores, marcas e operações gastronômicas por meio de uma **curadoria especializada, distribuição organizada e logística refrigerada**.',
           '**Facilitamos o acesso** a produtos especiais, aproximando boas origens de quem valoriza qualidade e praticidade.',
@@ -185,13 +185,13 @@ export const defaultContent: SiteContent = {
         label: 'Diferenciais',
         cards: [
           { title: 'Curadoria', text: 'Seleção de marcas e produtos especiais.', image: card('Mesa com queijos, embutidos, conservas e laticínios selecionados', [featureCuradoria800, featureCuradoria480]) },
-          { title: 'Logística Refrigerada', text: 'Cuidado no transporte e no frescor.', image: card('Funcionário organizando caixas dentro de uma câmara refrigerada', [featureLogistica800, featureLogistica480]) },
-          { title: 'Rede Organizada', text: 'Diferentes fornecedores em uma operação.', image: card('Funcionária conferindo estoque com prancheta em um armazém', [featureRede800, featureRede480]) },
+          { title: 'Logística\nRefrigerada', text: 'Cuidado no transporte e no frescor.', image: card('Funcionário organizando caixas dentro de uma câmara refrigerada', [featureLogistica800, featureLogistica480]) },
+          { title: 'Rede\nOrganizada', text: 'Diferentes fornecedores em uma operação.', image: card('Funcionária conferindo estoque com prancheta em um armazém', [featureRede800, featureRede480]) },
         ],
       },
       brands: {
         label: 'Marcas parceiras',
-        title: 'Boas *conexões* começam com boas *parcerias.*',
+        title: 'Boas *conexões* começam com\nboas *parcerias*.',
       },
       categories: {
         label: 'Destaque',
@@ -208,7 +208,7 @@ export const defaultContent: SiteContent = {
       },
       closing: {
         label: 'Sua próxima seleção começa aqui',
-        title: 'Boas origens para grandes *criações.*',
+        title: 'Boas origens para\ngrandes *criações*.',
         text: 'Uma curadoria de produtos especiais, com distribuição organizada e atendimento próximo para facilitar a rotina da sua operação.',
         bullets: [
           'Produtos de diferentes fornecedores',
@@ -216,7 +216,7 @@ export const defaultContent: SiteContent = {
           'Atendimento comercial próximo e especializado',
         ],
         card: {
-          title: 'Vamos encontrar a seleção ideal para sua operação?',
+          title: 'Vamos encontrar a seleção ideal\npara sua operação?',
           text: 'Conheça nosso portfólio ou consulte produtos e condições comerciais com nossa equipe.',
           primary: { label: 'Acessar catálogo', href: '#catalog' },
           secondary: { label: 'Falar pelo WhatsApp', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de consultar produtos e condições comerciais.' },
@@ -231,12 +231,12 @@ export const defaultContent: SiteContent = {
         description: 'Conheça a Naturee Food Hub: uma rede de curadoria, distribuição refrigerada e relacionamento que conecta produtores, marcas e gastronomia.',
       },
       hero: {
-        title: '*Conectando* produtores, marcas & gastronomia.',
+        title: '*Conectando*\nprodutores, marcas\n& gastronomia.',
         image: banner('Galpão, vans e caixas da Naturee Food Hub', [aboutHero1440, aboutHero960, aboutHero640]),
       },
       about: {
         label: 'Sobre nós',
-        title: 'Mais do que distribuir, *conectamos.*',
+        title: 'Mais do que distribuir,\n*conectamos*.',
         paragraphs: [
           'A **Naturee Food Hub** é uma parceira estratégica para marcas, produtores e negócios gastronômicos que **buscam uma distribuição mais inteligente, organizada e próxima.**',
           'Unimos curadoria, relacionamento comercial e logística refrigerada para **facilitar o abastecimento, fortalecer parcerias e criar novas oportunidades** para todos que fazem parte dessa rede.',
@@ -245,7 +245,7 @@ export const defaultContent: SiteContent = {
       },
       history: {
         label: 'Nossa história',
-        title: 'Uma história em *movimento.*',
+        title: 'Uma história em *movimento*.',
         paragraphs: [
           'A Naturee nasceu da necessidade de levar os cogumelos do Sítio Pura Vida a diferentes operações gastronômicas. Com o crescimento da distribuição, novos produtores e marcas passaram a fazer parte desse caminho, ampliando a variedade de produtos e as possibilidades de atendimento.',
           'O que começou como uma solução logística evoluiu para uma rede de curadoria, distribuição e relacionamento. Hoje, a Naturee Food Hub conecta boas origens a negócios gastronômicos por meio de uma operação mais organizada, próxima e especializada.',
@@ -253,7 +253,7 @@ export const defaultContent: SiteContent = {
       },
       purpose: {
         label: 'Nosso propósito',
-        title: '*Boas* origens merecem chegar *mais longe.*',
+        title: '*Boas* origens merecem\nchegar *mais longe*.',
         text: 'Nosso propósito é *criar conexões* entre quem produz e quem transforma ingredientes em experiências gastronômicas, valorizando qualidade, frescor e relações de confiança.',
         image: card('Caminhão da Naturee em uma estrada à beira-mar', [aboutPurpose800, aboutPurpose480], HALF_SIZES),
       },
@@ -264,7 +264,7 @@ export const defaultContent: SiteContent = {
       ],
       banner: {
         label: 'Faça parte da nossa rede',
-        title: '*Boas conexões* movimentam grandes oportunidades.',
+        title: '*Boas conexões* movimentam\ngrandes oportunidades.',
         primary: { label: 'Conheça nossos produtos', href: '/marcas-e-produtos' },
         secondary: { label: 'Seja um parceiro', href: '/contato' },
       },
@@ -276,14 +276,14 @@ export const defaultContent: SiteContent = {
         description: 'Marcas parceiras e categorias de produtos especiais — frescos, antepastos, laticínios, massas, charcutaria e gourmet — para o food service.',
       },
       hero: {
-        title: 'Uma seleção de *boas origens* e *grandes sabores.*',
+        title: 'Uma seleção de\n*boas origens* e\n*grandes sabores*.',
         text: 'Conheça as marcas e categorias que fazem parte da Naturee Food Hub, reunidas para trazer mais variedade, qualidade e praticidade à sua operação.',
         image: banner('Colher retirando patê de cogumelos de um pote Sítio Pura Vida', [productsHero1440, productsHero960, productsHero640]),
         cta: { label: 'Acessar catálogo', href: '#catalog' },
       },
       categories: {
         label: 'Categorias de produtos',
-        title: 'Produtos especiais para diferentes necessidades.',
+        title: 'Produtos especiais para diferentes\nnecessidades.',
         text: 'Uma curadoria que reúne ingredientes frescos, produtos artesanais e especialidades gastronômicas para o food service.',
         cta: { label: 'Baixar catálogo', href: '#catalog' },
       },
@@ -300,7 +300,7 @@ export const defaultContent: SiteContent = {
       },
       catalog: {
         label: 'Catálogo Naturee Food Hub',
-        title: 'Quer conhecer a *seleção completa?*',
+        title: 'Quer conhecer a *seleção*\n*completa?*',
         text: 'Explore nosso catálogo e descubra os produtos, marcas e opções disponíveis para sua operação.',
         image: card('Catálogo impresso da Naturee Food Hub sobre tábuas de madeira', [productsCatalog800, productsCatalog480], HALF_SIZES),
         cta: { label: 'Baixar catálogo', href: '#catalog' },
@@ -318,14 +318,14 @@ export const defaultContent: SiteContent = {
         description: 'Distribuição refrigerada com rotas programadas no litoral de Santa Catarina, de Itajaí a Araranguá, para restaurantes, hotéis, empórios e supermercados.',
       },
       hero: {
-        title: 'Cuidado em cada *rota.*',
+        title: 'Cuidado em cada\n**rota.**',
         text: 'Distribuição especializada e logística refrigerada para conectar produtos especiais à sua operação.',
         image: banner('Van refrigerada da Naturee em frente ao galpão', [logisticsHero1440, logisticsHero960, logisticsHero640]),
         cta: { label: 'Fazer pedido', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de fazer um pedido.' },
       },
       how: {
         label: 'Como funciona nossa distribuição',
-        title: 'Uma operação pensada para *facilitar sua rotina.*',
+        title: 'Uma operação pensada para *facilitar*\n*sua rotina.*',
         text: 'A Naturee reúne produtos de diferentes fornecedores e organiza sua distribuição por meio de rotas programadas, trazendo mais praticidade e organização ao abastecimento de operações gastronômicas.',
         steps: [
           { title: 'Curadoria', text: 'Produtos de diferentes marcas e fornecedores.' },
@@ -335,13 +335,13 @@ export const defaultContent: SiteContent = {
       },
       regions: {
         label: 'Regiões atendidas',
-        title: 'Estamos *em movimento* pelo litoral catarinense!',
+        title: 'Estamos *em*\n*movimento* pelo litoral\ncatarinense!',
         text: 'Atendemos o **litoral de Santa Catarina**, *de Itajaí (extremo norte) a Araranguá (extremo sul)*, com entregas organizadas conforme as rotas de cada região.',
         image: banner('Mapa de Santa Catarina destacando o litoral de Itajaí a Araranguá', [logisticsMap1440, logisticsMap960, logisticsMap640]),
       },
       audience: {
         label: 'Para quem distribuímos?',
-        title: 'Produtos especiais para *diferentes operações.*',
+        title: 'Produtos especiais para *diferentes*\n*operações*.',
         text: 'Nossa distribuição atende negócios que buscam qualidade, variedade e praticidade no abastecimento.',
         items: [
           { icon: 'utensils', label: 'Restaurantes' },
@@ -352,7 +352,7 @@ export const defaultContent: SiteContent = {
       },
       planning: {
         label: 'Entregas e planejamento',
-        title: 'Cada região, uma *rota planejada.*',
+        title: 'Cada região, uma *rota*\n*planejada*.',
         text: 'Trabalhamos com dias fixos de entrega, definidos conforme a região atendida. Para facilitar a organização, os pedidos devem ser realizados com pelo menos dois dias de antecedência, respeitando a programação das rotas.',
         boxes: [
           { icon: 'calendar', title: 'Rotas programadas', text: '*Consulte os dias* de entrega disponíveis para a sua região.' },
@@ -361,7 +361,7 @@ export const defaultContent: SiteContent = {
       },
       banner: {
         label: 'Fale com a Naturee',
-        title: 'O próximo destino pode ser *o seu negócio.*',
+        title: 'O próximo destino\npode ser *o seu negócio.*',
         text: 'Saiba mais sobre regiões atendidas, dias de entrega e disponibilidade de produtos.',
         image: card('Atendente da Naturee sorrindo com fone de ouvido', [logisticsContact800, logisticsContact480], HALF_SIZES),
         cta: { label: 'Consultar minha região', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de saber se vocês atendem a minha região e os dias de entrega.' },
@@ -375,7 +375,7 @@ export const defaultContent: SiteContent = {
       },
       hero: {
         label: 'Fale com a Naturee',
-        title: 'Boas conexões começam com uma conversa.',
+        title: 'Boas conexões começam\ncom uma conversa.',
         text: 'Quer conhecer nossos produtos, consultar entregas ou propor uma parceria? Nossa equipe está pronta para conversar com você.',
       },
       form: {

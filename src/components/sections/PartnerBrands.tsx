@@ -1,7 +1,8 @@
-import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import type { Brand } from '@/content/types'
 import { cn } from '@/lib/utils'
+import arrowLeft from '@/assets/icons/arrowLeftGreen.svg'
+import arrowRight from '@/assets/icons/arrowRightGreen.svg'
 
 type PartnerBrandsProps = {
   brands: Brand[]
@@ -12,9 +13,11 @@ type PartnerBrandsProps = {
 }
 
 const ARROW =
-  'inline-flex size-11 shrink-0 items-center justify-center rounded-full text-olive transition-colors hover:bg-olive/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive disabled:opacity-40'
+  'inline-flex size-11 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-olive/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive disabled:opacity-40 lg:size-[calc(47*var(--u))]'
 
 function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
+  const style = { '--w': brand.logo.width, '--h': brand.logo.height } as CSSProperties
+
   return (
     <img
       src={brand.logo.src}
@@ -23,16 +26,20 @@ function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
       height={brand.logo.height}
       loading="lazy"
       decoding="async"
-      className={cn('h-16 w-auto max-w-full object-contain sm:h-20 lg:h-24', className)}
+      style={style}
+      className={cn(
+        'h-16 w-auto max-w-full object-contain sm:h-20 lg:h-[calc(var(--h)*var(--u)*var(--k,1.04))] lg:w-[calc(var(--w)*var(--u)*var(--k,1.04))]',
+        className,
+      )}
     />
   )
 }
 
 function BrandGrid({ brands }: { brands: Brand[] }) {
   return (
-    <ul className="grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-12 md:grid-cols-3 md:gap-y-16">
+    <ul className="grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-12 md:grid-cols-3 lg:gap-y-[calc(48*var(--u))]">
       {brands.map((brand) => (
-        <li key={brand.id} className="flex max-w-[13rem] items-center justify-center">
+        <li key={brand.id} className="flex max-w-[13rem] items-center justify-center lg:max-w-none">
           <BrandLogo brand={brand} />
         </li>
       ))}
@@ -55,27 +62,27 @@ function BrandCarousel({
   }
 
   return (
-    <div className="flex items-center gap-2 sm:gap-6">
+    <div className="flex items-center gap-2 sm:gap-6 lg:justify-between lg:gap-0">
       <button type="button" aria-label={previousLabel} className={ARROW} onClick={() => scrollByPage(-1)}>
-        <ArrowLeft aria-hidden="true" className="size-5" strokeWidth={1.5} />
+        <img src={arrowLeft} alt="" aria-hidden="true" className="w-6 lg:w-full" />
       </button>
       <ul
         ref={trackRef}
         tabIndex={0}
         aria-label={trackLabel}
-        className="scrollbar-none flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive"
+        className="scrollbar-none flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive lg:flex-none lg:w-[calc(1311*var(--u))] lg:gap-0"
       >
         {brands.map((brand) => (
           <li
             key={brand.id}
-            className="flex w-[calc(50%-0.75rem)] shrink-0 snap-start items-center justify-center sm:w-[calc(33.333%-1rem)]"
+            className="flex w-[calc(50%-0.75rem)] shrink-0 snap-start items-center justify-center sm:w-[calc(33.333%-1rem)] lg:w-1/3"
           >
             <BrandLogo brand={brand} />
           </li>
         ))}
       </ul>
       <button type="button" aria-label={nextLabel} className={ARROW} onClick={() => scrollByPage(1)}>
-        <ArrowRight aria-hidden="true" className="size-5" strokeWidth={1.5} />
+        <img src={arrowRight} alt="" aria-hidden="true" className="w-6 lg:w-full" />
       </button>
     </div>
   )

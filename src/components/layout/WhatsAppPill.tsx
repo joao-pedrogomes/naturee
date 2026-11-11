@@ -16,11 +16,11 @@ function WhatsAppPill({ className }: WhatsAppPillProps) {
       target="_blank"
       rel="noopener"
       className={cn(
-        'inline-flex min-h-11 items-center gap-2 rounded-full bg-olive px-5 py-2 text-[0.8125rem] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-olive-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand',
+        'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-olive px-5 py-2 text-[0.9375rem] font-medium text-sand uppercase transition-colors hover:bg-olive-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand lg:h-[calc(62*var(--u))] lg:gap-[calc(10*var(--u))] lg:px-[calc(17*var(--u))] lg:text-[length:clamp(0.9375rem,calc(23*var(--u)),2.5rem)]',
         className,
       )}
     >
-      <img src={whatsappIcon} alt="" width={18} height={18} aria-hidden="true" />
+      <img src={whatsappIcon} alt="" aria-hidden="true" className="size-[1.1em] lg:size-[calc(30*var(--u))]" />
       <span>{site.whatsappCta}</span>
     </a>
   )
