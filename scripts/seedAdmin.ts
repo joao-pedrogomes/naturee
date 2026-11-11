@@ -22,7 +22,9 @@ function run(): void {
   const remote = process.argv.includes('--remote')
   if (!email?.includes('@')) throw new Error('Usage: node scripts/seedAdmin.ts <email> [--remote]')
 
-  const password = generatePassword()
+  const fixedPassword = process.env.SEED_PASSWORD
+  const persistTo = process.argv.includes('--persist-to') ? process.argv[process.argv.indexOf('--persist-to') + 1] : undefined
+  const password = fixedPassword ?? generatePassword()
   const salt = crypto.randomBytes(16)
   const hash = crypto.pbkdf2Sync(password, salt, ITERATIONS, 32, 'sha256')
 
@@ -40,7 +42,7 @@ DELETE FROM rate_limits WHERE key LIKE 'login:%';
   if (remote) env.CLOUDFLARE_API_TOKEN = fs.readFileSync(TOKEN_FILE, 'utf8').trim()
 
   try {
-    execFileSync('npx', ['wrangler', 'd1', 'execute', 'naturee', remote ? '--remote' : '--local', '--file', sqlFile], {
+    execFileSync('npx', ['wrangler', 'd1', 'execute', 'naturee', remote ? '--remote' : '--local', ...(persistTo ? ['--persist-to', persistTo] : []), '--file', sqlFile], {
       env,
       stdio: ['ignore', 'ignore', 'inherit'],
     })
@@ -48,6 +50,10 @@ DELETE FROM rate_limits WHERE key LIKE 'login:%';
     fs.rmSync(path.dirname(sqlFile), { recursive: true, force: true })
   }
 
+  if (fixedPassword) {
+    console.log(`Admin ${email} ready with the password from SEED_PASSWORD`)
+    return
+  }
   fs.writeFileSync(PASSWORD_FILE, `${email}\n${password}\n`, { mode: 0o600 })
   console.log(`Admin ${email} ready (${remote ? 'remote' : 'local'}). Credentials saved to ${PASSWORD_FILE}`)
 }

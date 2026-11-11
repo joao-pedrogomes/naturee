@@ -22,3 +22,17 @@ export async function registerHit(
     .first<CountRow>()
   return (row?.count ?? 1) <= limit
 }
+
+/** Read-only check: true when the key already used up its failures inside the window. */
+export async function isLimited(env: Env, key: string, limit: number, windowSeconds: number, now = Date.now()): Promise<boolean> {
+  const row = await env.DB.prepare('SELECT count, window_start FROM rate_limits WHERE key = ?1')
+    .bind(key)
+    .first<{ count: number; window_start: number }>()
+  if (!row) return false
+  if (now - row.window_start >= windowSeconds * 1000) return false
+  return row.count >= limit
+}
+
+export async function clearHits(env: Env, key: string): Promise<void> {
+  await env.DB.prepare('DELETE FROM rate_limits WHERE key = ?1').bind(key).run()
+}

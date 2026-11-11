@@ -65,6 +65,18 @@ describe('admin login', () => {
     expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(429)
   })
 
+  it('does not count successful logins against the limit', async () => {
+    const env = await setup()
+    for (let i = 0; i < 8; i += 1) expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(200)
+  })
+
+  it('a good login clears earlier failures for that account', async () => {
+    const env = await setup()
+    for (let i = 0; i < 4; i += 1) await call(env, '/api/admin/login', { email: EMAIL, password: 'bad bad bad bad' })
+    expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(200)
+    for (let i = 0; i < 4; i += 1) expect((await call(env, '/api/admin/login', { email: EMAIL, password: 'bad bad bad bad' })).status).toBe(401)
+  })
+
   it('rejects other origins and malformed bodies', async () => {
     const env = await setup()
     expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD }, { origin: 'https://evil.example' })).status).toBe(403)

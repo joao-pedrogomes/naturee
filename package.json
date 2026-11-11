@@ -16,7 +16,9 @@
     "typecheck:worker": "tsc -p tsconfig.worker.json",
     "db:local": "wrangler d1 migrations apply naturee --local",
     "dev:worker": "npm run build && npm run db:local && wrangler dev --port 8787",
-    "seed:admin": "node scripts/seedAdmin.ts"
+    "seed:admin": "node scripts/seedAdmin.ts",
+    "e2e:admin:serve": "rm -rf .wrangler/e2e && wrangler d1 migrations apply naturee --local --persist-to .wrangler/e2e && SEED_PASSWORD='e2e test passphrase 2026' node scripts/seedAdmin.ts admin@teste.com --persist-to .wrangler/e2e && wrangler dev --port 8788 --persist-to .wrangler/e2e",
+    "e2e:admin": "npm run build && playwright test -c playwright.admin.config.ts"
   },
   "dependencies": {
     "@fontsource-variable/mulish": "^5.3.0",
