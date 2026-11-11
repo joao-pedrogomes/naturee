@@ -37,7 +37,9 @@ async function run(): Promise<void> {
   }
 
   // The 404 fallback must stay a bare shell so the client router owns unknown paths.
-  writeFile(path.join(DIST_DIR, '404.html'), injectPage(template, { head: '', body: '' }, preloads))
+  const shell = injectPage(template, { head: '', body: '' }, preloads)
+  writeFile(path.join(DIST_DIR, '404.html'), shell)
+  writeFile(path.join(DIST_DIR, 'ssrTemplate.html'), shell)
   writeFile(path.join(DIST_DIR, 'sitemap.xml'), buildSitemap(routes, bundle.siteUrl, new Date().toISOString().slice(0, 10)))
   console.log(`sitemap with ${routes.length} routes`)
 }

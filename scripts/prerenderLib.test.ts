@@ -67,3 +67,12 @@ describe('buildSitemap', () => {
     expect(xml.match(/<url>/g)).toHaveLength(2)
   })
 })
+
+describe('injectContentScript', () => {
+  it('adds the content script before the closing body tag', async () => {
+    const { injectContentScript } = await import('./htmlShell.ts')
+    const html = injectContentScript('<html><body><div id="root"></div></body></html>', '{"a":1}')
+    expect(html).toContain('<script id="siteContent" type="application/json">{"a":1}</script>')
+    expect(html.indexOf('siteContent')).toBeLessThan(html.indexOf('</body>'))
+  })
+})

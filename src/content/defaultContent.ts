@@ -98,6 +98,7 @@ export const defaultContent: SiteContent = {
     tagline: 'Conectamos produtores, marcas e\ngastronomia com uma operação\norganizada, próxima e refrigerada.',
     whatsapp: WHATSAPP_NUMBER,
     whatsappLabel: '48 99196 3383',
+    formWhatsapp: '48 99196 3383',
     whatsappCta: 'Fale com a Naturee',
     email: 'contato@naturee.com.br',
     instagram: 'natureealimentos',
