@@ -13,5 +13,6 @@
     "noUnusedParameters": true,
     "paths": { "@/*": ["./src/*"] }
   },
+  "exclude": ["worker/testing", "worker/**/*.test.ts"],
   "include": ["worker", "src/content/overrides.ts", "src/lib/serializeContent.ts", "src/routes.ts", "scripts/htmlShell.ts"]
 }

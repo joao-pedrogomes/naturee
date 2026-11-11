@@ -1,7 +1,9 @@
 import { defaultContent, enabledRoutes } from '@ssr'
 import { buildSitemap } from '../scripts/htmlShell'
 import type { Env } from './env'
+import { error } from './http'
 import { loadContent } from './content/loadContent'
+import { handleContact } from './routes/contact'
 import { matchPageRoute, renderPage } from './render/renderPage'
 
 async function sitemap(env: Env): Promise<Response> {
@@ -15,6 +17,8 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
   const { pathname } = new URL(request.url)
 
   if (pathname === '/sitemap.xml') return sitemap(env)
+  if (pathname === '/api/contact') return handleContact(request, env, ctx)
+  if (pathname.startsWith('/api/')) return error(404, 'not_found')
 
   const route = matchPageRoute(pathname)
   if (route && request.method === 'GET') return renderPage(env, ctx, request, route, false)

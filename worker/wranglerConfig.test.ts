@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { ROUTES } from '../src/routes.ts'
+import { ROUTES } from '../src/routes'
 
 const config = JSON.parse(fs.readFileSync('wrangler.jsonc', 'utf8')) as { assets: { run_worker_first: string[] } }
 

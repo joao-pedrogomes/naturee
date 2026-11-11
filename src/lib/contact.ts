@@ -50,12 +50,14 @@ export function buildContactMessage(fields: ContactFields): string {
 type SubmitOptions = {
   apiUrl?: string
   fetchFn?: typeof fetch
+  honeypot?: string
+  elapsedMs?: number
 }
 
 /** Never throws: the caller always gets a status it can act on. */
 export async function submitContact(
   fields: ContactFields,
-  { apiUrl, fetchFn = fetch }: SubmitOptions = {},
+  { apiUrl, fetchFn = fetch, honeypot = '', elapsedMs }: SubmitOptions = {},
 ): Promise<SubmitResult> {
   if (!apiUrl) return { status: 'skipped' }
 
@@ -65,6 +67,8 @@ export async function submitContact(
     assunto: fields.subject.trim(),
     mensagem: fields.message.trim(),
     origem: 'site',
+    website: honeypot,
+    elapsedMs,
   }
 
   try {
