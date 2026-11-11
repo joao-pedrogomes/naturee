@@ -4,6 +4,7 @@ import Picture from '@/components/sections/Picture'
 import RichText from '@/components/sections/RichText'
 import type { FeatureCard } from '@/content/types'
 import { cn } from '@/lib/utils'
+import { holdLine } from '@/lib/layout'
 
 type FeatureCardsProps = {
   cards: FeatureCard[]
@@ -36,7 +37,7 @@ function FeatureCards({ cards, variant }: FeatureCardsProps) {
           <div className="flex flex-1 flex-col px-8 pt-8 pb-8 lg:px-0 lg:pb-[calc(40*var(--u))] lg:pt-[calc(45*var(--u))]">
             <div className="lg:mx-auto lg:w-fit">
             <Heading as="h3" text={card.title} className={cn('text-card-title lg:leading-[1.09]', tone.title)} />
-            <RichText text={card.text} className={cn('mt-3 text-body lg:mt-[calc(18*var(--u))] lg:whitespace-nowrap lg:leading-[1.23]', tone.text)} />
+            <RichText text={card.text} className={cn('mt-3 text-body lg:mt-[calc(18*var(--u))] lg:leading-[1.23]', holdLine(card.text), tone.text)} />
             </div>
             <Icon name="circleCheck" className="mt-auto size-8 self-center lg:size-[calc(41*var(--u))]" />
           </div>

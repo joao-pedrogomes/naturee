@@ -20,7 +20,8 @@ import { buildWhatsAppUrl } from '@/lib/whatsapp'
 
 type FormStatus = 'idle' | 'submitting' | 'done'
 
-const CONTACT_API_URL = '/api/contact'
+/** The backend lives on the Worker host only; subpath builds (GitHub Pages) have none. */
+const CONTACT_API_URL = import.meta.env.BASE_URL === '/' ? '/api/contact' : undefined
 
 const INPUT_CLASS =
   'h-14 rounded-xl border-0 bg-sand px-5 text-base text-teal shadow-none placeholder:text-[#a9a995] focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white md:text-base lg:h-[calc(81*var(--u))] lg:rounded-[calc(14*var(--u))] lg:px-[calc(27*var(--u))] lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)] md:lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)]'
@@ -112,10 +113,7 @@ function ContactForm() {
     <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 lg:gap-[calc(31*var(--u))]">
       <Heading as="h2" text={copy.title} className="text-display text-sand lg:mb-[calc(10*var(--u))] lg:ml-[calc(24*var(--u))] lg:leading-[0.935] [&_em]:font-medium" />
       <div inert className="sr-only">
-        <label>
-          Website
-          <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
-        </label>
+        <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" aria-hidden="true" />
       </div>
       {hasErrors ? (
         <p role="alert" className="rounded-xl bg-teal/40 px-4 py-3 text-small font-semibold text-white">

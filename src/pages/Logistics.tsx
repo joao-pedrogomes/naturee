@@ -9,6 +9,7 @@ import SectionLabel from '@/components/sections/SectionLabel'
 import Seo from '@/components/seo/Seo'
 import { usePage } from '@/content/siteContent'
 import { cn } from '@/lib/utils'
+import { holdLine } from '@/lib/layout'
 import { pathFor } from '@/routes'
 import stepArrow from '@/assets/icons/stepArrow.svg'
 
@@ -54,7 +55,7 @@ function Logistics() {
                   aria-hidden="true"
                   className={cn('mt-1 w-5 shrink-0 self-start lg:mt-[calc(75*var(--u))] lg:w-[calc(33*var(--u))]', STEP_OFFSETS[index])}
                 />
-                <div className="lg:ml-[calc(64*var(--u))] lg:mt-0 lg:whitespace-nowrap">
+                <div className={`lg:ml-[calc(64*var(--u))] lg:mt-0 ${holdLine(`${step.title} ${step.text}`, 70)}`}>
                   <p className="text-label font-semibold normal-case text-olive lg:leading-none">{String(index + 1).padStart(2, '0')}</p>
                   <h3 className="mt-3 font-sans text-step font-semibold text-olive uppercase lg:mt-[calc(26*var(--u))] lg:leading-none">{step.title}</h3>
                   <RichText text={step.text} className="mt-3 text-body text-black lg:mt-[calc(36*var(--u))] lg:leading-[1.3]" />

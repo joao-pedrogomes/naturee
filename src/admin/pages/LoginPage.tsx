@@ -46,7 +46,7 @@ function LoginPage() {
     <main className="flex min-h-svh items-center justify-center bg-teal px-4 py-10">
       <AdminTitle page={copy.login.title} />
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5 rounded-3xl bg-[#f7f4e6] p-8 shadow-xl">
-        <img src={logo} alt="Naturee Food Hub" width={161} height={147} className="mx-auto h-20 w-auto" />
+        <img src={logo} alt={copy.logoAlt} width={161} height={147} className="mx-auto h-20 w-auto" />
         <h1 className="text-center font-heading text-3xl text-teal">{copy.login.title}</h1>
         {error ? <Notice tone="error">{error}</Notice> : null}
         <div className="space-y-2">

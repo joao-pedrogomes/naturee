@@ -86,7 +86,7 @@ describe('admin login', () => {
 
   it('does not count successful logins against the limit', async () => {
     const env = await setup()
-    for (let i = 0; i < 8; i += 1) expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(200)
+    for (let i = 0; i < 30; i += 1) expect((await call(env, '/api/admin/login', { email: EMAIL, password: PASSWORD })).status).toBe(200)
   })
 
   it('a good login clears earlier failures for that account', async () => {

@@ -33,7 +33,7 @@ VALUES (${sqlText(email)}, ${sqlText(hash.toString('base64'))}, ${sqlText(salt.t
 ON CONFLICT(email) DO UPDATE SET password_hash = excluded.password_hash, salt = excluded.salt,
   iterations = excluded.iterations, must_change = 1;
 DELETE FROM sessions WHERE user_id = (SELECT id FROM users WHERE email = ${sqlText(email)});
-DELETE FROM rate_limits WHERE key LIKE 'login:%';
+DELETE FROM rate_limits WHERE key LIKE 'login%';
 `
   const sqlFile = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'seed-')), 'seed.sql')
   fs.writeFileSync(sqlFile, sql, { mode: 0o600 })

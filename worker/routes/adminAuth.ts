@@ -48,10 +48,11 @@ async function login(request: Request, env: Env): Promise<Response> {
 
   const ipHash = await clientHash(request, env.IP_PEPPER)
   const accountKey = `login:${ipHash}:${email}`
+  const ipKey = `login-ip:${ipHash}`
   // Counting before verifying keeps parallel guesses from slipping past the limit.
   const allowed =
     (await registerHit(env, accountKey, LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)) &&
-    (await registerHit(env, `login-ip:${ipHash}`, LOGIN_IP_ATTEMPTS, LOGIN_WINDOW_SECONDS)) &&
+    (await registerHit(env, ipKey, LOGIN_IP_ATTEMPTS, LOGIN_WINDOW_SECONDS)) &&
     (await registerHit(env, `login-acct:${email}`, LOGIN_ACCOUNT_ATTEMPTS, LOGIN_WINDOW_SECONDS))
   if (!allowed) return error(429, 'too_many_attempts')
 
@@ -62,6 +63,7 @@ async function login(request: Request, env: Env): Promise<Response> {
   const valid = await verifyPassword(password, record)
   if (!user || !valid) return error(401, 'invalid_credentials')
   await clearHits(env, accountKey)
+  await clearHits(env, ipKey)
 
   const token = await createSession(env, user.id)
   return json({ email: user.email, mustChange: user.must_change === 1 }, 200, { 'set-cookie': sessionCookie(token) })

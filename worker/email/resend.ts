@@ -11,7 +11,10 @@ function singleLine(value: string): string {
 
 /** Returns true when Resend accepted the message; never throws. */
 export async function sendMail(env: Env, message: MailMessage, fetchFn: typeof fetch = fetch): Promise<boolean> {
-  if (!env.RESEND_API_KEY) return false
+  if (!env.RESEND_API_KEY) {
+    console.warn('mail skipped: RESEND_API_KEY is not set')
+    return false
+  }
   try {
     const response = await fetchFn(RESEND_URL, {
       method: 'POST',
@@ -24,8 +27,11 @@ export async function sendMail(env: Env, message: MailMessage, fetchFn: typeof f
         text: message.text,
       }),
     })
-    return response.ok
-  } catch {
+    if (response.ok) return true
+    console.error('resend rejected the message', response.status, await response.text().catch(() => ''))
+    return false
+  } catch (failure) {
+    console.error('resend request failed', failure)
     return false
   }
 }

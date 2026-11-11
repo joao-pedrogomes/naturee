@@ -31,6 +31,6 @@ export async function handlePublicMedia(request: Request, env: Env, ctx: Executi
       'x-content-type-options': 'nosniff',
     },
   })
-  if (cache) ctx.waitUntil(cache.put(cacheKey, response.clone()))
+  if (cache) ctx.waitUntil(cache.put(cacheKey, response.clone()).catch((failure) => console.error('media cache put failed', failure)))
   return response
 }

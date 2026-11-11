@@ -1,5 +1,7 @@
 import type {
   AdminSettings,
+  AdminUser,
+  TemporaryAccess,
   ContentChange,
   ContentResponse,
   HistoryEntry,
@@ -23,6 +25,17 @@ export class ApiError extends Error {
   }
 }
 
+type UnauthorizedHandler = () => void
+
+let onUnauthorized: UnauthorizedHandler | undefined
+
+/** Lets the session provider react when the server says the session is gone. */
+export function setUnauthorizedHandler(handler: UnauthorizedHandler | undefined): void {
+  onUnauthorized = handler
+}
+
+const AUTH_PATHS = ['/api/admin/login', '/api/admin/me', '/api/admin/logout']
+
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const isForm = body instanceof FormData
   const response = await fetch(path, {
@@ -32,6 +45,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
     body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
   })
   const payload = (await response.json().catch(() => ({}))) as { error?: string }
+  if (response.status === 401 && !AUTH_PATHS.includes(path)) onUnauthorized?.()
   if (!response.ok) throw new ApiError(response.status, payload.error ?? 'request_failed', payload)
   return payload as T
 }
@@ -60,11 +74,16 @@ export const adminApi = {
   saveContent: (changes: Record<string, ContentChange>) =>
     request<{ ok: true; version: string }>('PUT', '/api/admin/content', { changes }),
   contentHistory: () => request<{ history: HistoryEntry[] }>('GET', '/api/admin/content/history'),
-  restoreContent: (version: number) => request<{ ok: true }>('POST', '/api/admin/content/restore', { version }),
+  restoreContent: (version: number) => request<{ ok: true; skipped: number }>('POST', '/api/admin/content/restore', { version }),
 
   readSettings: () => request<AdminSettings>('GET', '/api/admin/settings'),
   saveSettings: (settings: Pick<AdminSettings, 'leadNotifyEmail' | 'emailEnabled'>) =>
     request<{ ok: true }>('PUT', '/api/admin/settings', settings),
+
+  listUsers: () => request<{ users: AdminUser[] }>('GET', '/api/admin/users'),
+  createUser: (email: string) => request<TemporaryAccess & { id: number }>('POST', '/api/admin/users', { email }),
+  resetUser: (id: number) => request<TemporaryAccess>('POST', `/api/admin/users/${id}/reset`, {}),
+  deleteUser: (id: number) => request<{ ok: true }>('DELETE', `/api/admin/users/${id}`),
 
   listMedia: () => request<{ media: MediaItem[] }>('GET', '/api/admin/media'),
   uploadMedia: (image: PreparedImage, alt: string) => {

@@ -7,9 +7,9 @@ const SMALL_LIMIT_BYTES = 280_000
 const QUALITIES = [0.82, 0.72, 0.62, 0.5]
 
 export class ImageProblem extends Error {
-  readonly kind: 'notImage' | 'tooHeavy' | 'noWebp'
+  readonly kind: 'notImage' | 'tooHeavy' | 'noWebp' | 'encodeFailed'
 
-  constructor(kind: 'notImage' | 'tooHeavy' | 'noWebp') {
+  constructor(kind: 'notImage' | 'tooHeavy' | 'noWebp' | 'encodeFailed') {
     super(kind)
     this.kind = kind
   }
@@ -29,11 +29,11 @@ async function encode(bitmap: ImageBitmap, width: number, height: number, limit:
   canvas.width = width
   canvas.height = height
   const context = canvas.getContext('2d')
-  if (!context) return null
+  if (!context) throw new ImageProblem('encodeFailed')
   context.drawImage(bitmap, 0, 0, width, height)
   for (const quality of QUALITIES) {
     const blob = await toWebp(canvas, quality)
-    if (!blob) return null
+    if (!blob) throw new ImageProblem('encodeFailed')
     if (blob.type !== 'image/webp') throw new ImageProblem('noWebp')
     if (blob.size <= limit) return blob
   }
@@ -47,12 +47,15 @@ export async function prepareImage(file: File): Promise<PreparedImage> {
   const bitmap = await createImageBitmap(file).catch(() => null)
   if (!bitmap) throw new ImageProblem('notImage')
 
-  const full = scaledSize(bitmap.width, bitmap.height, MAX_FULL_WIDTH)
-  const fullBlob = await encode(bitmap, full.width, full.height, FULL_LIMIT_BYTES)
-  if (!fullBlob) throw new ImageProblem('tooHeavy')
+  try {
+    const full = scaledSize(bitmap.width, bitmap.height, MAX_FULL_WIDTH)
+    const fullBlob = await encode(bitmap, full.width, full.height, FULL_LIMIT_BYTES)
+    if (!fullBlob) throw new ImageProblem('tooHeavy')
 
-  const small = scaledSize(bitmap.width, bitmap.height, SMALL_WIDTH)
-  const smallBlob = full.width > SMALL_WIDTH ? await encode(bitmap, small.width, small.height, SMALL_LIMIT_BYTES) : null
-  bitmap.close()
-  return { full: fullBlob, small: smallBlob, width: full.width, height: full.height }
+    const small = scaledSize(bitmap.width, bitmap.height, SMALL_WIDTH)
+    const smallBlob = full.width > SMALL_WIDTH ? await encode(bitmap, small.width, small.height, SMALL_LIMIT_BYTES) : null
+    return { full: fullBlob, small: smallBlob, width: full.width, height: full.height }
+  } finally {
+    bitmap.close()
+  }
 }

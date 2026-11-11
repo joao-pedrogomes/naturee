@@ -8,7 +8,13 @@ type OverrideRow = { path: string; value: string }
 export async function loadOverrides(env: Env): Promise<Overrides> {
   const { results } = await env.DB.prepare('SELECT path, value FROM content_overrides').all<OverrideRow>()
   const overrides: Overrides = {}
-  for (const row of results) overrides[row.path] = JSON.parse(row.value)
+  for (const row of results) {
+    try {
+      overrides[row.path] = JSON.parse(row.value)
+    } catch (failure) {
+      console.error('skipping unreadable override', row.path, failure)
+    }
+  }
   return overrides
 }
 

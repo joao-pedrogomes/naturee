@@ -27,6 +27,12 @@ describe('flattenEditable', () => {
     expect(paths).not.toContain('site.ogImage')
   })
 
+  it('does not offer fields that are never rendered', () => {
+    const paths = fields.map((field) => field.path)
+    expect(paths).not.toContain('site.email')
+    expect(paths.some((path) => /^brands\.\d+\.name$/.test(path))).toBe(false)
+  })
+
   it('does not descend into images', () => {
     expect(fields.some((field) => field.path.endsWith('.image.src'))).toBe(false)
   })
@@ -61,17 +67,18 @@ describe('applyOverrides', () => {
 
 describe('validateOverride', () => {
   it('accepts matching values', () => {
-    expect(validateOverride(fields, 'site.email', 'a@b.com')).toBeNull()
+    expect(validateOverride(fields, 'site.tagline', 'Nova frase')).toBeNull()
     expect(validateOverride(fields, 'pages.home.enabled', true)).toBeNull()
     expect(validateOverride(fields, 'pages.home.hero.image', image)).toBeNull()
   })
 
   it('rejects unknown paths, wrong types and oversized text', () => {
-    expect(validateOverride(fields, 'site.url', 'https://x.com')).toBe('unknown field')
-    expect(validateOverride(fields, 'site.email', 5)).toBe('expected text')
-    expect(validateOverride(fields, 'pages.home.enabled', 'no')).toBe('expected boolean')
-    expect(validateOverride(fields, 'pages.home.hero.image', { mediaId: '' })).toBe('expected image reference')
-    expect(validateOverride(fields, 'site.tagline', 'x'.repeat(MAX_TEXT_LENGTH + 1))).toBe('text too long')
+    expect(validateOverride(fields, 'site.url', 'https://x.com')).toBe('unknown_field')
+    expect(validateOverride(fields, 'site.tagline', 5)).toBe('expected_text')
+    expect(validateOverride(fields, 'pages.home.enabled', 'no')).toBe('expected_boolean')
+    expect(validateOverride(fields, 'pages.home.hero.image', { mediaId: '' })).toBe('expected_image')
+    expect(validateOverride(fields, 'pages.home.hero.image', { ...image, alt: 'x'.repeat(301) })).toBe('text_too_long')
+    expect(validateOverride(fields, 'site.tagline', 'x'.repeat(MAX_TEXT_LENGTH + 1))).toBe('text_too_long')
   })
 
   it('only lets links use safe schemes', () => {
@@ -80,15 +87,15 @@ describe('validateOverride', () => {
       expect(validateOverride(fields, hrefPath, ok), ok).toBeNull()
     }
     for (const bad of ['javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'data:text/html,x', '//evil.com', 'vbscript:x']) {
-      expect(validateOverride(fields, hrefPath, bad), bad).toBe('unsafe link')
+      expect(validateOverride(fields, hrefPath, bad), bad).toBe('unsafe_link')
     }
-    expect(validateOverride(fields, 'site.instagramUrl', 'javascript:1')).toBe('unsafe link')
+    expect(validateOverride(fields, 'site.instagramUrl', 'javascript:1')).toBe('unsafe_link')
   })
 
-  it('validates phone numbers and e-mail addresses', () => {
+  it('validates phone numbers and hides fields the site never shows', () => {
     expect(validateOverride(fields, 'site.whatsapp', '48 99196-3383')).toBeNull()
-    expect(validateOverride(fields, 'site.whatsapp', '123')).toBe('invalid phone')
-    expect(validateOverride(fields, 'site.formWhatsapp', 'abc')).toBe('invalid phone')
-    expect(validateOverride(fields, 'site.email', 'nope')).toBe('invalid email')
+    expect(validateOverride(fields, 'site.whatsapp', '123')).toBe('invalid_phone')
+    expect(validateOverride(fields, 'site.formWhatsapp', 'abc')).toBe('invalid_phone')
+    expect(validateOverride(fields, 'site.email', 'a@b.com')).toBe('unknown_field')
   })
 })

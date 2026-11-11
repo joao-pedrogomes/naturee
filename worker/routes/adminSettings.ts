@@ -1,6 +1,6 @@
 import type { Env } from '../env'
 import { error, json, readJson } from '../http'
-import { getSetting, setSetting } from '../settings'
+import { getSetting, setSettings } from '../settings'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
@@ -21,8 +21,7 @@ async function write(request: Request, env: Env): Promise<Response> {
   if (typeof body.emailEnabled !== 'boolean') return error(422, 'invalid_enabled')
   if (body.emailEnabled && !email) return error(422, 'email_required')
 
-  await setSetting(env, 'leadNotifyEmail', email)
-  await setSetting(env, 'emailEnabled', String(body.emailEnabled))
+  await setSettings(env, { leadNotifyEmail: email, emailEnabled: String(body.emailEnabled) })
   return json({ ok: true })
 }
 

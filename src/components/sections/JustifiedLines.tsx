@@ -13,6 +13,8 @@ type JustifiedLinesProps = {
  * Below the desktop breakpoint the lines flow as ordinary text.
  */
 function JustifiedLines({ text, className, lastLine = 'start' }: JustifiedLinesProps) {
+  if (!text.includes('\n')) return <p className={cn('lg:text-justify', className)}>{renderRichText(text)}</p>
+
   const lines = text.split('\n')
 
   return (
@@ -21,7 +23,7 @@ function JustifiedLines({ text, className, lastLine = 'start' }: JustifiedLinesP
         const isLast = index === lines.length - 1
         return (
           <span
-            key={line}
+            key={`${index}-${line}`}
             className={cn(
               'lg:block lg:whitespace-nowrap',
               !isLast && 'lg:[text-align-last:justify]',

@@ -29,6 +29,7 @@ function LeadsPage() {
   const [list, setList] = useState<LeadList>()
   const [failed, setFailed] = useState(false)
   const [selected, setSelected] = useState<Lead>()
+  const [actionFailed, setActionFailed] = useState(false)
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -42,7 +43,8 @@ function LeadsPage() {
     try {
       setList(await adminApi.listLeads({ status: filter === 'all' ? undefined : filter, q: query, page }))
       setFailed(false)
-    } catch {
+    } catch (failure) {
+      console.error('could not load leads', failure)
       setFailed(true)
     }
   }, [filter, query, page])
@@ -51,10 +53,23 @@ function LeadsPage() {
     void load()
   }, [load])
 
+  async function attempt(action: () => Promise<void>) {
+    setActionFailed(false)
+    try {
+      await action()
+    } catch (failure) {
+      console.error('lead action failed', failure)
+      setActionFailed(true)
+      await load()
+    }
+  }
+
   async function changeStatus(lead: Lead, status: LeadStatus) {
-    await adminApi.updateLead(lead.id, status)
-    setSelected((current) => (current?.id === lead.id ? { ...current, status } : current))
-    await load()
+    await attempt(async () => {
+      await adminApi.updateLead(lead.id, status)
+      setSelected((current) => (current?.id === lead.id ? { ...current, status } : current))
+      await load()
+    })
   }
 
   async function open(lead: Lead) {
@@ -64,9 +79,11 @@ function LeadsPage() {
 
   async function remove(lead: Lead) {
     if (!window.confirm(copy.leads.confirmRemove)) return
-    await adminApi.deleteLead(lead.id)
-    setSelected(undefined)
-    await load()
+    await attempt(async () => {
+      await adminApi.deleteLead(lead.id)
+      setSelected(undefined)
+      await load()
+    })
   }
 
   function pickFilter(next: Filter) {
@@ -117,6 +134,7 @@ function LeadsPage() {
       />
 
       {failed ? <Notice tone="error">{copy.leads.failed}</Notice> : null}
+      {actionFailed ? <Notice tone="error">{copy.leads.actionFailed}</Notice> : null}
 
       {list && list.leads.length === 0 ? <Notice tone="info">{copy.leads.empty}</Notice> : null}
 
@@ -168,7 +186,7 @@ function LeadsPage() {
       ) : null}
 
       <Sheet open={selected !== undefined} onOpenChange={(open) => !open && setSelected(undefined)}>
-        <SheetContent side="right" closeLabel={copy.media.close} className="w-[min(100vw,32rem)] bg-[#f7f4e6] text-teal sm:max-w-lg">
+        <SheetContent side="right" closeLabel={copy.close} className="w-[min(100vw,32rem)] bg-[#f7f4e6] text-teal sm:max-w-lg">
           {selected ? (
             <>
               <SheetHeader>

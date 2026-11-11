@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ApiError, adminApi } from '@/admin/api/adminApi'
+import { adminApi } from '@/admin/api/adminApi'
 import type { ContentChange, ContentField, HistoryEntry } from '@/admin/api/types'
 import { copy } from '@/admin/copy'
 import { formatDate } from '@/admin/format'
 import { groupFields } from '@/admin/content/contentGroups'
 import FieldEditor from '@/admin/content/FieldEditor'
+import { fieldErrorsFrom } from '@/admin/content/fieldErrors'
 import { shortFieldLabel } from '@/admin/content/labels'
 import Button from '@/admin/ui/Button'
 import AdminTitle from '@/admin/ui/AdminTitle'
@@ -22,16 +23,18 @@ function ContentPage() {
   const [saving, setSaving] = useState(false)
   const [history, setHistory] = useState<HistoryEntry[]>()
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (): Promise<boolean> => {
     try {
       setFields((await adminApi.readContent()).fields)
-    } catch {
-      setOutcome({ tone: 'error', text: copy.errors.generic })
+      return true
+    } catch (failure) {
+      console.error('could not load content', failure)
+      return false
     }
   }, [])
 
   useEffect(() => {
-    void load()
+    void load().then((ok) => ok || setOutcome({ tone: 'error', text: copy.errors.generic }))
   }, [load])
 
   const pending = Object.keys(drafts).length
@@ -60,11 +63,11 @@ function ContentPage() {
       await adminApi.saveContent(drafts)
       setDrafts({})
       setErrors({})
-      await load()
-      setOutcome({ tone: 'success', text: copy.content.saved })
+      const refreshed = await load()
+      setOutcome(refreshed ? { tone: 'success', text: copy.content.saved } : { tone: 'error', text: copy.errors.refresh })
     } catch (failure) {
-      const details = failure instanceof ApiError ? (failure.details as { fields?: Record<string, string> }) : undefined
-      setErrors(details?.fields ?? {})
+      console.error('content save failed', failure)
+      setErrors(fieldErrorsFrom(failure))
       setOutcome({ tone: 'error', text: copy.content.failed })
     } finally {
       setSaving(false)
@@ -72,16 +75,27 @@ function ContentPage() {
   }
 
   async function showHistory() {
-    setHistory((await adminApi.contentHistory()).history)
+    try {
+      setHistory((await adminApi.contentHistory()).history)
+    } catch (failure) {
+      console.error('could not load history', failure)
+      setOutcome({ tone: 'error', text: copy.content.actionFailed })
+    }
   }
 
   async function restore(entry: HistoryEntry) {
     if (!window.confirm(copy.content.confirmRestore)) return
-    await adminApi.restoreContent(entry.version)
-    setDrafts({})
-    setHistory(undefined)
-    await load()
-    setOutcome({ tone: 'success', text: copy.content.saved })
+    try {
+      const { skipped } = await adminApi.restoreContent(entry.version)
+      setDrafts({})
+      setHistory(undefined)
+      const refreshed = await load()
+      if (!refreshed) setOutcome({ tone: 'error', text: copy.errors.refresh })
+      else setOutcome({ tone: skipped > 0 ? 'error' : 'success', text: skipped > 0 ? copy.content.restoreSkipped : copy.content.saved })
+    } catch (failure) {
+      console.error('restore failed', failure)
+      setOutcome({ tone: 'error', text: copy.content.actionFailed })
+    }
   }
 
   return (

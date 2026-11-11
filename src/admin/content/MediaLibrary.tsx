@@ -17,6 +17,7 @@ type MediaLibraryProps = {
 function uploadProblem(error: unknown): string {
   if (error instanceof ImageProblem) return copy.media[error.kind]
   if (error instanceof ApiError && error.status === 413) return copy.media.tooHeavy
+  if (error instanceof ApiError && error.code === 'webp_only') return copy.media.webpOnly
   return copy.media.failed
 }
 
@@ -30,8 +31,9 @@ function MediaLibrary({ onPick }: MediaLibraryProps) {
   const load = useCallback(async () => {
     try {
       setItems((await adminApi.listMedia()).media)
-    } catch {
-      setProblem(copy.media.failed)
+    } catch (failure) {
+      console.error('could not load media', failure)
+      setProblem(copy.media.loadFailed)
     }
   }, [])
 
@@ -48,9 +50,10 @@ function MediaLibrary({ onPick }: MediaLibraryProps) {
     try {
       const created = await adminApi.uploadMedia(await prepareImage(file), alt.trim())
       setAlt('')
-      await load()
       if (onPick) onPick({ ...created, createdAt: '', usedBy: [] })
+      await load()
     } catch (failure) {
+      console.error('image upload failed', failure)
       setProblem(uploadProblem(failure))
     } finally {
       setBusy(false)
@@ -74,7 +77,7 @@ function MediaLibrary({ onPick }: MediaLibraryProps) {
           <Label htmlFor="mediaAlt">{copy.media.altLabel}</Label>
           <Input id="mediaAlt" value={alt} maxLength={300} onChange={(event) => setAlt(event.target.value)} className="h-12 bg-white" />
         </div>
-        <input ref={fileInput} type="file" accept="image/*" className="sr-only" tabIndex={-1} aria-label={copy.media.upload} onChange={handleFile} />
+        <input ref={fileInput} type="file" accept="image/*" className="sr-only" tabIndex={-1} aria-hidden="true" onChange={handleFile} />
         <Button disabled={busy} onClick={() => fileInput.current?.click()}>
           {busy ? copy.media.uploading : copy.media.upload}
         </Button>

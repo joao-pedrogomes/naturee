@@ -7,6 +7,7 @@ import LeadsPage from '@/admin/pages/LeadsPage'
 import LoginPage from '@/admin/pages/LoginPage'
 import MediaPage from '@/admin/pages/MediaPage'
 import SettingsPage from '@/admin/pages/SettingsPage'
+import UsersPage from '@/admin/pages/UsersPage'
 
 function AdminApp() {
   return (
@@ -19,6 +20,7 @@ function AdminApp() {
           <Route path="conteudo" element={<ContentPage />} />
           <Route path="configuracoes" element={<SettingsPage />} />
           <Route path="imagens" element={<MediaPage />} />
+          <Route path="usuarios" element={<UsersPage />} />
           <Route path="conta" element={<AccountPage />} />
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Route>

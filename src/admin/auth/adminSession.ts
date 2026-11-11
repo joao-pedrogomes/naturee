@@ -4,12 +4,14 @@ import type { SessionUser } from '@/admin/api/types'
 export type SessionState =
   | { status: 'loading' }
   | { status: 'anonymous' }
+  | { status: 'unavailable' }
   | { status: 'authenticated'; user: SessionUser }
 
 export type AdminSessionValue = {
   state: SessionState
   signIn: (email: string, password: string) => Promise<SessionUser>
   signOut: () => Promise<void>
+  retry: () => void
   passwordChanged: () => void
 }
 

@@ -10,10 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useSiteContent } from '@/content/siteContent'
+import { useSiteContent, visibleLinks } from '@/content/siteContent'
 
 function MobileNav() {
-  const { nav, footer, site } = useSiteContent()
+  const content = useSiteContent()
+  const { nav, footer, site } = content
   const [open, setOpen] = useState(false)
 
   function closeMenu() {
@@ -34,7 +35,7 @@ function MobileNav() {
           <SheetDescription className="text-sand/70">{site.name}</SheetDescription>
         </SheetHeader>
         <nav aria-label={footer.menuTitle} className="px-4">
-          <NavLinks links={nav} className="flex-col items-start gap-2" linkClassName="text-lg font-medium tracking-wide" onNavigate={closeMenu} />
+          <NavLinks links={visibleLinks(content, nav)} className="flex-col items-start gap-2" linkClassName="text-lg font-medium tracking-wide" onNavigate={closeMenu} />
         </nav>
         <div className="mt-auto px-4 pb-6">
           <WhatsAppPill className="w-full" />

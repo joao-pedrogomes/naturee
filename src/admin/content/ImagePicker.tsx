@@ -28,6 +28,7 @@ function ImagePicker({ id, label, image, onChange }: ImagePickerProps) {
         <img src={image.src} srcSet={image.srcSet} sizes="240px" alt={image.alt} width={image.width} height={image.height} className="aspect-[3/2] w-60 rounded-xl bg-white object-cover" />
         <div className="min-w-56 flex-1 space-y-3">
           <Button variant="secondary" onClick={() => setOpen(true)}>{copy.media.choose}</Button>
+          <p className="text-xs text-teal/70">{copy.media.cropHint}</p>
           {mediaId ? (
             <div className="space-y-2">
               <Label htmlFor={`${id}-alt`}>{copy.media.altLabel}</Label>
@@ -40,7 +41,7 @@ function ImagePicker({ id, label, image, onChange }: ImagePickerProps) {
       </div>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" closeLabel={copy.media.close} className="w-[min(100vw,44rem)] bg-[#f7f4e6] text-teal sm:max-w-2xl">
+        <SheetContent side="right" closeLabel={copy.close} className="w-[min(100vw,44rem)] bg-[#f7f4e6] text-teal sm:max-w-2xl">
           <SheetHeader>
             <SheetTitle className="font-heading text-2xl text-teal">{copy.media.pick}</SheetTitle>
             <SheetDescription className="text-teal/70">{label}</SheetDescription>

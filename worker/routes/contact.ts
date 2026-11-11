@@ -29,7 +29,11 @@ function isBot(body: ContactBody): boolean {
 async function notify(env: Env, id: number, fields: ContactFields): Promise<void> {
   const enabled = (await getSetting(env, 'emailEnabled')) === 'true'
   const to = await getSetting(env, 'leadNotifyEmail')
-  if (!enabled || !to) return
+  if (!enabled) return
+  if (!to) {
+    console.warn('lead mail enabled but no recipient is configured')
+    return
+  }
   const sent = await sendMail(env, {
     to,
     replyTo: fields.email,
@@ -67,7 +71,7 @@ export async function handleContact(request: Request, env: Env, ctx: ExecutionCo
     .bind(fields.name, fields.email, fields.subject, fields.message, ipHash)
     .run()
   const id = Number(result.meta.last_row_id)
-  ctx.waitUntil(notify(env, id, fields))
-  ctx.waitUntil(pruneRateLimits(env))
+  ctx.waitUntil(notify(env, id, fields).catch((failure) => console.error('lead notification failed', id, failure)))
+  ctx.waitUntil(pruneRateLimits(env).catch((failure) => console.error('rate limit prune failed', failure)))
   return json({ ok: true, id }, 201)
 }

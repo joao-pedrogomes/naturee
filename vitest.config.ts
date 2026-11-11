@@ -25,7 +25,7 @@ export default defineConfig({
       },
       {
         plugins: [react()],
-        resolve: { alias: { ...alias, '@ssr': path.resolve(__dirname, './src/entryServer.tsx') } },
+        resolve: { alias: { ...alias, '@ssr': path.resolve(__dirname, './src/entryServer.tsx'), 'react-router-dom': 'react-router' } },
         test: {
           name: 'node',
           environment: 'node',

@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import MobileNav from '@/components/layout/MobileNav'
 import NavLinks from '@/components/layout/NavLinks'
 import WhatsAppPill from '@/components/layout/WhatsAppPill'
-import { useSiteContent } from '@/content/siteContent'
+import { useSiteContent, visibleLinks } from '@/content/siteContent'
 import { cn } from '@/lib/utils'
 import logo from '@/assets/logos/naturee.svg'
 
-const LEFT_LINK_COUNT = 3
+const LEFT_SIDE_MAX = 3
 const STICK_AT = 80
 const UNSTICK_AT = 20
 const DESKTOP_LINK = 'xl:text-[length:clamp(0.8125rem,calc(22*var(--u)),2.75rem)] xl:min-h-[calc(50*var(--u))]'
@@ -28,13 +28,15 @@ function useStuck() {
 }
 
 function SiteHeader() {
-  const { nav, site } = useSiteContent()
+  const content = useSiteContent()
+  const { nav, site } = content
   const { pathname } = useLocation()
   const stuck = useStuck()
   const overlaysHero = pathname === '/'
-  const enabled = nav.filter((link) => link.enabled)
-  const leftLinks = enabled.slice(0, LEFT_LINK_COUNT)
-  const rightLinks = enabled.slice(LEFT_LINK_COUNT)
+  const links = visibleLinks(content, nav)
+  const split = links.length >= LEFT_SIDE_MAX + 1 ? LEFT_SIDE_MAX : Math.ceil(links.length / 2)
+  const leftLinks = links.slice(0, split)
+  const rightLinks = links.slice(split)
 
   return (
     <div className={cn('z-30 h-20 w-full xl:h-[calc(306*var(--u))]', overlaysHero ? 'absolute inset-x-0 top-0' : 'relative')}>

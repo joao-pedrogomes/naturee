@@ -10,7 +10,7 @@ type NavLinksProps = {
 }
 
 const LINK_BASE =
-  'inline-flex min-h-11 items-center border-b-2 border-transparent py-1 text-sand uppercase transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand'
+  'inline-flex min-h-11 items-center whitespace-nowrap border-b-2 border-transparent py-1 text-sand uppercase transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand'
 
 function NavLinks({ links, className, linkClassName, onNavigate }: NavLinksProps) {
   const enabled = links.filter((link) => link.enabled)

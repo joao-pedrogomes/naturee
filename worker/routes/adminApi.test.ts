@@ -171,13 +171,13 @@ describe('content', () => {
 
   it('keeps history and restores an earlier state', async () => {
     const { env, cookie } = await adminEnv()
-    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.email': 'um@x.com' } }, { cookie })
-    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.email': 'dois@x.com' } }, { cookie })
+    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.tagline': 'um@x.com' } }, { cookie })
+    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.tagline': 'dois@x.com' } }, { cookie })
     const history = (await (await call(env, 'GET', '/api/admin/content/history', undefined, { cookie })).json()) as { history: { version: number; edits: number }[] }
     expect(history.history).toHaveLength(2)
     const firstSnapshot = history.history[history.history.length - 1].version
     expect((await call(env, 'POST', '/api/admin/content/restore', { version: firstSnapshot }, { cookie })).status).toBe(200)
-    expect((await fields(env, cookie)).byPath.get('site.email')?.overridden).toBe(false)
+    expect((await fields(env, cookie)).byPath.get('site.tagline')?.overridden).toBe(false)
     expect((await call(env, 'POST', '/api/admin/content/restore', { version: 9999 }, { cookie })).status).toBe(404)
   })
 
@@ -199,7 +199,7 @@ describe('content', () => {
     expect(queries).toBeLessThan(15)
     expect((await fields(env, cookie)).fields.filter((field) => field.overridden)).toHaveLength(paths.length)
 
-    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.email': 'novo@x.com' } }, { cookie })
+    await call(env, 'PUT', '/api/admin/content', { changes: { 'site.tagline': 'novo@x.com' } }, { cookie })
     queries = 0
     const history = (await (await call(env, 'GET', '/api/admin/content/history', undefined, { cookie })).json()) as { history: { version: number; edits: number }[] }
     const withMany = history.history.find((entry) => entry.edits === paths.length)!

@@ -53,3 +53,7 @@ export type MediaItem = {
 export type AdminSettings = { leadNotifyEmail: string; emailEnabled: boolean; mailConfigured: boolean }
 
 export type PreparedImage = { full: Blob; small: Blob | null; width: number; height: number }
+
+export type AdminUser = { id: number; email: string; mustChange: boolean; createdAt: string; isSelf: boolean }
+
+export type TemporaryAccess = { email: string; temporaryPassword: string }

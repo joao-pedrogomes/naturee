@@ -8,12 +8,16 @@ import { handleContent } from './routes/adminContent'
 import { handleLeads } from './routes/adminLeads'
 import { handleMedia } from './routes/adminMedia'
 import { handleSettings } from './routes/adminSettings'
+import { handleUsers } from './routes/adminUsers'
 import { handlePublicMedia } from './routes/media'
 import { handleContact } from './routes/contact'
 import { matchPageRoute, renderPage } from './render/renderPage'
 
 async function sitemap(env: Env): Promise<Response> {
-  const content = await loadContent(env).catch(() => defaultContent)
+  const content = await loadContent(env).catch((failure) => {
+    console.error('sitemap falls back to defaults', failure)
+    return defaultContent
+  })
   const paths = enabledRoutes(content).map((route) => route.path)
   const xml = buildSitemap(paths, content.site.url, new Date().toISOString().slice(0, 10))
   return new Response(xml, { headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' } })
@@ -38,7 +42,7 @@ async function adminShell(env: Env, request: Request): Promise<Response> {
   })
 }
 
-async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+async function route(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const { pathname } = new URL(request.url)
 
   if (pathname === '/sitemap.xml') return sitemap(env)
@@ -53,6 +57,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
       (await handleLeads(request, env, pathname)) ??
       (await handleContent(request, env, pathname, session)) ??
       (await handleSettings(request, env, pathname)) ??
+      (await handleUsers(request, env, pathname, session)) ??
       (await handleMedia(request, env, pathname))
     return admin ?? error(404, 'not_found')
   }
@@ -61,9 +66,18 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
   if (pathname.startsWith('/api/')) return error(404, 'not_found')
 
   const route = matchPageRoute(pathname)
-  if (route && request.method === 'GET') return renderPage(env, ctx, request, route, false)
+  if (route && request.method === 'GET') return renderPage(env, ctx, request, route)
 
   return env.ASSETS.fetch(request)
+}
+
+async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  try {
+    return await route(request, env, ctx)
+  } catch (failure) {
+    console.error('unhandled', request.method, new URL(request.url).pathname, failure)
+    return error(500, 'internal')
+  }
 }
 
 export default { fetch: handle } satisfies ExportedHandler<Env>

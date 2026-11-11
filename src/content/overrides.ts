@@ -9,6 +9,9 @@ export const MAX_TEXT_LENGTH = 2000
 export const SMALL_IMAGE_WIDTH = 720
 
 const SKIPPED_KEYS = new Set(['id', 'ids', 'icon', 'url', 'ogImage'])
+/** Editable in the data model but never shown on the site, so the admin would mislead. */
+const SKIPPED_PATH = /^(site\.email|brands\.\d+\.name)$/
+export const MAX_ALT_LENGTH = 300
 
 function isImage(value: unknown): value is Image {
   return (
@@ -53,7 +56,8 @@ function collect(value: unknown, path: string, out: EditableField[]): void {
   if (typeof value !== 'object' || value === null) return
   for (const [key, child] of Object.entries(value)) {
     if (SKIPPED_KEYS.has(key)) continue
-    collect(child, path ? `${path}.${key}` : key, out)
+    const childPath = path ? `${path}.${key}` : key
+    if (!SKIPPED_PATH.test(childPath)) collect(child, childPath, out)
   }
 }
 
@@ -85,23 +89,24 @@ export function imageFromOverride(override: ImageOverride, current: Image): Imag
 const LINK_PATH = /(^|\.)(href|instagramUrl|catalogPdfUrl)$/
 const SAFE_LINK = /^(\/(?!\/)|#|https?:\/\/|mailto:|tel:)/i
 const PHONE_PATH = /^site\.(whatsapp|formWhatsapp)$/
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 function textProblem(path: string, value: string): string | null {
-  if (value.length > MAX_TEXT_LENGTH) return 'text too long'
-  if (LINK_PATH.test(path) && !SAFE_LINK.test(value.trim())) return 'unsafe link'
-  if (PHONE_PATH.test(path) && !/^\d{10,13}$/.test(value.replace(/\D/g, ''))) return 'invalid phone'
-  if (path === 'site.email' && !EMAIL_PATTERN.test(value.trim())) return 'invalid email'
+  if (value.length > MAX_TEXT_LENGTH) return 'text_too_long'
+  if (LINK_PATH.test(path) && !SAFE_LINK.test(value.trim())) return 'unsafe_link'
+  if (PHONE_PATH.test(path) && !/^\d{10,13}$/.test(value.replace(/\D/g, ''))) return 'invalid_phone'
   return null
 }
 
 /** Returns an error message, or null when the value fits the field at `path`. */
 export function validateOverride(fields: EditableField[], path: string, value: unknown): string | null {
   const field = fields.find((candidate) => candidate.path === path)
-  if (!field) return 'unknown field'
-  if (field.kind === 'boolean') return typeof value === 'boolean' ? null : 'expected boolean'
-  if (field.kind === 'image') return isImageOverride(value) ? null : 'expected image reference'
-  if (typeof value !== 'string') return 'expected text'
+  if (!field) return 'unknown_field'
+  if (field.kind === 'boolean') return typeof value === 'boolean' ? null : 'expected_boolean'
+  if (field.kind === 'image') {
+    if (!isImageOverride(value)) return 'expected_image'
+    return value.alt.length <= MAX_ALT_LENGTH ? null : 'text_too_long'
+  }
+  if (typeof value !== 'string') return 'expected_text'
   return textProblem(path, value)
 }
 

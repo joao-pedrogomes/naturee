@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
-import { ApiError, adminApi } from '@/admin/api/adminApi'
+import { adminApi } from '@/admin/api/adminApi'
 import type { AdminSettings, ContentChange, ContentField } from '@/admin/api/types'
 import { copy } from '@/admin/copy'
 import FieldEditor from '@/admin/content/FieldEditor'
+import { fieldErrorsFrom } from '@/admin/content/fieldErrors'
 import { fieldLabel } from '@/admin/content/labels'
 import Button from '@/admin/ui/Button'
 import AdminTitle from '@/admin/ui/AdminTitle'
@@ -40,12 +41,19 @@ function SettingsPage() {
       if (Object.keys(drafts).length > 0) await adminApi.saveContent(drafts)
       setDrafts({})
       setErrors({})
+    } catch (failure) {
+      console.error('settings save failed', failure)
+      setErrors(fieldErrorsFrom(failure))
+      setOutcome({ tone: 'error', text: copy.settings.failed })
+      setSaving(false)
+      return
+    }
+    try {
       await load()
       setOutcome({ tone: 'success', text: copy.settings.saved })
     } catch (failure) {
-      const details = failure instanceof ApiError ? (failure.details as { fields?: Record<string, string> }) : undefined
-      setErrors(details?.fields ?? {})
-      setOutcome({ tone: 'error', text: copy.settings.failed })
+      console.error('could not refresh settings', failure)
+      setOutcome({ tone: 'error', text: copy.errors.refresh })
     } finally {
       setSaving(false)
     }

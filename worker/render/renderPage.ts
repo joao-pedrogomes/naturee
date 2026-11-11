@@ -33,7 +33,10 @@ async function renderFresh(env: Env, route: RouteDef, origin: string): Promise<R
 
 /** Falls back to the prerendered static page so a backend failure never takes the site down. */
 async function staticFallback(env: Env, request: Request): Promise<Response> {
-  return env.ASSETS.fetch(request)
+  const response = await env.ASSETS.fetch(request)
+  const marked = new Response(response.body, response)
+  marked.headers.set('x-render-fallback', '1')
+  return marked
 }
 
 export async function renderPage(
@@ -41,25 +44,21 @@ export async function renderPage(
   ctx: ExecutionContext,
   request: Request,
   route: RouteDef,
-  bypassCache: boolean,
 ): Promise<Response> {
   const url = new URL(request.url)
   const cache = caches.default
 
   try {
     const version = await loadContentVersion(env)
-    if (version === PRISTINE_VERSION) return staticFallback(env, request)
+    if (version === PRISTINE_VERSION) return await staticFallback(env, request)
     const cacheKey = new Request(`${url.origin}/__page/${env.CF_VERSION?.id ?? 'dev'}/${version}${route.path}`)
-    if (!bypassCache) {
-      const hit = await cache.match(cacheKey)
-      if (hit) return hit
-    }
+    const hit = await cache.match(cacheKey)
+    if (hit) return hit
     const response = await renderFresh(env, route, url.origin)
-    if (bypassCache) response.headers.set('cache-control', 'no-store')
-    if (!bypassCache) ctx.waitUntil(cache.put(cacheKey, response.clone()))
+    ctx.waitUntil(cache.put(cacheKey, response.clone()).catch((failure) => console.error('page cache put failed', failure)))
     return response
-  } catch (error) {
-    console.error('render failed, serving static page', error)
+  } catch (failure) {
+    console.error('render failed, serving static page', route.path, failure)
     return staticFallback(env, request)
   }
 }

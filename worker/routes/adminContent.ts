@@ -90,14 +90,14 @@ async function write(request: Request, env: Env, session: AdminSession): Promise
   for (const [path, value] of entries) {
     if (value === null) {
       if (fields.some((field) => field.path === path)) removals.push(path)
-      else invalid[path] = 'unknown field'
+      else invalid[path] = 'unknown_field'
       continue
     }
     let stored = value
     if (isImageValue(value)) {
       const row = media.get(value.mediaId)
       if (!row) {
-        invalid[path] = 'unknown media'
+        invalid[path] = 'unknown_media'
         continue
       }
       stored = { mediaId: row.id, alt: value.alt, width: row.width, height: row.height } satisfies ImageOverride
@@ -118,6 +118,14 @@ async function write(request: Request, env: Env, session: AdminSession): Promise
   return json({ ok: true, version: await publish(env, statements) })
 }
 
+function countEdits(snapshot: string): number {
+  try {
+    return Object.keys(JSON.parse(snapshot) as Overrides).length
+  } catch {
+    return 0
+  }
+}
+
 async function history(env: Env): Promise<Response> {
   const { results } = await env.DB.prepare(
     'SELECT version, created_at, created_by, json FROM content_history ORDER BY version DESC',
@@ -127,7 +135,7 @@ async function history(env: Env): Promise<Response> {
       version: row.version,
       createdAt: row.created_at,
       createdBy: row.created_by,
-      edits: Object.keys(JSON.parse(row.json) as Overrides).length,
+      edits: countEdits(row.json),
     })),
   })
 }
@@ -145,9 +153,12 @@ async function restore(request: Request, env: Env, session: AdminSession): Promi
   )
   const fields = flattenEditable(defaultContent)
   const rows: StoredRow[] = []
+  let skipped = 0
   for (const [path, value] of Object.entries(snapshot)) {
-    if (isImageValue(value) && !media.has(value.mediaId)) continue
-    if (validateOverride(fields, path, value) !== null) continue
+    if ((isImageValue(value) && !media.has(value.mediaId)) || validateOverride(fields, path, value) !== null) {
+      skipped += 1
+      continue
+    }
     rows.push({ p: path, v: JSON.stringify(value) })
   }
 
@@ -157,7 +168,7 @@ async function restore(request: Request, env: Env, session: AdminSession): Promi
     env.DB.prepare('DELETE FROM content_overrides'),
     ...upsertStatement(env, rows, session.email),
   ]
-  return json({ ok: true, version: await publish(env, statements) })
+  return json({ ok: true, version: await publish(env, statements), skipped })
 }
 
 export async function handleContent(

@@ -8,8 +8,10 @@ export async function getSetting(env: Env, key: SettingKey): Promise<string | un
   return row?.value
 }
 
-export async function setSetting(env: Env, key: string, value: string): Promise<void> {
-  await env.DB.prepare('INSERT INTO settings (key, value) VALUES (?1, ?2) ON CONFLICT(key) DO UPDATE SET value = ?2')
-    .bind(key, value)
-    .run()
+/** One batch, so a partial write can never leave the two settings out of step. */
+export async function setSettings(env: Env, values: Partial<Record<SettingKey, string>>): Promise<void> {
+  const statements = Object.entries(values).map(([key, value]) =>
+    env.DB.prepare('INSERT INTO settings (key, value) VALUES (?1, ?2) ON CONFLICT(key) DO UPDATE SET value = ?2').bind(key, value),
+  )
+  await env.DB.batch(statements)
 }

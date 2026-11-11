@@ -1,5 +1,6 @@
 import Icon from '@/components/icons/Icon'
 import { renderRichText } from '@/lib/richText'
+import { holdLine } from '@/lib/layout'
 import type { TrustItem } from '@/content/types'
 
 type TrustStripProps = {
@@ -18,7 +19,7 @@ function TrustStrip({ items }: TrustStripProps) {
           <h3 className="mt-3 font-sans text-[1.0625rem] font-extrabold text-sand lg:mt-[calc(22*var(--u))] lg:text-[length:clamp(1.0625rem,calc(25*var(--u)),2.75rem)]">
             {item.title}
           </h3>
-          <p className="mt-1 max-w-[16rem] text-foot text-sand lg:mt-[calc(8*var(--u))] lg:max-w-none lg:whitespace-nowrap">{renderRichText(item.text)}</p>
+          <p className={`mt-1 max-w-[16rem] text-foot text-sand lg:mt-[calc(8*var(--u))] lg:max-w-none ${holdLine(item.text)}`}>{renderRichText(item.text)}</p>
         </li>
       ))}
     </ul>
