@@ -24,3 +24,5 @@ export function routesToPrerender(): string[] {
 }
 
 export const siteUrl = defaultContent.site.url
+
+export { defaultContent, enabledRoutes }

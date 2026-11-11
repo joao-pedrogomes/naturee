@@ -1,0 +1,25 @@
+import { defaultContent, enabledRoutes } from '@ssr'
+import { buildSitemap } from '../scripts/htmlShell'
+import type { Env } from './env'
+import { loadContent } from './content/loadContent'
+import { matchPageRoute, renderPage } from './render/renderPage'
+
+async function sitemap(env: Env): Promise<Response> {
+  const content = await loadContent(env).catch(() => defaultContent)
+  const paths = enabledRoutes(content).map((route) => route.path)
+  const xml = buildSitemap(paths, content.site.url, new Date().toISOString().slice(0, 10))
+  return new Response(xml, { headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' } })
+}
+
+async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  const { pathname } = new URL(request.url)
+
+  if (pathname === '/sitemap.xml') return sitemap(env)
+
+  const route = matchPageRoute(pathname)
+  if (route && request.method === 'GET') return renderPage(env, ctx, request, route, false)
+
+  return env.ASSETS.fetch(request)
+}
+
+export default { fetch: handle } satisfies ExportedHandler<Env>

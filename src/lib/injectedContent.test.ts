@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { defaultContent } from '@/content/defaultContent'
-import { INJECTED_CONTENT_ID, readInjectedContent, serializeContent } from '@/lib/injectedContent'
+import { readInjectedContent } from '@/lib/injectedContent'
+import { INJECTED_CONTENT_ID, serializeContent } from '@/lib/serializeContent'
 
 describe('injected content', () => {
   it('round-trips content through a script tag', () => {

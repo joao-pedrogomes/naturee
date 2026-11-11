@@ -1,32 +1,31 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
-*.local
-
+dist-ssr/
+.DS_Store
 # Editor directories and files
+.idea
+lerna-debug.log*
+*.local
+# Local verification screenshots
+*.log
+logs
+# Logs
+*.njsproj
+node_modules
+npm-debug.log*
+*.ntvs*
+plan-assets/*.zip
+# Playwright
+playwright-report
+pnpm-debug.log*
+.screenshots
+*.sln
+*.suo
+*.sw?
+test-results
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Local verification screenshots
-.screenshots
-plan-assets/*.zip
-
-# Playwright
-test-results
-playwright-report
+.wrangler/
+yarn-debug.log*
+yarn-error.log*

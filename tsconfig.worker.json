@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["worker", "src/content/overrides.ts", "src/lib/serializeContent.ts", "src/routes.ts", "scripts/htmlShell.ts"]
+}
