@@ -32,7 +32,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="bg-sand py-16 lg:pt-[calc(59*var(--u))] lg:pb-[calc(44*var(--u))]">
+      <section className="bg-sand py-16 lg:py-[calc(118*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.about.label}</SectionLabel>
           <div className="mt-10 grid items-start gap-10 md:grid-cols-2 lg:mt-[calc(60*var(--u))] lg:grid-cols-[calc(668*var(--u))_calc(735*var(--u))] lg:justify-between lg:gap-0 lg:pl-0 lg:ml-[calc(-3*var(--u))] lg:w-[calc(1482*var(--u))]">
@@ -41,7 +41,7 @@ function About() {
               className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(534*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
             <div className="lg:-mt-[calc(8*var(--u))] lg:w-[calc(735*var(--u))]">
-              <Heading text={page.about.title} className="text-display text-teal lg:leading-[0.935]" />
+              <Heading text={page.about.title} className="text-[length:clamp(1.8rem,calc(62.1*var(--u)),7.2rem)] leading-[1.02] text-teal lg:leading-[0.985]" />
               <div className="mt-6 space-y-4 lg:mt-[calc(41*var(--u))] lg:space-y-[calc(39*var(--u))]">
                 {page.about.paragraphs.map((paragraph) => (
                   <RichText key={paragraph} text={paragraph} className={PARAGRAPH} />
@@ -52,7 +52,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(56*var(--u))] lg:pb-[calc(66*var(--u))]">
+      <section className="py-16 lg:py-[calc(118*var(--u))]">
         <Container className="text-center lg:flex lg:flex-col lg:items-center">
           <SectionLabel>{page.history.label}</SectionLabel>
           <Heading text={page.history.title} className="mt-4 text-title text-teal lg:mt-[calc(37*var(--u))]" />
@@ -83,7 +83,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="bg-sand pb-16 pt-16 lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(301*var(--u)),white_0)] lg:pt-[calc(63*var(--u))] lg:pb-[calc(37*var(--u))]">
+      <section className="bg-sand pb-16 pt-16 lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(391*var(--u)),white_0)] lg:pt-[calc(153*var(--u))] lg:pb-[calc(37*var(--u))]">
         <Container>
           <CtaBanner label={page.banner.label} title={page.banner.title} primary={page.banner.primary} secondary={page.banner.secondary} />
         </Container>

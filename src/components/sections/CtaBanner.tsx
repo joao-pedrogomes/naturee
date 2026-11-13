@@ -32,12 +32,25 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
           withImage ? 'lg:pt-[calc(57*var(--u))] lg:pr-[calc(40*var(--u))] lg:pl-[calc(61*var(--u))]' : 'items-center text-center lg:pt-[calc(69*var(--u))]',
         )}
       >
-        <SectionLabel tone="cream" className="lg:text-[length:calc(23*var(--u))] lg:font-normal">
+        <SectionLabel
+          tone="cream"
+          className={cn(
+            'lg:font-normal',
+            withImage
+              ? 'lg:text-[length:calc(23*var(--u))]'
+              : 'text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase lg:text-[length:calc(20.7*var(--u))]',
+          )}
+        >
           {label}
         </SectionLabel>
         <Heading
           text={title}
-          className={cn('mt-4 text-display text-teal', withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]')}
+          className={cn(
+            'mt-4 text-teal',
+            withImage
+              ? 'text-display lg:mt-[calc(27*var(--u))] lg:font-medium'
+              : 'text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] lg:mt-[calc(26*var(--u))]',
+          )}
         />
         {text ? (
           <RichText
