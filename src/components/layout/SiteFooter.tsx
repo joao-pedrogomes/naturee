@@ -81,7 +81,7 @@ function SiteFooter() {
               </li>
               <li className="flex min-h-11 items-start gap-3 py-2 text-sand lg:min-h-0 lg:gap-[calc(14*var(--u))] lg:py-0">
                 <img src={footerPin} alt="" aria-hidden="true" className="mt-0.5 size-[1.1em] shrink-0 lg:size-[calc(20*var(--u))]" />
-                <span className="text-foot font-medium text-[#e9e3ba] lg:w-max lg:max-w-[max(calc(340*var(--u)),17rem)] lg:shrink-0">{site.regionLine}</span>
+                <span className="text-foot font-medium text-[#e9e3ba] lg:w-max lg:max-w-[max(calc(340*var(--u)),17rem)] lg:shrink-0 whitespace-pre-line">{site.regionLine}</span>
               </li>
               <li>
                 <a href={site.instagramUrl} target="_blank" rel="noopener" className={CONTACT_LINK}>

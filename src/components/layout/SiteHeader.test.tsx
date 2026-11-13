@@ -18,13 +18,14 @@ function renderHeader(path = '/sobre', content: SiteContent = defaultContent) {
 }
 
 describe('SiteHeader', () => {
-  it('renders the five nav links with their routes', () => {
+  it('renders the five nav links and the WhatsApp pill, in order, in one nav after the logo', () => {
     renderHeader()
     const primary = screen.getByRole('navigation', { name: 'Principal' })
-    const secondary = screen.getByRole('navigation', { name: 'Secundária' })
-    const links = [...primary.querySelectorAll('a'), ...secondary.querySelectorAll('a')]
-    const hrefs = links.map((link) => link.getAttribute('href'))
+    expect(screen.queryByRole('navigation', { name: 'Secundária' })).not.toBeInTheDocument()
+    const hrefs = [...primary.querySelectorAll('a')].map((link) => link.getAttribute('href'))
     expect(hrefs).toEqual(['/', '/sobre', '/marcas-e-produtos', '/logistica', '/contato', expect.stringContaining('wa.me')])
+    const logo = screen.getByRole('img', { name: defaultContent.site.name }).closest('a')
+    expect(logo?.compareDocumentPosition(primary)).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
   })
 
   it('marks the current page link', () => {

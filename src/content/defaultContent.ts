@@ -103,7 +103,7 @@ export const defaultContent: SiteContent = {
     email: 'contato@natureefoodhub.com.br',
     instagram: 'natureealimentos',
     instagramUrl: 'https://www.instagram.com/natureealimentos',
-    regionLine: REGION_LINE,
+    regionLine: 'Atendemos o litoral catarinense,\nde Itajaí a Araranguá.',
     catalogPdfUrl: '/catalogoNaturee.pdf',
     url: 'https://natureefoodhub.com.br',
     ogImage: '/ogDefault.jpg',

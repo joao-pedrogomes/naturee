@@ -29,4 +29,11 @@ describe('SiteFooter', () => {
     expect(screen.getByRole('link', { name: /natureealimentos/ })).toHaveAttribute('href', 'https://www.instagram.com/natureealimentos')
     expect(screen.getByText('Atendemos o litoral catarinense, de Itajaí a Araranguá.')).toBeInTheDocument()
   })
+
+  it('breaks the region line before "de Itajaí" on every screen size', () => {
+    renderFooter()
+    const region = screen.getByText('Atendemos o litoral catarinense, de Itajaí a Araranguá.')
+    expect(region.textContent).toBe('Atendemos o litoral catarinense,\nde Itajaí a Araranguá.')
+    expect(region).toHaveClass('whitespace-pre-line')
+  })
 })
