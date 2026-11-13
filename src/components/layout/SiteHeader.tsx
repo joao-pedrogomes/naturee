@@ -9,7 +9,7 @@ import logo from '@/assets/logos/naturee.svg'
 
 const STICK_AT = 80
 const UNSTICK_AT = 20
-const DESKTOP_LINK = 'xl:text-[length:clamp(0.8125rem,calc(22*var(--u)),2.75rem)] xl:min-h-[calc(50*var(--u))]'
+const DESKTOP_LINK = 'xl:text-[length:clamp(0.8125rem,calc(19.3*var(--u)),2.4rem)] xl:min-h-[calc(50*var(--u))]'
 
 function useStuck() {
   const [stuck, setStuck] = useState(false)
