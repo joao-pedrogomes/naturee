@@ -277,7 +277,7 @@ export const defaultContent: SiteContent = {
         description: 'Marcas parceiras e categorias de produtos especiais — frescos, antepastos, laticínios, massas, charcutaria e gourmet — para o food service.',
       },
       hero: {
-        title: 'Uma seleção de *boas*\n*origens* e *grandes*\n*sabores*.',
+        title: 'Uma seleção de *boas*\n*origens* e *grandes sabores*.',
         text: 'Conheça as marcas e categorias que fazem parte da Naturee Food Hub, reunidas para trazer mais variedade, qualidade e praticidade à sua operação.',
         image: banner('Colher retirando patê de cogumelos de um pote Sítio Pura Vida', [productsHero1440, productsHero960, productsHero640]),
         cta: { label: 'Acessar catálogo', href: '#catalog' },

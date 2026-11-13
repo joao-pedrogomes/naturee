@@ -25,10 +25,13 @@ function Products() {
       <Seo seo={page.seo} path={pathFor('products')} />
 
       <section className="grid bg-olive text-sand md:grid-cols-2 lg:h-[calc(721*var(--u))] lg:grid-cols-[calc(966*var(--u))_1fr]">
-        <Picture image={page.hero.image} priority className="h-64 w-full object-cover object-left md:h-full md:min-h-[24rem] lg:h-full lg:min-h-0" />
-        <div className="flex flex-col justify-start px-4 py-12 sm:px-6 lg:py-0 lg:pt-[calc(125*var(--u))] lg:pr-0 lg:pl-[calc(111*var(--u))]">
-          <Heading as="h1" text={page.hero.title} className="text-display text-teal lg:leading-[0.935]" />
-          <p className={`mt-6 max-w-[42ch] text-sand lg:mt-[calc(11*var(--u))] lg:max-w-[calc(640*var(--u))] lg:text-[length:clamp(1rem,calc(30*var(--u)),3.5rem)] lg:leading-[1.17]`}>
+        <div className="h-64 overflow-hidden md:h-full md:min-h-[24rem] lg:min-h-0">
+          {/* Zoomed in from the bottom-left corner so the jar leads and the hand is trimmed. */}
+          <Picture image={page.hero.image} priority className="h-full w-full origin-bottom-left scale-[1.25] object-cover md:scale-[1.1] lg:scale-[1.25] object-left-bottom" />
+        </div>
+        <div className="flex flex-col justify-center px-4 py-12 sm:px-6 lg:py-0 lg:pr-0 lg:pl-[calc(111*var(--u))]">
+          <Heading as="h1" text={page.hero.title} className="text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:leading-[0.935]" />
+          <p className={`mt-8 max-w-[42ch] text-sand lg:text-justify lg:mt-[calc(40*var(--u))] lg:max-w-[calc(640*var(--u))] lg:text-[length:clamp(1rem,calc(30*var(--u)),3.5rem)] lg:leading-[1.17]`}>
             {renderRichText(page.hero.text)}
           </p>
           <div className="mt-8 lg:mt-[calc(40*var(--u))]">
