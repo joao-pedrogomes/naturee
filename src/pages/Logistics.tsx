@@ -3,6 +3,7 @@ import Container from '@/components/sections/Container'
 import CtaBanner from '@/components/sections/CtaBanner'
 import CtaLink from '@/components/sections/CtaLink'
 import Heading from '@/components/sections/Heading'
+import JustifiedLines from '@/components/sections/JustifiedLines'
 import Picture from '@/components/sections/Picture'
 import RichText from '@/components/sections/RichText'
 import SectionLabel from '@/components/sections/SectionLabel'
@@ -38,7 +39,7 @@ function Logistics() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(26*var(--u))] lg:pb-[calc(69*var(--u))]">
+      <section className="py-16 lg:py-[calc(118*var(--u))]">
         <Container className="text-center">
           <SectionLabel>{page.how.label}</SectionLabel>
           <Heading text={page.how.title} className="mx-auto mt-4 max-w-[26ch] text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none" />
@@ -47,26 +48,31 @@ function Logistics() {
             {page.how.steps.map((step, index) => (
               <li
                 key={step.title}
-                className={cn('flex gap-4 md:px-[4%] md:first:pl-0 md:last:pr-0 lg:h-[calc(233*var(--u))] lg:px-0', index > 0 && 'md:border-l-2 md:border-olive')}
+                className={cn(
+                  'grid grid-cols-[auto_1fr] content-start gap-x-4 md:px-[4%] md:first:pl-0 md:last:pr-0 lg:h-[calc(233*var(--u))] lg:gap-x-[calc(48*var(--u))] lg:px-0',
+                  index > 0 && 'md:border-l-2 md:border-olive',
+                  holdLine(`${step.title} ${step.text}`, 70),
+                )}
               >
+                <p className="col-start-2 mb-3 text-label font-semibold normal-case text-olive lg:mb-[calc(26*var(--u))] lg:leading-none">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                {/* Shares the title's row so it stays centred on the title whatever the font size. */}
                 <img
                   src={stepArrow}
                   alt=""
                   aria-hidden="true"
-                  className={cn('mt-1 w-5 shrink-0 self-start lg:mt-[calc(75*var(--u))] lg:w-[calc(33*var(--u))]', STEP_OFFSETS[index])}
+                  className={cn('col-start-1 row-start-2 w-5 self-center lg:w-[calc(33*var(--u))]', STEP_OFFSETS[index])}
                 />
-                <div className={`lg:ml-[calc(64*var(--u))] lg:mt-0 ${holdLine(`${step.title} ${step.text}`, 70)}`}>
-                  <p className="text-label font-semibold normal-case text-olive lg:leading-none">{String(index + 1).padStart(2, '0')}</p>
-                  <h3 className="mt-3 font-sans text-step font-semibold text-olive uppercase lg:mt-[calc(26*var(--u))] lg:leading-none">{step.title}</h3>
-                  <RichText text={step.text} className="mt-3 text-body text-black lg:mt-[calc(36*var(--u))] lg:leading-[1.3]" />
-                </div>
+                <h3 className="col-start-2 row-start-2 font-sans text-step font-semibold text-olive uppercase lg:leading-none">{step.title}</h3>
+                <RichText text={step.text} className="col-start-2 mt-3 text-body text-black lg:mt-[calc(36*var(--u))] lg:leading-[1.3]" />
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      <section className="relative bg-sand py-16 lg:h-[calc(827*var(--u))] lg:py-0">
+      <section className="relative bg-sand py-16 lg:h-[calc(867*var(--u))] lg:py-0">
         <Picture
           image={page.regions.image}
           className="mx-auto w-full max-w-md object-contain lg:absolute lg:inset-x-0 lg:top-[calc(17*var(--u))] lg:mx-0 lg:h-[calc(795*var(--u))] lg:max-w-none lg:w-full"
@@ -74,8 +80,8 @@ function Logistics() {
         <Container className="relative lg:pt-[calc(213*var(--u))]">
           <div className="lg:w-[calc(700*var(--u))]">
             <SectionLabel>{page.regions.label}</SectionLabel>
-            <Heading text={page.regions.title} className="mt-6 text-display text-teal lg:mt-[calc(59*var(--u))] lg:leading-[0.935]" />
-            <RichText text={page.regions.text} className={`mt-6 ${PARAGRAPH} lg:mt-[calc(48*var(--u))] lg:leading-[1.31] [&_strong]:font-extrabold [&_em]:font-medium`} />
+            <Heading text={page.regions.title} className="mt-6 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(59*var(--u))] lg:leading-[0.935]" />
+            <RichText text={page.regions.text} className={`mt-6 ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:mt-[calc(48*var(--u))] lg:leading-[1.31] [&_strong]:font-extrabold [&_em]:font-medium`} />
           </div>
         </Container>
       </section>
@@ -84,7 +90,7 @@ function Logistics() {
         <Container className="text-center">
           <SectionLabel>{page.audience.label}</SectionLabel>
           <Heading text={page.audience.title} className="mx-auto mt-4 max-w-[26ch] text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none" />
-          <RichText text={page.audience.text} className={`mx-auto mt-5 max-w-[56ch] ${PARAGRAPH} lg:mt-[calc(15*var(--u))] lg:max-w-none`} />
+          <RichText text={page.audience.text} className={`mx-auto mt-12 max-w-[56ch] ${PARAGRAPH} lg:mt-[calc(64*var(--u))] lg:max-w-none`} />
           <ul className="mt-12 grid grid-cols-2 gap-4 lg:mt-[calc(64*var(--u))] lg:grid-cols-4 lg:gap-[calc(25*var(--u))]">
             {page.audience.items.map((item, index) => (
               <li
@@ -99,13 +105,13 @@ function Logistics() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(97*var(--u))] lg:pb-[calc(82*var(--u))]">
+      <section className="py-16 lg:py-[calc(97*var(--u))]">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[calc(819*var(--u))_1fr] lg:gap-0">
-            <div className="lg:pl-[calc(4*var(--u))]">
+            <div className="lg:flex lg:flex-col lg:pl-[calc(4*var(--u))]">
               <SectionLabel>{page.planning.label}</SectionLabel>
-              <Heading text={page.planning.title} className="mt-6 text-display text-teal lg:mt-[calc(68*var(--u))] lg:leading-[0.935]" />
-              <RichText text={page.planning.text} className={`mt-6 ${PARAGRAPH} lg:mt-[calc(20*var(--u))] lg:leading-[1.31]`} />
+              <Heading text={page.planning.title} className="mt-6 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(68*var(--u))] lg:leading-[0.935]" />
+              <JustifiedLines text={page.planning.text} className={`mt-6 ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:mt-auto lg:w-max lg:pt-[calc(20*var(--u))] lg:leading-[1.31]`} />
             </div>
             <ul className="flex flex-col gap-5 lg:ml-[calc(-6*var(--u))] lg:gap-[calc(33*var(--u))] lg:pt-[calc(103*var(--u))]">
               {page.planning.boxes.map((box, index) => (
@@ -113,7 +119,7 @@ function Logistics() {
                   <Icon name={box.icon} className="mt-4 h-8 w-auto shrink-0 lg:mt-[calc(38*var(--u))] lg:h-[calc(40*var(--u))] lg:w-[calc(36*var(--u))]" />
                   <div
                     className={cn(
-                      'flex-1 rounded-2xl px-8 py-6 lg:h-[calc(152*var(--u))] lg:w-[calc(522*var(--u))] lg:flex-none lg:rounded-[calc(8*var(--u))] lg:pr-[calc(8*var(--u))] lg:pl-[calc(50*var(--u))] lg:py-0 lg:pt-[calc(36*var(--u))]',
+                      'flex flex-1 flex-col justify-center rounded-2xl px-8 py-6 lg:h-[calc(152*var(--u))] lg:w-[calc(522*var(--u))] lg:flex-none lg:rounded-[calc(8*var(--u))] lg:pr-[calc(8*var(--u))] lg:pl-[calc(50*var(--u))] lg:py-0',
                       index % 2 === 0 ? 'bg-teal text-sand' : 'border-2 border-teal bg-white text-teal',
                     )}
                   >

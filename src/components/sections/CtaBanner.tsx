@@ -46,10 +46,8 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
         <Heading
           text={title}
           className={cn(
-            'mt-4 text-teal',
-            withImage
-              ? 'text-display lg:mt-[calc(27*var(--u))] lg:font-medium'
-              : 'text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] lg:mt-[calc(26*var(--u))]',
+            'mt-4 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal',
+            withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]',
           )}
         />
         {text ? (
