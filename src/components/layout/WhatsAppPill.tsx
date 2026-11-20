@@ -16,11 +16,16 @@ function WhatsAppPill({ className }: WhatsAppPillProps) {
       target="_blank"
       rel="noopener"
       className={cn(
-        'inline-flex min-h-11 whitespace-nowrap items-center justify-center gap-2 rounded-full bg-olive px-5 py-2 text-[0.9375rem] font-medium text-sand uppercase transition-colors hover:bg-olive-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand lg:h-[calc(62*var(--u))] lg:gap-[calc(10*var(--u))] lg:px-[calc(17*var(--u))] lg:text-[length:clamp(0.8125rem,calc(19.3*var(--u)),2.4rem)]',
+        'inline-flex min-h-11 whitespace-nowrap items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-2 text-[0.9375rem] font-medium text-teal uppercase transition-colors hover:bg-whatsapp-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand lg:h-[calc(62*var(--u))] lg:gap-[calc(10*var(--u))] lg:px-[calc(17*var(--u))] lg:text-[length:clamp(0.8125rem,calc(19.3*var(--u)),2.4rem)]',
         className,
       )}
     >
-      <img src={whatsappIcon} alt="" aria-hidden="true" className="size-[1.1em] lg:size-[calc(30*var(--u))]" />
+      {/* The SVG carries a fixed cream fill, so it is used as a mask over a teal box instead of an <img>. */}
+      <span
+        aria-hidden="true"
+        className="size-[1.1em] shrink-0 bg-teal lg:size-[calc(30*var(--u))]"
+        style={{ mask: `url(${whatsappIcon}) center / contain no-repeat`, WebkitMask: `url(${whatsappIcon}) center / contain no-repeat` }}
+      />
       <span>{site.whatsappCta}</span>
     </a>
   )
