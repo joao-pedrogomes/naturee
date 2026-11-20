@@ -1,4 +1,5 @@
 import ContactForm from '@/components/contact/ContactForm'
+import LocationCard from '@/components/contact/LocationCard'
 import Container from '@/components/sections/Container'
 import Heading from '@/components/sections/Heading'
 import RichText from '@/components/sections/RichText'
@@ -18,11 +19,13 @@ function Contact() {
         <Container>
           <div className="grid gap-6 lg:grid-cols-[calc(659*var(--u))_1fr] lg:gap-0">
             <SectionLabel className="text-olive lg:ml-[calc(20*var(--u))]">{page.hero.label}</SectionLabel>
-            <div className="lg:-mt-[calc(4*var(--u))]">
-              <Heading as="h1" text={page.hero.title} className="text-display text-olive lg:leading-[0.935]" />
+            {/* On desktop the box is as wide as the title's longest line; the paragraph (w-0 + min-w-full) is sized by it, not the other way round.
+                The paragraph size is 0.43 x the title's (29 / 67.5, bounds too), so its justified lines stay almost gap-free at any width. */}
+            <div className="lg:-mt-[calc(4*var(--u))] lg:w-fit">
+              <Heading as="h1" text={page.hero.title} className="text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-olive lg:leading-[0.935]" />
               <RichText
                 text={page.hero.text}
-                className="mt-5 max-w-[52ch] text-body text-sand lg:mt-[calc(21*var(--u))] lg:max-w-none lg:leading-[1.17]"
+                className="mt-5 max-w-[52ch] text-body text-sand lg:mt-[calc(21*var(--u))] lg:w-0 lg:min-w-full lg:max-w-none lg:text-[length:clamp(0.918rem,calc(29*var(--u)),3.48rem)] lg:text-justify lg:leading-[1.17] lg:[&_br]:hidden"
               />
             </div>
           </div>
@@ -35,6 +38,12 @@ function Contact() {
             <ContactForm />
           </div>
         </Container>
+      </section>
+
+      <section className="lg:pt-[calc(40*var(--u))]">
+        <div className="mx-auto w-full px-4 sm:px-6 lg:w-[calc(1662*var(--u))] lg:px-0">
+          <LocationCard page={page} />
+        </div>
       </section>
     </>
   )

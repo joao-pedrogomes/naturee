@@ -9,6 +9,8 @@ import logo from '@/assets/logos/naturee.svg'
 
 const STICK_AT = 80
 const UNSTICK_AT = 20
+/* Inner pages: the logo sits 20px from the top and bottom edges of the bar, the home keeps the artboard's tall hero header. */
+const BAR_HEIGHT = 'xl:h-[calc(122*var(--u)+2.5rem)]'
 const DESKTOP_LINK = 'xl:text-[length:clamp(0.8125rem,calc(19.3*var(--u)),2.4rem)] xl:min-h-[calc(50*var(--u))]'
 
 function useStuck() {
@@ -35,7 +37,7 @@ function SiteHeader() {
   const links = visibleLinks(content, nav)
 
   return (
-    <div className={cn('z-30 h-20 w-full xl:h-[calc(306*var(--u))]', overlaysHero ? 'absolute inset-x-0 top-0' : 'relative')}>
+    <div className={cn('z-30 h-20 w-full', overlaysHero ? 'absolute inset-x-0 top-0 xl:h-[calc(306*var(--u))]' : cn('relative bg-teal', BAR_HEIGHT))}>
       <header
         className={cn(
           'inset-x-0 top-0 z-30 w-full text-sand',
@@ -49,7 +51,7 @@ function SiteHeader() {
             to="/"
             className={cn(
               'shrink-0 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand xl:self-start',
-              stuck ? 'xl:mt-[calc(16*var(--u))]' : 'xl:mt-[calc(84*var(--u))]',
+              stuck ? 'xl:mt-[calc(16*var(--u))]' : overlaysHero ? 'xl:mt-[calc(84*var(--u))]' : 'xl:mt-5',
             )}
           >
             <img
@@ -64,7 +66,7 @@ function SiteHeader() {
 
           <nav
             aria-label="Principal"
-            className={cn('hidden items-center xl:flex xl:justify-self-end xl:gap-[calc(64*var(--u))]', !stuck && 'xl:pt-[calc(24*var(--u))]')}
+            className={cn('hidden items-center xl:flex xl:justify-self-end xl:gap-[calc(64*var(--u))]', !stuck && overlaysHero && 'xl:pt-[calc(24*var(--u))]', !stuck && !overlaysHero && 'xl:self-center')}
           >
             <NavLinks links={links} className="xl:gap-[calc(64*var(--u))]" linkClassName={DESKTOP_LINK} />
             <WhatsAppPill />
