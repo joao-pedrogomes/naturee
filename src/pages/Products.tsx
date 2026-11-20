@@ -36,7 +36,7 @@ function Products() {
             {renderRichText(page.hero.text)}
           </p>
           <div className="mt-8 lg:mt-[calc(40*var(--u))]">
-            <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" className="max-sm:w-[210px] lg:w-[calc(255*var(--u))]" />
+            <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" className="max-sm:w-[210px] lg:px-[max(1.25rem,calc(40*var(--u)))]" />
           </div>
         </div>
       </section>
