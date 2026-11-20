@@ -79,7 +79,8 @@ function About() {
             <div className="lg:w-[calc(713*var(--u))] lg:pt-[calc(24*var(--u))]">
               <SectionLabel>{page.purpose.label}</SectionLabel>
               <Heading text={page.purpose.title} className="mt-8 text-title text-teal lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
-              <JustifiedLines text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] lg:w-[calc(707*var(--u))] ${PARAGRAPH} lg:text-[length:clamp(1rem,calc(25.5*var(--u)),3.5rem)] lg:leading-[1.3] [&_em]:font-bold`} />
+              {/* Three hand-broken lines (break after "produz e"); 24u and 692u keep the widest line inside the content edge. */}
+              <JustifiedLines handBroken text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] lg:w-[calc(692*var(--u))] ${PARAGRAPH} lg:text-[length:clamp(0.8rem,calc(24*var(--u)),3.5rem)] lg:leading-[1.3] [&_em]:font-bold`} />
             </div>
           </div>
           <div className="mt-16 lg:mt-[calc(153*var(--u))]">
