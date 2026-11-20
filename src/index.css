@@ -183,27 +183,27 @@
 }
 
 @utility text-display {
-  font-size: clamp(2.375rem, calc(75 * var(--u)), 9rem);
+  font-size: clamp(2rem, calc(62.1 * var(--u)), 8rem);
   line-height: 0.94;
 }
 
 @utility text-title {
-  font-size: clamp(2rem, calc(69 * var(--u)), 8rem);
+  font-size: clamp(2rem, calc(62.1 * var(--u)), 8rem);
   line-height: 1.02;
 }
 
 @utility text-heading {
-  font-size: clamp(1.75rem, calc(44 * var(--u)), 5rem);
+  font-size: clamp(2rem, calc(62.1 * var(--u)), 8rem);
   line-height: 1.1;
 }
 
 @utility text-card-title {
-  font-size: clamp(1.625rem, calc(53 * var(--u)), 6rem);
+  font-size: clamp(1.625rem, calc(48 * var(--u)), 6rem);
   line-height: 1.1;
 }
 
 @utility text-category {
-  font-size: clamp(1.5rem, calc(45 * var(--u)), 5rem);
+  font-size: clamp(1.625rem, calc(48 * var(--u)), 6rem);
   line-height: 1.07;
 }
 
@@ -218,7 +218,7 @@
 }
 
 @utility text-body {
-  font-size: clamp(1rem, calc(30 * var(--u)), 3.5rem);
+  font-size: clamp(1rem, calc(27 * var(--u)), 3.5rem);
   line-height: 1.28;
 }
 

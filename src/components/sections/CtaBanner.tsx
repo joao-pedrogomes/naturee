@@ -46,14 +46,14 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
         <Heading
           text={title}
           className={cn(
-            'mt-4 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal',
+            'mt-4 text-title leading-[0.94] text-teal',
             withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]',
           )}
         />
         {text ? (
           <RichText
             text={text}
-            className="mt-4 max-w-[48ch] text-body text-sand lg:mt-[calc(36*var(--u))] lg:max-w-none lg:text-[length:clamp(1rem,calc(24*var(--u)),3rem)] lg:leading-[1.17]"
+            className="mt-4 max-w-[48ch] text-body text-sand lg:mt-[calc(36*var(--u))] lg:max-w-none lg:text-[length:clamp(1rem,calc(27*var(--u)),3rem)] lg:leading-[1.17]"
           />
         ) : null}
         <div

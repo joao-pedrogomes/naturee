@@ -17,6 +17,10 @@ import { pathFor } from '@/routes'
 import footerPin from '@/assets/icons/footerPin.svg'
 
 /* word-spacing mimics the artboard's justified lines, whose spaces were squeezed to fit. */
+const ABOUT_TUNING = [
+  'lg:w-[calc(674*var(--u))] lg:text-[length:clamp(0.9rem,calc(23.9*var(--u)),3.5rem)]',
+  'lg:w-[calc(668*var(--u))] lg:text-[length:clamp(0.9rem,calc(24.9*var(--u)),3.5rem)]',
+]
 const PARAGRAPH = 'text-body text-black lg:text-justify lg:leading-[1.2] lg:[word-spacing:-0.04em]'
 
 function Home() {
@@ -38,7 +42,7 @@ function Home() {
             <Heading
               as="h1"
               text={page.hero.title}
-              className="font-normal text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-sand lg:leading-[0.935] [&_em]:font-semibold [&_strong]:text-olive-bright [&_strong]:font-semibold"
+              className="font-normal text-title leading-[0.94] text-sand lg:leading-[0.935] [&_em]:font-semibold [&_strong]:text-olive-bright [&_strong]:font-semibold"
             />
             <p className="mt-6 text-body text-sand lg:mt-[calc(29*var(--u))] lg:max-w-[calc(500*var(--u))] lg:leading-[1.17]">
               {renderRichText(page.hero.text)}
@@ -70,16 +74,20 @@ function Home() {
       <section className="py-16 lg:pt-[calc(118*var(--u))] lg:pb-[calc(118*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
-            <div>
+            {/* The label stays at the top; the heading, text and button are centred on the photo (326u = its 35u offset + half of its 582u height). */}
+            <div className="lg:relative lg:self-stretch">
               <SectionLabel className="lg:leading-[1.3]">{page.about.label}</SectionLabel>
-              <Heading text={page.about.title} className="mt-5 text-[length:clamp(1.8rem,calc(62.1*var(--u)),7.2rem)] leading-[1.02] text-teal lg:mt-[calc(43*var(--u))] lg:leading-[0.985]" />
-              <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
-                {page.about.paragraphs.map((paragraph) => (
-                  <RichText key={paragraph} text={paragraph} className={PARAGRAPH} />
-                ))}
-              </div>
-              <div className="mt-8 lg:mt-[calc(44*var(--u))]">
-                <CtaLink cta={page.about.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
+              <div className="lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
+                <Heading text={page.about.title} className="mt-5 text-title leading-[1.02] text-teal lg:mt-0 lg:leading-[0.985]" />
+                <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
+                  {/* Size and box width tuned at 1920x1080 so the justified lines have no wide word gaps. */}
+                  {page.about.paragraphs.map((paragraph, index) => (
+                    <RichText key={paragraph} text={paragraph} className={`${PARAGRAPH} ${ABOUT_TUNING[index % ABOUT_TUNING.length]}`} />
+                  ))}
+                </div>
+                <div className="mt-8 lg:mt-[calc(44*var(--u))]">
+                  <CtaLink cta={page.about.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
+                </div>
               </div>
             </div>
             <Picture
@@ -133,8 +141,9 @@ function Home() {
             />
             <div className="lg:pt-[calc(29*var(--u))]">
               <SectionLabel>{page.logistics.label}</SectionLabel>
-              <Heading text={page.logistics.title} className="mt-8 text-title text-teal lg:mt-[calc(64*var(--u))] lg:text-[length:clamp(2rem,calc(75*var(--u)),9rem)]" />
-              <p className={`mt-6 lg:mt-[calc(29*var(--u))] lg:max-w-[calc(668*var(--u))] ${PARAGRAPH} lg:leading-[1.3]`}>{renderRichText(page.logistics.text)}</p>
+              <Heading text={page.logistics.title} className="mt-8 text-title text-teal lg:mt-[calc(64*var(--u))] " />
+              {/* Box width in em (18.64 x the font size) so the justified lines stay almost gap-free at any screen width. */}
+              <p className={`mt-6 lg:mt-[calc(29*var(--u))] lg:max-w-[18.64em] ${PARAGRAPH} lg:leading-[1.3]`}>{renderRichText(page.logistics.text)}</p>
               <div className="mt-8 lg:mt-[calc(40*var(--u))]">
                 <CtaLink cta={page.logistics.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(384*var(--u))]" />
               </div>
@@ -148,32 +157,34 @@ function Home() {
           <div className="grid gap-10 lg:h-full lg:grid-cols-[calc(759*var(--u))_calc(702*var(--u))] lg:gap-0 lg:pl-[calc(104*var(--u))]">
             <div className="lg:pt-[calc(84*var(--u))]">
               <SectionLabel className="text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase">{page.closing.label}</SectionLabel>
-              <Heading text={page.closing.title} className="mt-5 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(41*var(--u))] lg:leading-[1.01]" />
-              <p className={`mt-4 lg:mt-[calc(30*var(--u))] lg:max-w-[calc(648*var(--u))] ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
+              <Heading text={page.closing.title} className="mt-5 text-title leading-[0.94] text-teal lg:mt-[calc(41*var(--u))] lg:leading-[1.01]" />
+              <p className={`mt-4 lg:mt-[calc(30*var(--u))] lg:max-w-[25.9em] ${PARAGRAPH} leading-[1.28] lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
               <ul className="mt-6 space-y-3 lg:mt-[calc(26*var(--u))] lg:space-y-[calc(18*var(--u))]">
                 {page.closing.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-3 font-semibold text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
+                  <li key={bullet} className="flex items-center gap-3 text-body font-semibold leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
                     <Icon name="circleCheck" className="size-5 shrink-0 lg:size-[calc(32*var(--u))]" />
                     <span>{renderRichText(bullet)}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl bg-teal px-6 py-10 text-sand sm:px-10 lg:mt-[calc(94*var(--u))] lg:h-[calc(528*var(--u))] lg:rounded-[calc(32*var(--u))] lg:pr-[calc(30*var(--u))] lg:pl-[calc(84*var(--u))] lg:pt-[calc(62*var(--u))] lg:pb-0">
+            <div className="rounded-3xl bg-teal px-6 py-10 text-sand sm:px-10 lg:mt-[calc(94*var(--u))] lg:flex lg:h-[calc(528*var(--u))] lg:flex-col lg:rounded-[calc(32*var(--u))] lg:pr-[calc(30*var(--u))] lg:pl-[calc(84*var(--u))] lg:pt-[calc(62*var(--u))] lg:pb-0">
               <h2 className={`font-sans font-bold text-olive ${holdLine(page.closing.card.title)} lg:text-[length:clamp(1.5rem,calc(37*var(--u)),4rem)] lg:leading-[1.05]`}>
                 {renderRichText(page.closing.card.title)}
               </h2>
               <p className="mt-4 text-body text-sand lg:mt-[calc(20*var(--u))] lg:max-w-[calc(580*var(--u))] lg:text-[length:clamp(1rem,calc(27*var(--u)),3rem)] lg:leading-[1.22]">
                 {renderRichText(page.closing.card.text)}
               </p>
-              <div className="mt-8 flex flex-col gap-3 lg:-ml-[calc(28*var(--u))] lg:mt-[calc(28*var(--u))] lg:w-[calc(590*var(--u))] lg:gap-[calc(10*var(--u))]">
-                <CtaLink cta={page.closing.card.primary} variant="olive" icon="arrow" size="lg" className="w-full lg:h-[calc(67*var(--u))]" />
-                <CtaLink cta={page.closing.card.secondary} variant="outlineCream" icon="arrow" size="lg" className="w-full lg:h-[calc(67*var(--u))]" />
+              <div className="lg:flex lg:flex-1 lg:flex-col">
+                <div className="mt-8 flex flex-col gap-3 lg:-ml-[calc(28*var(--u))] lg:my-auto lg:w-[calc(590*var(--u))] lg:gap-[calc(20*var(--u))] lg:py-[calc(16*var(--u))]">
+                  <CtaLink cta={page.closing.card.primary} variant="olive" icon="arrow" size="lg" className="w-full lg:h-[calc(48*var(--u))]" />
+                  <CtaLink cta={page.closing.card.secondary} variant="outlineCream" icon="arrow" size="lg" className="w-full lg:h-[calc(48*var(--u))]" />
+                </div>
+                <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-sand lg:mt-0 lg:mb-[calc(59*var(--u))] lg:gap-[calc(8*var(--u))] lg:text-[length:clamp(0.75rem,calc(16*var(--u)),1.5rem)]">
+                  <img src={footerPin} alt="" aria-hidden="true" className="size-4 shrink-0 lg:size-[calc(18*var(--u))]" />
+                  <span>{renderRichText(page.closing.card.note || site.regionLine)}</span>
+                </p>
               </div>
-              <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-sand lg:mt-[calc(46*var(--u))] lg:gap-[calc(8*var(--u))] lg:text-[length:clamp(0.75rem,calc(16*var(--u)),1.5rem)]">
-                <img src={footerPin} alt="" aria-hidden="true" className="size-4 shrink-0 lg:size-[calc(18*var(--u))]" />
-                <span>{renderRichText(page.closing.card.note || site.regionLine)}</span>
-              </p>
             </div>
           </div>
         </div>

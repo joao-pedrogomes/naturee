@@ -20,12 +20,12 @@ function Contact() {
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-0">
             <SectionLabel className="text-olive lg:ml-[calc(20*var(--u))]">{page.hero.label}</SectionLabel>
             {/* On desktop the box is as wide as the title's longest line; the paragraph (w-0 + min-w-full) is sized by it, not the other way round.
-                The paragraph size is 0.43 x the title's (29 / 67.5, bounds too), so its justified lines stay almost gap-free at any width. */}
+                The paragraph size is 0.435 x the title's (27 / 62.1, bounds too), so its justified lines stay almost gap-free at any width. */}
             <div className="lg:-mt-[calc(4*var(--u))] lg:w-fit">
-              <Heading as="h1" text={page.hero.title} className="text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-olive lg:leading-[0.935]" />
+              <Heading as="h1" text={page.hero.title} className="text-title leading-[0.94] text-olive lg:leading-[0.935]" />
               <RichText
                 text={page.hero.text}
-                className="mt-5 max-w-[52ch] text-body text-sand lg:mt-[calc(21*var(--u))] lg:w-0 lg:min-w-full lg:max-w-none lg:text-[length:clamp(0.918rem,calc(29*var(--u)),3.48rem)] lg:text-justify lg:leading-[1.17] lg:[&_br]:hidden"
+                className="mt-5 max-w-[52ch] text-body text-sand lg:mt-[calc(21*var(--u))] lg:w-0 lg:min-w-full lg:max-w-none lg:text-[length:clamp(0.87rem,calc(27*var(--u)),3.48rem)] lg:text-justify lg:leading-[1.17] lg:[&_br]:hidden"
               />
             </div>
           </div>
