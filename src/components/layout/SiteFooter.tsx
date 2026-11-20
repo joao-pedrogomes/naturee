@@ -4,7 +4,7 @@ import { renderRichText } from '@/lib/richText'
 import TrustStrip from '@/components/sections/TrustStrip'
 import { useSiteContent, visibleLinks } from '@/content/siteContent'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
-import footerLogo from '@/assets/logos/natureeFooter.svg'
+import footerLogo from '@/assets/logos/natureeSeal.svg'
 import footerMail from '@/assets/icons/footerMail.svg'
 import footerInstagram from '@/assets/icons/footerInstagram.svg'
 import footerPin from '@/assets/icons/footerPin.svg'
@@ -37,21 +37,22 @@ function SiteFooter() {
         <TrustStrip items={trust} />
 
         <div className="mt-14 grid gap-12 lg:mt-[calc(67*var(--u))] lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
-          <div>
+          {/* On desktop the tagline's last line shares a baseline with the last quick link, so the block ends level with that list. */}
+          <div className="lg:[align-self:last_baseline]">
             <img
               src={footerLogo}
               alt={site.name}
-              width={147}
-              height={135}
+              width={103}
+              height={79}
               loading="lazy"
-              className="h-[5.75rem] w-auto lg:h-[calc(135*var(--u))]"
+              className="h-[3.45rem] w-auto lg:h-[calc(81*var(--u))]"
             />
-            <p className={`mt-6 max-w-[16rem] font-light text-foot text-sand lg:mt-[calc(35*var(--u))] lg:max-w-none ${holdLine(site.tagline)} lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]`}>
+            <p className={`mt-4 max-w-[16rem] font-light text-foot text-sand lg:mt-[calc(23*var(--u))] lg:max-w-none ${holdLine(site.tagline)} lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]`}>
               {renderRichText(site.tagline)}
             </p>
           </div>
 
-          <nav aria-label={footer.quickLinksTitle}>
+          <nav aria-label={footer.quickLinksTitle} className="lg:[align-self:last_baseline]">
             <h2 className={FOOTER_HEADING}>{footer.quickLinksTitle}</h2>
             <ul className="mt-5 lg:mt-[calc(10*var(--u))]">
               {links.map((link) => (
