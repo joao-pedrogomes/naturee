@@ -1,5 +1,5 @@
 import ContactForm from '@/components/contact/ContactForm'
-import LocationCard from '@/components/contact/LocationCard'
+import LocationInfo from '@/components/contact/LocationInfo'
 import Container from '@/components/sections/Container'
 import Heading from '@/components/sections/Heading'
 import RichText from '@/components/sections/RichText'
@@ -17,7 +17,7 @@ function Contact() {
 
       <section className="bg-teal pt-6 pb-40 text-sand lg:h-[calc(587*var(--u))] lg:pt-[calc(46*var(--u))] lg:pb-0">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-[calc(659*var(--u))_1fr] lg:gap-0">
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-0">
             <SectionLabel className="text-olive lg:ml-[calc(20*var(--u))]">{page.hero.label}</SectionLabel>
             {/* On desktop the box is as wide as the title's longest line; the paragraph (w-0 + min-w-full) is sized by it, not the other way round.
                 The paragraph size is 0.43 x the title's (29 / 67.5, bounds too), so its justified lines stay almost gap-free at any width. */}
@@ -32,18 +32,19 @@ function Contact() {
         </Container>
       </section>
 
-      <section className="pb-16 lg:pb-[calc(51*var(--u))]">
+      {/* 60 / 40 columns on the header's grid, one uniform gap (60u) between them, below the teal band and above the footer. */}
+      <section className="pb-16 lg:pb-[calc(60*var(--u))]">
         <Container className="-mt-32 lg:-mt-[calc(189*var(--u))]">
-          <div className="rounded-3xl bg-olive px-5 py-10 sm:px-10 lg:h-[calc(1171*var(--u))] lg:rounded-[calc(36*var(--u))] lg:py-0 lg:pt-[calc(74*var(--u))] lg:pr-[calc(194*var(--u))] lg:pl-[calc(194*var(--u))]">
-            <ContactForm />
+          <div className="grid gap-12 lg:grid-cols-[3fr_2fr] lg:gap-x-[calc(60*var(--u))]">
+            <div className="rounded-3xl bg-olive px-5 py-10 sm:px-10 lg:rounded-[calc(36*var(--u))] lg:px-[calc(70*var(--u))] lg:pt-[calc(70*var(--u))] lg:pb-[calc(56*var(--u))]">
+              <ContactForm />
+            </div>
+            {/* The teal band ends 189u below the top of this grid; the info starts one gap under it. */}
+            <div className="lg:pt-[calc((189+60)*var(--u))]">
+              <LocationInfo page={page} />
+            </div>
           </div>
         </Container>
-      </section>
-
-      <section className="lg:pt-[calc(40*var(--u))]">
-        <div className="mx-auto w-full px-4 sm:px-6 lg:w-[calc(1662*var(--u))] lg:px-0">
-          <LocationCard page={page} />
-        </div>
       </section>
     </>
   )

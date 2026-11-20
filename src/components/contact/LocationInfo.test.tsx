@@ -15,7 +15,7 @@ function renderContact() {
   )
 }
 
-describe('contact location card', () => {
+describe('contact location info', () => {
   it('shows the address, the opening hours and the social links', () => {
     renderContact()
     const location = screen.getByRole('region', { name: 'Localização' })

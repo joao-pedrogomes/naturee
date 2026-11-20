@@ -24,7 +24,7 @@ type FormStatus = 'idle' | 'submitting' | 'done'
 const CONTACT_API_URL = import.meta.env.BASE_URL === '/' ? '/api/contact' : undefined
 
 const INPUT_CLASS =
-  'h-14 rounded-xl border-0 bg-sand px-5 text-base text-teal shadow-none placeholder:text-[#a9a995] focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white md:text-base lg:h-[calc(81*var(--u))] lg:rounded-[calc(14*var(--u))] lg:px-[calc(27*var(--u))] lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)] md:lg:text-[length:clamp(1rem,calc(32*var(--u)),3rem)]'
+  'h-14 rounded-xl border-0 bg-sand px-5 text-base text-teal shadow-none placeholder:text-[#a9a995] focus-visible:ring-2 focus-visible:ring-white aria-invalid:ring-2 aria-invalid:ring-white md:text-base lg:h-[calc(62*var(--u))] lg:rounded-[calc(12*var(--u))] lg:px-[calc(22*var(--u))] lg:text-[length:clamp(1rem,calc(23*var(--u)),2.5rem)] md:lg:text-[length:clamp(1rem,calc(23*var(--u)),2.5rem)]'
 
 function firstInvalid(errors: ContactErrors): ContactFieldKey | undefined {
   return CONTACT_FIELD_ORDER.find((key) => errors[key] !== undefined)
@@ -110,8 +110,8 @@ function ContactForm() {
   const hasErrors = firstInvalid(errors) !== undefined
 
   return (
-    <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 lg:gap-[calc(31*var(--u))]">
-      <Heading as="h2" text={copy.title} className="text-display text-sand lg:mb-[calc(10*var(--u))] lg:ml-[calc(24*var(--u))] lg:leading-[0.935] [&_em]:font-medium" />
+    <form ref={formRef} noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 lg:h-full lg:gap-[calc(24*var(--u))]">
+      <Heading as="h2" text={copy.title} className="text-[length:clamp(1.75rem,calc(50*var(--u)),5.5rem)] leading-[1.02] text-sand lg:mb-[calc(44*var(--u))] lg:ml-[calc(22*var(--u))] lg:leading-[0.935] [&_em]:font-medium" />
       <div inert className="sr-only">
         <input name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" aria-hidden="true" />
       </div>
@@ -135,12 +135,12 @@ function ContactForm() {
         }
 
         return (
-          <ContactField key={key} id={key} label={copy.fields[key]} error={error}>
+          <ContactField key={key} id={key} label={copy.fields[key]} error={error} className={key === 'message' ? 'lg:flex-1' : undefined}>
             {key === 'message' ? (
               <Textarea
                 {...shared}
                 rows={6}
-                className={cn(INPUT_CLASS, 'min-h-44 py-4 lg:h-[calc(210*var(--u))] lg:py-[calc(22*var(--u))]')}
+                className={cn(INPUT_CLASS, 'min-h-44 py-4 lg:h-auto lg:min-h-[calc(130*var(--u))] lg:flex-1 lg:py-[calc(18*var(--u))]')}
                 onChange={(event) => updateField(key, event.target.value)}
               />
             ) : (
@@ -156,11 +156,11 @@ function ContactForm() {
         )
       })}
 
-      <div className="flex justify-end lg:mt-[calc(20*var(--u))] lg:pr-[calc(0*var(--u))]">
+      <div className="lg:mt-[calc(10*var(--u))]">
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="inline-flex min-h-11 min-w-[11rem] items-center justify-center rounded-full bg-teal px-8 text-btn font-medium text-sand uppercase transition-colors hover:bg-teal/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 lg:h-[calc(46*var(--u))] lg:w-[calc(255*var(--u))] lg:min-w-0 lg:px-0"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-teal px-8 text-btn font-medium text-sand uppercase transition-colors hover:bg-teal/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 lg:h-[calc(46*var(--u))] lg:px-0"
         >
           {status === 'submitting' ? copy.submitting : copy.submit}
         </button>
