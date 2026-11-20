@@ -255,7 +255,7 @@ export const defaultContent: SiteContent = {
       purpose: {
         label: 'Nosso propósito',
         title: '*Boas* origens merecem\nchegar *mais longe*.',
-        text: 'Nosso propósito é *criar conexões* entre quem produz e\nquem transforma ingredientes em experiências gastronômicas,\nvalorizando qualidade, frescor e relações de confiança.',
+        text: 'Nosso propósito é *criar conexões* entre quem produz\ne quem transforma ingredientes em experiências\ngastronômicas, valorizando qualidade, frescor e\nrelações de confiança.',
         image: card('Caminhão da Naturee em uma estrada à beira-mar', [aboutPurpose800, aboutPurpose480], HALF_SIZES),
       },
       features: [
