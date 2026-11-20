@@ -29,49 +29,52 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
       <div
         className={cn(
           'flex flex-col justify-center px-6 py-12 lg:justify-start lg:py-0',
-          withImage ? 'lg:pt-[calc(57*var(--u))] lg:pr-[calc(40*var(--u))] lg:pl-[calc(61*var(--u))]' : 'items-center text-center lg:pt-[calc(69*var(--u))]',
+          withImage ? 'lg:pt-[calc(57*var(--u))]' : 'items-center text-center lg:pt-[calc(69*var(--u))]',
         )}
       >
-        <SectionLabel
-          tone="cream"
-          className={cn(
-            'lg:font-normal',
-            withImage
-              ? 'lg:text-[length:calc(23*var(--u))]'
-              : 'text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase lg:text-[length:calc(20.7*var(--u))]',
-          )}
-        >
-          {label}
-        </SectionLabel>
-        <Heading
-          text={title}
-          className={cn(
-            'mt-4 text-title leading-[0.94] text-teal',
-            withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]',
-          )}
-        />
-        {text ? (
-          <RichText
-            text={text}
-            className="mt-4 max-w-[48ch] text-body text-sand lg:mt-[calc(36*var(--u))] lg:max-w-none lg:text-[length:clamp(1rem,calc(27*var(--u)),3rem)] lg:leading-[1.17]"
+        {/* On desktop the text block is as wide as its widest line and centred in the olive panel, so both sides get the same space. Mobile keeps the plain stack. */}
+        <div className={withImage ? 'contents lg:mx-auto lg:flex lg:w-fit lg:flex-col' : 'contents'}>
+          <SectionLabel
+            tone="cream"
+            className={cn(
+              'lg:font-normal',
+              withImage
+                ? 'lg:text-[length:calc(23*var(--u))]'
+                : 'text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase lg:text-[length:calc(20.7*var(--u))]',
+            )}
+          >
+            {label}
+          </SectionLabel>
+          <Heading
+            text={title}
+            className={cn(
+              'mt-4 text-title leading-[0.94] text-teal',
+              withImage ? 'lg:mt-[calc(27*var(--u))] lg:font-medium' : 'lg:mt-[calc(26*var(--u))]',
+            )}
           />
-        ) : null}
-        <div
-          className={cn(
-            'mt-8 flex flex-wrap gap-4',
-            withImage ? 'lg:mt-[calc(33*var(--u))]' : 'justify-center lg:mt-[calc(57*var(--u))] lg:gap-[calc(22*var(--u))]',
-          )}
-        >
-          <CtaLink
-            cta={primary}
-            variant="teal"
-            icon="arrow"
-            size="lg"
-            className={cn('min-w-[16rem]', withImage ? 'lg:h-[calc(66*var(--u))] lg:w-[calc(495*var(--u))]' : 'lg:h-[calc(66*var(--u))] lg:w-[calc(494*var(--u))]')}
-          />
-          {secondary ? (
-            <CtaLink cta={secondary} variant="outlineTeal" icon="arrow" size="lg" className="min-w-[16rem] lg:h-[calc(66*var(--u))] lg:w-[calc(496*var(--u))]" />
+          {text ? (
+            <RichText
+              text={text}
+              className="mt-4 max-w-[48ch] text-body text-sand lg:mt-[calc(36*var(--u))] lg:max-w-none lg:text-[length:clamp(1rem,calc(27*var(--u)),3rem)] lg:leading-[1.17]"
+            />
           ) : null}
+          <div
+            className={cn(
+              'mt-8 flex flex-wrap gap-4',
+              withImage ? 'lg:mt-[calc(33*var(--u))]' : 'justify-center lg:mt-[calc(57*var(--u))] lg:gap-[calc(22*var(--u))]',
+            )}
+          >
+            <CtaLink
+              cta={primary}
+              variant="teal"
+              icon="arrow"
+              size="lg"
+              className={cn('min-w-[16rem]', withImage ? 'lg:h-[calc(66*var(--u))] lg:w-[calc(495*var(--u))]' : 'lg:h-[calc(66*var(--u))] lg:w-[calc(494*var(--u))]')}
+            />
+            {secondary ? (
+              <CtaLink cta={secondary} variant="outlineTeal" icon="arrow" size="lg" className="min-w-[16rem] lg:h-[calc(66*var(--u))] lg:w-[calc(496*var(--u))]" />
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

@@ -20,6 +20,8 @@
   --color-olive-deep: var(--olive-deep);
   --color-sand: var(--sand);
   --color-cream: var(--cream);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-deep: var(--whatsapp-deep);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -62,6 +64,9 @@
   --olive-deep: #55692f;
   --sand: #efe7c0;
   --cream: #f2ebd1;
+  /* WhatsApp's brand green for the header pill; the deep one is its hover. */
+  --whatsapp: #00d158;
+  --whatsapp-deep: #00b84d;
 
   --background: #ffffff;
   --foreground: var(--teal);

@@ -363,7 +363,7 @@ export const defaultContent: SiteContent = {
       banner: {
         label: 'Fale com a Naturee',
         title: 'O próximo destino\npode ser *o seu negócio.*',
-        text: 'Saiba mais sobre regiões atendidas, dias de entrega e\ndisponibilidade de produtos.',
+        text: 'Saiba mais sobre regiões atendidas, dias de\nentrega e disponibilidade de produtos.',
         image: card('Atendente da Naturee sorrindo com fone de ouvido', [logisticsContact800, logisticsContact480], HALF_SIZES),
         cta: { label: 'Consultar minha região', href: '#whatsapp', message: 'Olá, Naturee! Gostaria de saber se vocês atendem a minha região e os dias de entrega.' },
       },

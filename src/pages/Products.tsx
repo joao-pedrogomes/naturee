@@ -80,7 +80,8 @@ function Products() {
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[calc(668*var(--u))_calc(669*var(--u))] lg:gap-[calc(57*var(--u))] lg:ml-[calc(-3*var(--u))]">
             <Picture image={page.catalog.image} className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(534*var(--u))] lg:rounded-[calc(36*var(--u))]" />
-            <div className="lg:ml-[calc(2*var(--u))] lg:pt-[calc(44*var(--u))]">
+            {/* Text column starts at 1180u (same x as the hero title above). Explicit width + margin so it keeps its 669u line length while overflowing the track. */}
+            <div className="lg:ml-[calc(96*var(--u))] lg:w-[calc(669*var(--u))] lg:pt-[calc(44*var(--u))]">
               <SectionLabel>{page.catalog.label}</SectionLabel>
               <Heading text={page.catalog.title} className="mt-8 text-display text-teal lg:mt-[calc(64*var(--u))] lg:leading-[0.935]" />
               <p className={`mt-5 ${PARAGRAPH} lg:mt-[calc(25*var(--u))] lg:max-w-[calc(690*var(--u))]`}>{renderRichText(page.catalog.text)}</p>
