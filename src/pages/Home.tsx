@@ -171,7 +171,7 @@ function Home() {
               </ul>
             </div>
             <div className="rounded-3xl bg-teal px-6 py-10 text-sand sm:px-10 lg:mt-[calc(94*var(--u))] lg:flex lg:h-[calc(528*var(--u))] lg:flex-col lg:rounded-[calc(32*var(--u))] lg:pr-[calc(30*var(--u))] lg:pl-[calc(84*var(--u))] lg:pt-[calc(62*var(--u))] lg:pb-0">
-              <h2 className={`font-sans font-bold text-olive ${holdLine(page.closing.card.title)} lg:text-[length:clamp(1.5rem,calc(37*var(--u)),4rem)] lg:leading-[1.05]`}>
+              <h2 className={`font-sans font-bold text-olive ${holdLine(page.closing.card.title)} max-sm:leading-[1.15] lg:text-[length:clamp(1.5rem,calc(37*var(--u)),4rem)] lg:leading-[1.05]`}>
                 {renderRichText(page.closing.card.title)}
               </h2>
               <p className="mt-4 text-body text-sand lg:mt-[calc(20*var(--u))] lg:max-w-[calc(580*var(--u))] lg:text-[length:clamp(1rem,calc(27*var(--u)),3rem)] lg:leading-[1.22]">
@@ -182,8 +182,8 @@ function Home() {
                   <CtaLink cta={page.closing.card.primary} variant="olive" icon="arrow" size="lg" className="w-full lg:h-[calc(48*var(--u))]" />
                   <CtaLink cta={page.closing.card.secondary} variant="outlineCream" icon="arrow" size="lg" className="w-full lg:h-[calc(48*var(--u))]" />
                 </div>
-                <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-sand lg:mt-0 lg:mb-[calc(59*var(--u))] lg:gap-[calc(8*var(--u))] lg:text-[length:clamp(0.75rem,calc(16*var(--u)),1.5rem)]">
-                  <img src={footerPin} alt="" aria-hidden="true" className="size-4 shrink-0 lg:size-[calc(18*var(--u))]" />
+                <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-sand max-sm:block lg:mt-0 lg:mb-[calc(59*var(--u))] lg:gap-[calc(8*var(--u))] lg:text-[length:clamp(0.75rem,calc(16*var(--u)),1.5rem)]">
+                  <img src={footerPin} alt="" aria-hidden="true" className="size-4 shrink-0 max-sm:mr-2 max-sm:inline-block max-sm:align-middle lg:size-[calc(18*var(--u))]" />
                   <span>{renderRichText(page.closing.card.note || site.regionLine)}</span>
                 </p>
               </div>
