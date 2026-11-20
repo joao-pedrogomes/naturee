@@ -22,7 +22,7 @@ function BrandLogo({ brand, className }: { brand: Brand; className?: string }) {
     <img
       src={brand.logo.src}
       srcSet={brand.logo.srcSet}
-      sizes="(min-width: 1024px) 20vw, 50vw"
+      sizes="(min-width: 1280px) 20vw, 50vw"
       alt={brand.logo.alt}
       width={brand.logo.width}
       height={brand.logo.height}
