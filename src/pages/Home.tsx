@@ -74,17 +74,20 @@ function Home() {
       <section className="py-16 lg:pt-[calc(118*var(--u))] lg:pb-[calc(118*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
-            <div>
+            {/* The label stays at the top; the heading, text and button are centred on the photo (326u = its 35u offset + half of its 582u height). */}
+            <div className="lg:relative lg:self-stretch">
               <SectionLabel className="lg:leading-[1.3]">{page.about.label}</SectionLabel>
-              <Heading text={page.about.title} className="mt-5 text-title leading-[1.02] text-teal lg:mt-[calc(43*var(--u))] lg:leading-[0.985]" />
-              <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
-                {/* Size and box width tuned at 1920x1080 so the justified lines have no wide word gaps. */}
-                {page.about.paragraphs.map((paragraph, index) => (
-                  <RichText key={paragraph} text={paragraph} className={`${PARAGRAPH} ${ABOUT_TUNING[index % ABOUT_TUNING.length]}`} />
-                ))}
-              </div>
-              <div className="mt-8 lg:mt-[calc(44*var(--u))]">
-                <CtaLink cta={page.about.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
+              <div className="lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
+                <Heading text={page.about.title} className="mt-5 text-title leading-[1.02] text-teal lg:mt-0 lg:leading-[0.985]" />
+                <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
+                  {/* Size and box width tuned at 1920x1080 so the justified lines have no wide word gaps. */}
+                  {page.about.paragraphs.map((paragraph, index) => (
+                    <RichText key={paragraph} text={paragraph} className={`${PARAGRAPH} ${ABOUT_TUNING[index % ABOUT_TUNING.length]}`} />
+                  ))}
+                </div>
+                <div className="mt-8 lg:mt-[calc(44*var(--u))]">
+                  <CtaLink cta={page.about.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
+                </div>
               </div>
             </div>
             <Picture
