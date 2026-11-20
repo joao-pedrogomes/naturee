@@ -80,8 +80,8 @@ function Logistics() {
         <Container className="relative lg:pt-[calc(213*var(--u))]">
           <div className="lg:w-[calc(700*var(--u))]">
             <SectionLabel>{page.regions.label}</SectionLabel>
-            <Heading text={page.regions.title} className="mt-6 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(59*var(--u))] lg:leading-[0.935]" />
-            <RichText text={page.regions.text} className={`mt-6 ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:mt-[calc(48*var(--u))] lg:leading-[1.31] [&_strong]:font-extrabold [&_em]:font-medium`} />
+            <Heading text={page.regions.title} className="mt-6 text-title leading-[0.94] text-teal lg:mt-[calc(59*var(--u))] lg:leading-[0.935]" />
+            <RichText text={page.regions.text} className={`mt-6 ${PARAGRAPH} leading-[1.28] lg:mt-[calc(48*var(--u))] lg:leading-[1.31] [&_strong]:font-extrabold [&_em]:font-medium`} />
           </div>
         </Container>
       </section>
@@ -110,8 +110,8 @@ function Logistics() {
           <div className="grid gap-10 lg:grid-cols-[calc(819*var(--u))_1fr] lg:gap-0">
             <div className="lg:flex lg:flex-col lg:pl-[calc(4*var(--u))]">
               <SectionLabel>{page.planning.label}</SectionLabel>
-              <Heading text={page.planning.title} className="mt-6 text-[length:clamp(2.1375rem,calc(67.5*var(--u)),8.1rem)] leading-[0.94] text-teal lg:mt-[calc(68*var(--u))] lg:leading-[0.935]" />
-              <JustifiedLines text={page.planning.text} className={`mt-6 ${PARAGRAPH} text-[length:clamp(0.9rem,calc(27*var(--u)),3.15rem)] leading-[1.28] lg:mt-auto lg:w-max lg:pt-[calc(20*var(--u))] lg:leading-[1.31]`} />
+              <Heading text={page.planning.title} className="mt-6 text-title leading-[0.94] text-teal lg:mt-[calc(68*var(--u))] lg:leading-[0.935]" />
+              <JustifiedLines text={page.planning.text} className={`mt-6 ${PARAGRAPH} leading-[1.28] lg:mt-auto lg:w-[calc(610*var(--u))] lg:pt-[calc(20*var(--u))] lg:leading-[1.31]`} />
             </div>
             <ul className="flex flex-col gap-5 lg:ml-[calc(-6*var(--u))] lg:gap-[calc(33*var(--u))] lg:pt-[calc(103*var(--u))]">
               {page.planning.boxes.map((box, index) => (

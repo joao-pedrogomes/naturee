@@ -12,6 +12,11 @@ import { pathFor } from '@/routes'
 
 /* word-spacing mimics the artboard's justified lines, whose spaces were squeezed to fit. */
 const PARAGRAPH = 'text-body text-black lg:text-justify lg:leading-[1.27] lg:[word-spacing:-0.04em]'
+/* Justified blocks are tuned at 1920x1080: a size close to the 27u standard plus a box width where the lines fill without wide word gaps. */
+const INTRO_TUNING = [
+  'lg:max-w-[calc(716*var(--u))] lg:text-[length:clamp(1rem,calc(26.6*var(--u)),3.5rem)]',
+  'lg:max-w-[calc(710*var(--u))] lg:text-[length:clamp(1rem,calc(27.4*var(--u)),3.5rem)]',
+]
 
 function About() {
   const page = usePage('about')
@@ -27,7 +32,7 @@ function About() {
           <Heading
             as="h1"
             text={page.hero.title}
-            className="text-heading text-sand lg:leading-[1.02] [&_em]:font-semibold"
+            className="text-title text-sand lg:leading-[1.02] [&_em]:font-semibold"
           />
         </Container>
       </section>
@@ -35,16 +40,16 @@ function About() {
       <section className="bg-sand py-16 lg:py-[calc(118*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.about.label}</SectionLabel>
-          <div className="mt-10 grid items-start gap-10 md:grid-cols-2 lg:mt-[calc(60*var(--u))] lg:grid-cols-[calc(668*var(--u))_calc(735*var(--u))] lg:justify-between lg:gap-0 lg:pl-0 lg:ml-[calc(-3*var(--u))] lg:w-[calc(1482*var(--u))]">
+          <div className="mt-10 grid items-start gap-10 md:grid-cols-2 lg:mt-[calc(60*var(--u))] lg:items-center lg:grid-cols-[calc(668*var(--u))_calc(735*var(--u))] lg:justify-between lg:gap-0 lg:pl-0 lg:ml-[calc(-3*var(--u))] lg:w-[calc(1482*var(--u))]">
             <Picture
               image={page.about.image}
               className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(534*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
-            <div className="lg:-mt-[calc(8*var(--u))] lg:w-[calc(735*var(--u))]">
-              <Heading text={page.about.title} className="text-[length:clamp(1.8rem,calc(62.1*var(--u)),7.2rem)] leading-[1.02] text-teal lg:leading-[0.985]" />
-              <div className="mt-6 space-y-4 lg:mt-[calc(41*var(--u))] lg:space-y-[calc(39*var(--u))]">
-                {page.about.paragraphs.map((paragraph) => (
-                  <RichText key={paragraph} text={paragraph} className={PARAGRAPH} />
+            <div className="lg:w-[calc(735*var(--u))]">
+              <Heading text={page.about.title} className="text-title leading-[1.02] text-teal lg:leading-[0.985]" />
+              <div className="mt-6 space-y-4 lg:mt-[calc(41*var(--u))] lg:space-y-[calc(18*var(--u))]">
+                {page.about.paragraphs.map((paragraph, index) => (
+                  <RichText key={paragraph} text={paragraph} className={`${PARAGRAPH} ${INTRO_TUNING[index % INTRO_TUNING.length]}`} />
                 ))}
               </div>
             </div>
@@ -56,9 +61,9 @@ function About() {
         <Container className="text-center lg:flex lg:flex-col lg:items-center">
           <SectionLabel>{page.history.label}</SectionLabel>
           <Heading text={page.history.title} className="mt-4 text-title text-teal lg:mt-[calc(37*var(--u))]" />
-          <div className="mx-auto mt-8 max-w-[62ch] space-y-5 lg:mt-[calc(52*var(--u))] lg:max-w-none lg:w-[calc(1150*var(--u))] lg:translate-x-[calc(7*var(--u))] lg:space-y-[calc(44*var(--u))]">
+          <div className="mx-auto mt-8 max-w-[62ch] space-y-5 lg:mt-[calc(52*var(--u))] lg:max-w-none lg:w-[calc(1150*var(--u))] lg:translate-x-[calc(6*var(--u))] lg:space-y-[calc(44*var(--u))]">
             {page.history.paragraphs.map((paragraph) => (
-              <JustifiedLines key={paragraph} text={paragraph} lastLine="center" className={PARAGRAPH} />
+              <JustifiedLines key={paragraph} text={paragraph} lastLine="center" className={`${PARAGRAPH} lg:text-[length:clamp(1rem,calc(25.6*var(--u)),3.5rem)]`} />
             ))}
           </div>
         </Container>
@@ -73,8 +78,8 @@ function About() {
             />
             <div className="lg:w-[calc(713*var(--u))] lg:pt-[calc(24*var(--u))]">
               <SectionLabel>{page.purpose.label}</SectionLabel>
-              <Heading text={page.purpose.title} className="mt-8 text-display text-teal lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
-              <JustifiedLines text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] ${PARAGRAPH} lg:leading-[1.3] [&_em]:font-bold`} />
+              <Heading text={page.purpose.title} className="mt-8 text-title text-teal lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
+              <JustifiedLines text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] lg:w-[calc(707*var(--u))] ${PARAGRAPH} lg:text-[length:clamp(1rem,calc(25.5*var(--u)),3.5rem)] lg:leading-[1.3] [&_em]:font-bold`} />
             </div>
           </div>
           <div className="mt-16 lg:mt-[calc(153*var(--u))]">
