@@ -18,8 +18,8 @@ import footerPin from '@/assets/icons/footerPin.svg'
 
 /* word-spacing mimics the artboard's justified lines, whose spaces were squeezed to fit. */
 const ABOUT_TUNING = [
-  'lg:w-[calc(705*var(--u))] lg:text-[length:clamp(1rem,calc(25*var(--u)),3.5rem)]',
-  'lg:w-[calc(699*var(--u))] lg:text-[length:clamp(1rem,calc(26*var(--u)),3.5rem)]',
+  'lg:w-[calc(674*var(--u))] lg:text-[length:clamp(0.9rem,calc(23.9*var(--u)),3.5rem)]',
+  'lg:w-[calc(668*var(--u))] lg:text-[length:clamp(0.9rem,calc(24.9*var(--u)),3.5rem)]',
 ]
 const PARAGRAPH = 'text-body text-black lg:text-justify lg:leading-[1.2] lg:[word-spacing:-0.04em]'
 
