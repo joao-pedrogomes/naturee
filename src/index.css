@@ -9,6 +9,15 @@
 /* Single light theme: without this, `dark:` utilities follow the visitor's OS setting. */
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * The desktop layout (every lg: utility, sized in artboard units) starts at 1280px instead of Tailwind's
+ * 1024px. Tablets in landscape (iPad Mini, 1024px) get the fluid tablet layout that uses the full width,
+ * instead of the desktop layout scaled down into a narrow box.
+ */
+@theme {
+  --breakpoint-lg: 80rem;
+}
+
 @theme inline {
   --font-heading: 'Playfair Display Variable', Georgia, serif;
   --font-sans: 'Mulish Variable', system-ui, sans-serif;
@@ -256,7 +265,7 @@
   @media (width >= 40rem) {
     padding-inline: 1.5rem;
   }
-  @media (width >= 64rem) {
+  @media (width >= 80rem) {
     padding-inline: 0;
     width: calc(1458 * var(--u));
   }
