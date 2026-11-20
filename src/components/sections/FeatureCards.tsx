@@ -35,7 +35,7 @@ function FeatureCards({ cards, variant }: FeatureCardsProps) {
             className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-[calc(352*var(--u))]"
           />
           <div className="flex flex-1 flex-col px-8 pt-8 pb-8 lg:px-0 lg:pb-[calc(40*var(--u))] lg:pt-[calc(45*var(--u))]">
-            <div className="lg:mx-auto lg:w-fit">
+            <div className="pb-6 lg:mx-auto lg:w-fit lg:pb-0">
             <Heading as="h3" text={card.title} className={cn('text-card-title lg:leading-[1.09]', tone.title)} />
             <RichText text={card.text} className={cn('mt-3 text-body lg:mt-[calc(18*var(--u))] lg:leading-[1.23]', holdLine(card.text), tone.text)} />
             </div>
