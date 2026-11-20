@@ -17,7 +17,8 @@ function Contact() {
 
       <section className="bg-teal pt-6 pb-40 text-sand lg:h-[calc(587*var(--u))] lg:pt-[calc(46*var(--u))] lg:pb-0">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:gap-0">
+          {/* The title column starts at 1180u (362u container offset + 818u), the same start as the Marcas e Produtos hero title. */}
+          <div className="grid gap-6 lg:grid-cols-[calc(818*var(--u))_1fr] lg:gap-0">
             <SectionLabel className="text-olive lg:ml-[calc(20*var(--u))]">{page.hero.label}</SectionLabel>
             {/* On desktop the box is as wide as the title's longest line; the paragraph (w-0 + min-w-full) is sized by it, not the other way round.
                 The paragraph size is 0.435 x the title's (27 / 62.1, bounds too), so its justified lines stay almost gap-free at any width. */}

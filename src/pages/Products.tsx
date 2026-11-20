@@ -24,7 +24,8 @@ function Products() {
     <>
       <Seo seo={page.seo} path={pathFor('products')} />
 
-      <section className="grid bg-olive text-sand md:grid-cols-2 lg:h-[calc(721*var(--u))] lg:grid-cols-[calc(966*var(--u))_1fr]">
+      {/* Image column 1069u + 111u padding puts the title at 1180u, the same start as the Contact hero title. */}
+      <section className="grid bg-olive text-sand md:grid-cols-2 lg:h-[calc(721*var(--u))] lg:grid-cols-[calc(1069*var(--u))_1fr]">
         <div className="h-64 overflow-hidden md:h-full md:min-h-[24rem] lg:min-h-0">
           {/* Zoomed in from the bottom-left corner so the jar leads and the hand is trimmed. */}
           <Picture image={page.hero.image} priority className="h-full w-full origin-bottom-left scale-[1.25] object-cover md:scale-[1.1] lg:scale-[1.25] object-left-bottom" />
