@@ -27,6 +27,9 @@ const SECTIONS: Record<string, string> = {
   catalog: 'Catálogo',
   partner: 'Sua marca pode estar aqui',
   form: 'Formulário',
+  location: 'Localização e mapa',
+  hours: 'Horário de funcionamento',
+  social: 'Redes sociais',
 }
 
 const SEGMENTS: Record<string, string> = {
@@ -59,6 +62,15 @@ const SEGMENTS: Record<string, string> = {
   name: 'Nome',
   blurb: 'Resumo',
   seo: 'SEO',
+  address: 'Endereço',
+  cityLabel: 'Rótulo da cidade',
+  city: 'Cidade',
+  mapQuery: 'Endereço usado no mapa do Google',
+  mapTitle: 'Descrição do mapa (acessibilidade)',
+  daysLabel: 'Rótulo dos dias',
+  days: 'Dias',
+  timeLabel: 'Rótulo do horário',
+  time: 'Horário',
 }
 
 const SITE: Record<string, string> = {

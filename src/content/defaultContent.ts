@@ -398,6 +398,22 @@ export const defaultContent: SiteContent = {
           summary: 'Revise os campos destacados para enviar sua mensagem.',
         },
       },
+      location: {
+        title: 'Localização',
+        address: 'Rua Manoel Loureiro, 1112\nBarreiros - CEP: 88117-330',
+        cityLabel: 'Cidade:',
+        city: 'São José | SC',
+        mapQuery: 'Rua Manoel Loureiro, 1112, Barreiros, São José, SC, 88117-330',
+        mapTitle: 'Mapa com a localização da Naturee Food Hub em São José, SC',
+      },
+      hours: {
+        title: 'Horário de funcionamento',
+        daysLabel: 'Dias:',
+        days: 'Segunda a sexta-feira',
+        timeLabel: 'Horário:',
+        time: '7:00 às 18:00',
+      },
+      social: { title: 'Siga nosso Instagram' },
     },
   },
   notFound: {

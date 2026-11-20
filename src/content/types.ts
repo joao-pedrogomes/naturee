@@ -170,6 +170,17 @@ export type ContactPage = {
     success: { title: string; text: string; cta: string }
     errors: { required: string; email: string; tooLong: string; apiFailed: string; summary: string }
   }
+  location: {
+    title: string
+    address: string
+    cityLabel: string
+    city: string
+    /** Searched on Google Maps to place the pin in the embedded map. */
+    mapQuery: string
+    mapTitle: string
+  }
+  hours: { title: string; daysLabel: string; days: string; timeLabel: string; time: string }
+  social: { title: string }
 }
 
 export type NotFoundContent = {

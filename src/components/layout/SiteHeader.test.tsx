@@ -58,4 +58,16 @@ describe('SiteHeader', () => {
     await user.keyboard('{Escape}')
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
+
+  /* On inner pages the wrapper stays in the flow as a spacer once the header turns fixed; unpainted, the page background shows through it. */
+  it('paints the spacer that holds the header height on inner pages', () => {
+    const { container } = renderHeader('/sobre')
+    expect(container.firstElementChild).toHaveClass('relative', 'bg-teal')
+  })
+
+  it('leaves the home header floating over the hero without a spacer background', () => {
+    const { container } = renderHeader('/')
+    expect(container.firstElementChild).toHaveClass('absolute')
+    expect(container.firstElementChild).not.toHaveClass('bg-teal')
+  })
 })

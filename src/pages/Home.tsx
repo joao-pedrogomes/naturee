@@ -144,7 +144,7 @@ function Home() {
       </section>
 
       <section>
-        <div className="mx-auto w-full bg-sand px-4 py-12 sm:px-6 lg:w-[calc(1662*var(--u))] lg:px-0 lg:py-0 lg:h-[calc(710*var(--u))]">
+        <div className="mx-auto w-full rounded-t-3xl bg-sand px-4 py-12 sm:px-6 lg:w-[calc(1662*var(--u))] lg:rounded-t-[calc(36*var(--u))] lg:px-0 lg:py-0 lg:h-[calc(710*var(--u))]">
           <div className="grid gap-10 lg:h-full lg:grid-cols-[calc(759*var(--u))_calc(702*var(--u))] lg:gap-0 lg:pl-[calc(104*var(--u))]">
             <div className="lg:pt-[calc(84*var(--u))]">
               <SectionLabel className="text-[length:clamp(0.7875rem,calc(24.3*var(--u)),2.7rem)] leading-[1.3] font-semibold uppercase">{page.closing.label}</SectionLabel>
