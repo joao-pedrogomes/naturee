@@ -74,14 +74,17 @@ function About() {
           <div className="grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[calc(669*var(--u))_calc(713*var(--u))] lg:gap-[calc(95*var(--u))]">
             <Picture
               image={page.purpose.image}
-              className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(499*var(--u))] lg:rounded-[calc(36*var(--u))]"
+              className="aspect-[4/3] w-full rounded-2xl object-cover max-sm:order-2 lg:aspect-auto lg:h-[calc(499*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
             {/* The column is as wide as the title's longest line (w-fit); the paragraph (w-0 + min-w-full) takes that width, so the text ends where the title ends. */}
-            <div className="lg:w-fit lg:pt-[calc(24*var(--u))]">
-              <SectionLabel>{page.purpose.label}</SectionLabel>
-              <Heading text={page.purpose.title} className="mt-8 text-title text-teal lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
-              {/* Four hand-broken lines at 24u: with the title's width as the box, these breaks give the most even word spacing. */}
-              <JustifiedLines handBroken text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] lg:w-0 lg:min-w-full ${PARAGRAPH} lg:text-[length:clamp(0.8rem,calc(24*var(--u)),3.5rem)] lg:leading-[1.3] [&_em]:font-bold`} />
+            <div className="max-sm:contents lg:w-fit lg:pt-[calc(24*var(--u))]">
+              <SectionLabel className="max-sm:order-1 max-sm:-mb-2">{page.purpose.label}</SectionLabel>
+              {/* Phones: only the label goes above the photo; this wrapper keeps the title and text together below it. It has no box from sm up. */}
+              <div className="contents max-sm:order-3 max-sm:-mt-4 max-sm:block">
+                <Heading text={page.purpose.title} className="mt-8 text-title text-teal max-sm:mt-0 lg:mt-[calc(70*var(--u))] lg:leading-[0.935]" />
+                {/* Four hand-broken lines at 24u: with the title's width as the box, these breaks give the most even word spacing. */}
+                <JustifiedLines handBroken text={page.purpose.text} className={`mt-6 lg:mt-[calc(28*var(--u))] lg:w-0 lg:min-w-full ${PARAGRAPH} lg:text-[length:clamp(0.8rem,calc(24*var(--u)),3.5rem)] lg:leading-[1.3] [&_em]:font-bold`} />
+              </div>
             </div>
           </div>
           <div className="mt-16 lg:mt-[calc(153*var(--u))]">
