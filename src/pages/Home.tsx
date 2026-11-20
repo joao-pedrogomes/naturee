@@ -87,7 +87,7 @@ function Home() {
                   ))}
                 </div>
                 <div className="mt-8 lg:mt-[calc(44*var(--u))]">
-                  <CtaLink cta={page.about.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
+                  <CtaLink cta={page.about.cta} variant="olive" size="sm" className="max-sm:w-[210px] lg:h-[calc(42*var(--u))] lg:w-[calc(383*var(--u))]" />
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@ function Home() {
             ))}
           </ul>
           <div className="mt-10 text-center lg:mt-[calc(70*var(--u))]">
-            <CtaLink cta={page.categories.cta} variant="teal" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(363*var(--u))]" />
+            <CtaLink cta={page.categories.cta} variant="teal" size="sm" className="max-sm:w-[210px] lg:h-[calc(42*var(--u))] lg:w-[calc(363*var(--u))]" />
           </div>
         </Container>
       </section>
@@ -162,8 +162,9 @@ function Home() {
               <p className={`mt-4 lg:mt-[calc(30*var(--u))] lg:max-w-[25.9em] ${PARAGRAPH} leading-[1.28] lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
               <ul className="mt-6 space-y-3 lg:mt-[calc(26*var(--u))] lg:space-y-[calc(18*var(--u))]">
                 {page.closing.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-3 max-sm:flex-col max-sm:gap-2 text-body font-semibold leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
-                    <Icon name="circleCheck" className="size-5 shrink-0 lg:size-[calc(32*var(--u))]" />
+                  <li key={bullet} className="flex items-center gap-3 max-sm:block text-body font-semibold leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
+                    {/* On phones the icon flows inline with the text, so a wrapped line keeps it beside the first words and the whole line centres as one. */}
+                    <Icon name="circleCheck" className="size-5 shrink-0 max-sm:mr-2.5 max-sm:inline-block max-sm:align-middle lg:size-[calc(32*var(--u))]" />
                     <span>{renderRichText(bullet)}</span>
                   </li>
                 ))}
