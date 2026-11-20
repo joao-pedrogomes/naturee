@@ -15,7 +15,6 @@ import { pathFor } from '@/routes'
 import stepArrow from '@/assets/icons/stepArrow.svg'
 
 const AUDIENCE_TONES = ['bg-olive text-sand', 'border-2 border-olive bg-white text-olive']
-const STEP_OFFSETS = ['lg:ml-0', 'lg:ml-[calc(36*var(--u))]', 'lg:ml-[calc(45*var(--u))]']
 
 /* word-spacing mimics the artboard's justified lines, whose spaces were squeezed to fit. */
 const PARAGRAPH = 'text-body text-black lg:leading-[1.3] lg:[word-spacing:-0.04em]'
@@ -49,23 +48,21 @@ function Logistics() {
               <li
                 key={step.title}
                 className={cn(
-                  'grid grid-cols-[auto_1fr] content-start gap-x-4 md:px-[4%] md:first:pl-0 md:last:pr-0 lg:h-[calc(233*var(--u))] lg:gap-x-[calc(48*var(--u))] lg:px-0',
+                  'grid content-start md:px-[4%] md:first:pl-0 md:last:pr-0 lg:h-[calc(233*var(--u))] lg:px-0',
                   index > 0 && 'md:border-l-2 md:border-olive',
                   holdLine(`${step.title} ${step.text}`, 70),
                 )}
               >
-                <p className="col-start-2 mb-3 text-label font-semibold normal-case text-olive lg:mb-[calc(26*var(--u))] lg:leading-none">
-                  {String(index + 1).padStart(2, '0')}
-                </p>
-                {/* Shares the title's row so it stays centred on the title whatever the font size. */}
-                <img
-                  src={stepArrow}
-                  alt=""
-                  aria-hidden="true"
-                  className={cn('col-start-1 row-start-2 w-5 self-center lg:w-[calc(33*var(--u))]', STEP_OFFSETS[index])}
-                />
-                <h3 className="col-start-2 row-start-2 font-sans text-step font-semibold text-olive uppercase lg:leading-none">{step.title}</h3>
-                <RichText text={step.text} className="col-start-2 mt-3 text-body text-black lg:mt-[calc(36*var(--u))] lg:leading-[1.3]" />
+                {/* The group is as wide as its widest line and centred between the dividers; the text inside stays left-aligned. */}
+                <div className="lg:mx-auto lg:w-fit">
+                  {/* The arrow sits with the number, on the same left edge as the title and text below. */}
+                  <div className="mb-3 flex items-center gap-3 lg:mb-[calc(26*var(--u))] lg:gap-[calc(20*var(--u))]">
+                    <img src={stepArrow} alt="" aria-hidden="true" className="w-5 shrink-0 lg:w-[calc(33*var(--u))]" />
+                    <p className="text-label font-semibold normal-case text-olive lg:leading-none">{String(index + 1).padStart(2, '0')}</p>
+                  </div>
+                  <h3 className="font-sans text-step font-semibold text-olive uppercase lg:leading-none">{step.title}</h3>
+                  <RichText text={step.text} className="mt-3 text-body text-black lg:mt-[calc(36*var(--u))] lg:leading-[1.3]" />
+                </div>
               </li>
             ))}
           </ol>
