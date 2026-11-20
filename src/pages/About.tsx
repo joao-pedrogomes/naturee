@@ -69,7 +69,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="bg-sand pt-16 lg:pt-[calc(88*var(--u))]">
+      <section className="bg-sand pt-16 max-sm:pt-[58px] lg:pt-[calc(88*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[calc(669*var(--u))_calc(713*var(--u))] lg:gap-[calc(95*var(--u))]">
             <Picture
