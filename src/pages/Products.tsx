@@ -36,7 +36,7 @@ function Products() {
             {renderRichText(page.hero.text)}
           </p>
           <div className="mt-8 lg:mt-[calc(40*var(--u))]">
-            <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" className="lg:w-[calc(255*var(--u))]" />
+            <CtaLink cta={page.hero.cta} variant="teal" icon="catalog" size="sm" className="max-sm:w-[210px] lg:w-[calc(255*var(--u))]" />
           </div>
         </div>
       </section>
@@ -52,7 +52,7 @@ function Products() {
             ))}
           </ul>
           <div className="mt-12 lg:mt-[calc(69*var(--u))]">
-            <CtaLink cta={page.categories.cta} variant="teal" icon="download" size="lg" className="w-full sm:w-auto sm:min-w-[24rem] lg:h-[calc(66*var(--u))] lg:w-[calc(564*var(--u))]" />
+            <CtaLink cta={page.categories.cta} variant="teal" icon="download" size="lg" className="w-full max-sm:w-[210px] sm:w-auto sm:min-w-[24rem] lg:h-[calc(66*var(--u))] lg:w-[calc(564*var(--u))]" />
           </div>
         </Container>
       </section>
@@ -71,7 +71,7 @@ function Products() {
               <Heading as="h3" text={page.brands.partner.title} className="mt-2 text-card-title text-teal lg:mt-[calc(6*var(--u))] lg:text-[length:calc(31*var(--u))]" />
               <p className="mt-1 text-small text-black lg:mt-[calc(10*var(--u))] lg:text-[length:calc(17*var(--u))]">{renderRichText(page.brands.partner.text)}</p>
             </div>
-            <CtaLink cta={page.brands.partner.cta} variant="teal" icon="arrow" size="sm" className="normal-case lg:mt-[calc(40*var(--u))] lg:h-[calc(44*var(--u))] lg:w-[calc(250*var(--u))] lg:text-[length:calc(21*var(--u))]" />
+            <CtaLink cta={page.brands.partner.cta} variant="teal" icon="arrow" size="sm" className="normal-case max-sm:w-[210px] lg:mt-[calc(40*var(--u))] lg:h-[calc(44*var(--u))] lg:w-[calc(250*var(--u))] lg:text-[length:calc(21*var(--u))]" />
           </div>
         </Container>
       </section>
@@ -86,16 +86,16 @@ function Products() {
               <Heading text={page.catalog.title} className="mt-8 text-display text-teal lg:mt-[calc(64*var(--u))] lg:leading-[0.935]" />
               <p className={`mt-5 ${PARAGRAPH} lg:mt-[calc(25*var(--u))] lg:max-w-[calc(690*var(--u))]`}>{renderRichText(page.catalog.text)}</p>
               <div className="mt-8 lg:mt-[calc(25*var(--u))]">
-                <CtaLink cta={page.catalog.cta} variant="olive" icon="download" size="lg" className="lg:h-[calc(66*var(--u))] lg:w-[calc(322*var(--u))]" />
+                <CtaLink cta={page.catalog.cta} variant="olive" icon="download" size="lg" className="max-sm:w-[210px] lg:h-[calc(66*var(--u))] lg:w-[calc(322*var(--u))]" />
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="bg-sand pb-0 lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(177*var(--u)),var(--teal)_0)] lg:pt-[calc(0*var(--u))]">
+      <section className="bg-sand pb-0 max-sm:bg-[linear-gradient(to_bottom,var(--sand)_calc(100%-24px),var(--teal)_0)] lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(177*var(--u)),var(--teal)_0)] lg:pt-[calc(0*var(--u))]">
         <Container>
-          <div className="rounded-3xl bg-olive px-6 py-10 text-center text-sand lg:h-[calc(360*var(--u))] lg:rounded-[calc(36*var(--u))] lg:px-[calc(176*var(--u))] lg:py-0 lg:pt-[calc(70*var(--u))]">
+          <div className="rounded-3xl bg-olive px-6 py-10 text-center text-sand max-sm:translate-y-[30px] lg:h-[calc(360*var(--u))] lg:rounded-[calc(36*var(--u))] lg:px-[calc(176*var(--u))] lg:py-0 lg:pt-[calc(70*var(--u))]">
             <SectionLabel tone="cream" className="lg:text-[length:calc(23*var(--u))] lg:font-normal">{page.banner.label}</SectionLabel>
             <Heading text={page.banner.title} className="mt-3 text-display text-teal lg:mt-[calc(12*var(--u))]" />
             <div className="mt-8 lg:mt-[calc(39*var(--u))]">
@@ -104,7 +104,7 @@ function Products() {
           </div>
         </Container>
       </section>
-      <div className="h-8 bg-teal lg:h-[calc(56*var(--u))]" aria-hidden="true" />
+      <div className="h-8 bg-teal max-sm:-mt-px max-sm:h-[calc(2rem+1px)] lg:h-[calc(56*var(--u))]" aria-hidden="true" />
     </>
   )
 }
