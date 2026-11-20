@@ -45,9 +45,9 @@ function SiteFooter() {
               width={103}
               height={79}
               loading="lazy"
-              className="h-[3.45rem] w-auto lg:h-[calc(81*var(--u))]"
+              className="h-[3.45rem] w-auto max-sm:mx-auto lg:h-[calc(81*var(--u))]"
             />
-            <p className={`mt-4 max-w-[16rem] font-light text-foot text-sand lg:mt-[calc(23*var(--u))] lg:max-w-none ${holdLine(site.tagline)} lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]`}>
+            <p className={`mt-4 max-w-[16rem] max-sm:mx-auto font-light text-foot text-sand lg:mt-[calc(23*var(--u))] lg:max-w-none ${holdLine(site.tagline)} lg:text-[length:clamp(0.9375rem,calc(22*var(--u)),2.5rem)] lg:leading-[1.2]`}>
               {renderRichText(site.tagline)}
             </p>
           </div>
@@ -80,7 +80,7 @@ function SiteFooter() {
                   </span>
                 </a>
               </li>
-              <li className="flex min-h-11 items-start gap-3 py-2 text-sand lg:min-h-0 lg:gap-[calc(14*var(--u))] lg:py-0">
+              <li className="flex min-h-11 items-start gap-3 py-2 max-sm:justify-center text-sand lg:min-h-0 lg:gap-[calc(14*var(--u))] lg:py-0">
                 <img src={footerPin} alt="" aria-hidden="true" className="mt-0.5 size-[1.1em] shrink-0 lg:size-[calc(20*var(--u))]" />
                 <span className="text-foot font-medium text-[#e9e3ba] lg:w-max lg:max-w-[max(calc(340*var(--u)),17rem)] lg:shrink-0 whitespace-pre-line">{site.regionLine}</span>
               </li>

@@ -268,3 +268,13 @@
     display: none;
   }
 }
+
+/* Phones (under Tailwind's sm, 40rem) centre all running text; tablets and up keep each section's own alignment.
+   Unlayered on purpose: it must beat the utilities (text-left, text-start) that sit on individual elements.
+   Form fields stay left-aligned, where reading and typing are easier. */
+@media (width < 40rem) {
+  main :not(form, form *),
+  footer :not(form, form *) {
+    text-align: center;
+  }
+}

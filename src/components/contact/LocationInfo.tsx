@@ -8,9 +8,9 @@ import footerWhatsapp from '@/assets/icons/footerWhatsapp.svg'
 import planningClock from '@/assets/icons/planningClock.svg'
 
 const HEADING =
-  'flex items-center gap-4 font-sans text-[length:clamp(1.125rem,calc(27*var(--u)),2.6rem)] leading-[1.15] font-semibold tracking-normal text-olive uppercase lg:gap-[calc(29*var(--u))]'
+  'flex items-center gap-4 max-sm:justify-center font-sans text-[length:clamp(1.125rem,calc(27*var(--u)),2.6rem)] leading-[1.15] font-semibold tracking-normal text-olive uppercase lg:gap-[calc(29*var(--u))]'
 const HEADING_ICON = 'size-6 shrink-0 lg:size-[calc(26*var(--u))]'
-const INDENT = 'pl-10 lg:pl-[calc(54*var(--u))]'
+const INDENT = 'pl-10 max-sm:pl-0 lg:pl-[calc(54*var(--u))]'
 const COPY = 'text-body text-black lg:text-[length:clamp(1rem,calc(24*var(--u)),2.8rem)] lg:leading-[1.25]'
 const SOCIAL_LINK =
   'inline-flex size-11 items-center justify-center rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive-deep lg:size-[calc(38*var(--u))]'
@@ -65,7 +65,7 @@ function LocationInfo({ page }: LocationInfoProps) {
           <h2 id="contact-social" className={`${HEADING} ${INDENT}`}>
             {social.title}
           </h2>
-          <ul className={`mt-4 flex items-center gap-3 ${INDENT} lg:mt-[calc(21*var(--u))] lg:gap-[calc(16*var(--u))]`}>
+          <ul className={`mt-4 flex items-center gap-3 max-sm:justify-center ${INDENT} lg:mt-[calc(21*var(--u))] lg:gap-[calc(16*var(--u))]`}>
             <li>
               <a href={site.instagramUrl} target="_blank" rel="noopener" className={SOCIAL_LINK}>
                 <img src={footerInstagram} alt="" aria-hidden="true" className="size-8 lg:size-[calc(27*var(--u))]" />

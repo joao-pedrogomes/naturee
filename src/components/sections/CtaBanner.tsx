@@ -60,7 +60,7 @@ function CtaBanner({ label, title, text, image, primary, secondary }: CtaBannerP
           ) : null}
           <div
             className={cn(
-              'mt-8 flex flex-wrap gap-4',
+              'mt-8 flex flex-wrap gap-4 max-sm:justify-center',
               withImage ? 'lg:mt-[calc(33*var(--u))]' : 'justify-center lg:mt-[calc(57*var(--u))] lg:gap-[calc(22*var(--u))]',
             )}
           >

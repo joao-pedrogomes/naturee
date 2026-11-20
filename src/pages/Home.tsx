@@ -44,10 +44,11 @@ function Home() {
               text={page.hero.title}
               className="font-normal text-title leading-[0.94] text-sand lg:leading-[0.935] [&_em]:font-semibold [&_strong]:text-olive-bright [&_strong]:font-semibold"
             />
-            <p className="mt-6 text-body text-sand lg:mt-[calc(29*var(--u))] lg:max-w-[calc(500*var(--u))] lg:leading-[1.17]">
+            {/* The newline breaks before "gastronomia" on phones only: the [&_br] overrides show the desktop-only <br> under 640px and hide it again from lg, where the text already wraps there on its own. */}
+            <p className="mt-6 text-body text-sand max-sm:[&_br]:inline lg:[&_br]:hidden lg:mt-[calc(29*var(--u))] lg:max-w-[calc(500*var(--u))] lg:leading-[1.17]">
               {renderRichText(page.hero.text)}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3 lg:mt-[calc(58*var(--u))] lg:gap-[calc(15*var(--u))]">
+            <div className="mt-8 flex flex-wrap gap-3 max-sm:justify-center lg:mt-[calc(58*var(--u))] lg:gap-[calc(15*var(--u))]">
               <CtaLink cta={page.hero.primary} variant="teal" icon="catalog" size="sm" className="lg:px-[calc(40*var(--u))]" />
               <CtaLink cta={page.hero.secondary} variant="outlineCream" size="sm" className="border-2 lg:px-[calc(40*var(--u))]" />
             </div>
@@ -75,10 +76,10 @@ function Home() {
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             {/* The label stays at the top; the heading, text and button are centred on the photo (326u = its 35u offset + half of its 582u height). */}
-            <div className="lg:relative lg:self-stretch">
-              <SectionLabel className="lg:leading-[1.3]">{page.about.label}</SectionLabel>
-              <div className="lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
-                <Heading text={page.about.title} className="mt-5 text-title leading-[1.02] text-teal lg:mt-0 lg:leading-[0.985]" />
+            <div className="max-sm:contents lg:relative lg:self-stretch">
+              <SectionLabel className="max-sm:order-1 max-sm:-mb-2 lg:leading-[1.3]">{page.about.label}</SectionLabel>
+              <div className="max-sm:order-3 lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
+                <Heading text={page.about.title} className="mt-5 max-sm:mt-0 lg:mt-0 text-title leading-[1.02] text-teal lg:leading-[0.985]" />
                 <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
                   {/* Size and box width tuned at 1920x1080 so the justified lines have no wide word gaps. */}
                   {page.about.paragraphs.map((paragraph, index) => (
@@ -92,7 +93,7 @@ function Home() {
             </div>
             <Picture
               image={page.about.image}
-              className="aspect-[4/3] w-full rounded-2xl object-cover lg:mt-[calc(35*var(--u))] lg:aspect-auto lg:h-[calc(582*var(--u))] lg:w-[calc(690*var(--u))] lg:rounded-[calc(36*var(--u))]"
+              className="aspect-[4/3] w-full rounded-2xl object-cover max-sm:order-2 lg:mt-[calc(35*var(--u))] lg:aspect-auto lg:h-[calc(582*var(--u))] lg:w-[calc(690*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
           </div>
         </Container>
@@ -161,7 +162,7 @@ function Home() {
               <p className={`mt-4 lg:mt-[calc(30*var(--u))] lg:max-w-[25.9em] ${PARAGRAPH} leading-[1.28] lg:leading-[1.3]`}>{renderRichText(page.closing.text)}</p>
               <ul className="mt-6 space-y-3 lg:mt-[calc(26*var(--u))] lg:space-y-[calc(18*var(--u))]">
                 {page.closing.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-3 text-body font-semibold leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
+                  <li key={bullet} className="flex items-center gap-3 max-sm:flex-col max-sm:gap-2 text-body font-semibold leading-[1.28] text-olive lg:gap-[calc(14*var(--u))]">
                     <Icon name="circleCheck" className="size-5 shrink-0 lg:size-[calc(32*var(--u))]" />
                     <span>{renderRichText(bullet)}</span>
                   </li>

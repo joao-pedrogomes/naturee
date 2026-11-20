@@ -56,7 +56,7 @@ function Logistics() {
                 {/* The group is as wide as its widest line and centred between the dividers; the text inside stays left-aligned. */}
                 <div className="lg:mx-auto lg:w-fit">
                   {/* The arrow sits with the number, on the same left edge as the title and text below. */}
-                  <div className="mb-3 flex items-center gap-3 lg:mb-[calc(26*var(--u))] lg:gap-[calc(20*var(--u))]">
+                  <div className="mb-3 flex items-center gap-3 max-sm:justify-center lg:mb-[calc(26*var(--u))] lg:gap-[calc(20*var(--u))]">
                     <img src={stepArrow} alt="" aria-hidden="true" className="w-5 shrink-0 lg:w-[calc(33*var(--u))]" />
                     <p className="text-label font-semibold normal-case text-olive lg:leading-none">{String(index + 1).padStart(2, '0')}</p>
                   </div>

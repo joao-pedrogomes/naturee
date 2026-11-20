@@ -161,7 +161,7 @@ export const defaultContent: SiteContent = {
       },
       hero: {
         title: '*Curadoria &\ndistribuição* para\n**produtos especiais**',
-        text: 'Conectamos produtores, marcas e gastronomia com uma operação organizada, próxima e refrigerada.',
+        text: 'Conectamos produtores, marcas e\ngastronomia com uma operação organizada, próxima e refrigerada.',
         image: banner('Queijos, patês e conservas Sítio Pura Vida sobre uma mesa escura', [homeHero1440, homeHero960, homeHero640]),
         primary: { label: 'Acessar catálogo', href: '#catalog' },
         secondary: { label: 'Saiba mais', href: '/sobre' },
