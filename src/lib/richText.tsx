@@ -4,13 +4,16 @@ const MARKUP_PATTERN = /\*\*([^*]+)\*\*|\*([^*]+)\*/g
 
 /**
  * A newline becomes a space plus a <br> that only applies on desktop, to reproduce the
- * artboard's line breaks. The space keeps words apart wherever the <br> is hidden.
+ * artboard's line breaks; `||` does the same for phones only (under 640px), where the
+ * lines wrap at different words. The space keeps words apart wherever the <br> is hidden.
  */
 function withBreaks(text: string, keyPrefix: number): ReactNode[] {
-  const lines = text.split('\n')
-  return lines.flatMap((line, index) => {
-    if (index === 0) return [line]
-    return [' ', <br key={`${keyPrefix}-${index}`} className="hidden lg:inline" />, line]
+  const parts = text.split(/(\n|\|\|)/)
+  return parts.flatMap((part, index) => {
+    if (index === 0) return [part]
+    if (part === '\n') return [' ', <br key={`${keyPrefix}-${index}`} className="hidden lg:inline" />]
+    if (part === '||') return [' ', <br key={`${keyPrefix}-${index}`} className="sm:hidden" />]
+    return [part]
   })
 }
 

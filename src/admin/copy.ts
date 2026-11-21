@@ -60,7 +60,7 @@ export const copy = {
     pending: 'alterações pendentes',
     discard: 'Descartar',
     viewPage: 'Ver página no site',
-    markupHint: 'Use *itálico* e **negrito**. A quebra de linha vale só no computador.',
+    markupHint: 'Use *itálico* e **negrito**. A quebra de linha vale só no computador; use || para uma quebra só no celular.',
     linkHint: 'Use /pagina, #whatsapp, #catalog ou um link https://',
     active: 'Página ativa',
     history: 'Histórico',
