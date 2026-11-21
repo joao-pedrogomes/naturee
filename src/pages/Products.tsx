@@ -76,7 +76,7 @@ function Products() {
         </Container>
       </section>
 
-      <section className="bg-sand py-16 lg:pt-[calc(98*var(--u))] lg:pb-[calc(123*var(--u))]">
+      <section className="bg-sand py-16 max-sm:pb-[10px] lg:pt-[calc(98*var(--u))] lg:pb-[calc(123*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[calc(668*var(--u))_calc(669*var(--u))] lg:gap-[calc(57*var(--u))] lg:ml-[calc(-3*var(--u))]">
             <Picture image={page.catalog.image} className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(534*var(--u))] lg:rounded-[calc(36*var(--u))]" />
