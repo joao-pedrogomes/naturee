@@ -329,9 +329,9 @@ export const defaultContent: SiteContent = {
         title: 'Uma operação pensada para *facilitar*\n*sua rotina.*',
         text: 'A Naturee reúne produtos de diferentes fornecedores e organiza sua\ndistribuição por meio de rotas programadas, trazendo mais praticidade e\norganização ao abastecimento de operações gastronômicas.',
         steps: [
-          { title: 'Curadoria', text: 'Produtos de diferentes\nmarcas e fornecedores.' },
-          { title: 'Organização', text: 'Pedidos alinhados à\nprogramação das rotas.' },
-          { title: 'Distribuição', text: 'Logística refrigerada e\ncuidado no transporte.' },
+          { title: 'Curadoria', text: 'Produtos de diferentes\nmarcas ||e fornecedores.' },
+          { title: 'Organização', text: 'Pedidos alinhados à\nprogramação ||das rotas.' },
+          { title: 'Distribuição', text: 'Logística refrigerada e\ncuidado ||no transporte.' },
         ],
       },
       regions: {

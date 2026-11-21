@@ -21,4 +21,13 @@ describe('renderRichText', () => {
     expect(container.querySelectorAll('em')).toHaveLength(2)
     expect(container.textContent).toBe('a b c 5*')
   })
+
+  it('turns a newline into a desktop-only break and || into a phone-only break, without extra spaces', () => {
+    const { container } = render(<p>{renderRichText('Produtos de diferentes\nmarcas ||e fornecedores.')}</p>)
+    const breaks = [...container.querySelectorAll('br')]
+    expect(breaks).toHaveLength(2)
+    expect(breaks[0]).toHaveClass('hidden', 'lg:inline')
+    expect(breaks[1]).toHaveClass('sm:hidden')
+    expect(container.textContent?.replace(/\s+/g, ' ')).toBe('Produtos de diferentes marcas e fornecedores.')
+  })
 })
