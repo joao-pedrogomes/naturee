@@ -9,7 +9,7 @@ type TrustStripProps = {
 
 function TrustStrip({ items }: TrustStripProps) {
   return (
-    <ul className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-4 lg:gap-x-[calc(127*var(--u))]">
+    <ul className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 md:grid-cols-4 md:gap-x-6 lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-4 lg:gap-x-[calc(127*var(--u))]">
       {items.map((item) => (
         <li
           key={item.title}

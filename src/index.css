@@ -10,12 +10,13 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * The desktop layout (every lg: utility, sized in artboard units) starts at 1280px instead of Tailwind's
- * 1024px. Tablets in landscape (iPad Mini, 1024px) get the fluid tablet layout that uses the full width,
- * instead of the desktop layout scaled down into a narrow box.
+ * The desktop layout (every lg: utility, sized in artboard units) and the desktop header (xl:) start at
+ * 1366px, the common laptop width. Everything below, tablets in portrait and landscape (744-1365px),
+ * gets the fluid tablet layout that uses the full width instead of the desktop scaled into a narrow box.
  */
 @theme {
-  --breakpoint-lg: 80rem;
+  --breakpoint-lg: 85.375rem;
+  --breakpoint-xl: 85.375rem;
 }
 
 @theme inline {
@@ -265,7 +266,7 @@
   @media (width >= 40rem) {
     padding-inline: 1.5rem;
   }
-  @media (width >= 80rem) {
+  @media (width >= 85.375rem) {
     padding-inline: 0;
     width: calc(1458 * var(--u));
   }

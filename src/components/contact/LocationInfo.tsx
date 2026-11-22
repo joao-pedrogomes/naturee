@@ -38,7 +38,7 @@ function LocationInfo({ page }: LocationInfoProps) {
 
   return (
     <div className="flex flex-col gap-10 lg:h-full lg:gap-[calc(48*var(--u))]">
-      <div className="space-y-10 lg:space-y-[calc(38*var(--u))]">
+      <div className="space-y-10 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 md:space-y-0 lg:block lg:space-y-[calc(38*var(--u))]">
         <section aria-labelledby="contact-location">
           <h2 id="contact-location" className={HEADING}>
             <img src={footerPin} alt="" aria-hidden="true" className={HEADING_ICON} />
@@ -61,7 +61,7 @@ function LocationInfo({ page }: LocationInfoProps) {
           </div>
         </section>
 
-        <section aria-labelledby="contact-social">
+        <section aria-labelledby="contact-social" className="md:col-span-2 lg:col-span-1">
           <h2 id="contact-social" className={`${HEADING} ${INDENT}`}>
             {social.title}
           </h2>
@@ -88,7 +88,7 @@ function LocationInfo({ page }: LocationInfoProps) {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         allowFullScreen
-        className="aspect-[4/3] w-full rounded-2xl border-0 bg-cream lg:aspect-auto lg:min-h-[calc(270*var(--u))] lg:flex-1 lg:rounded-[calc(28*var(--u))]"
+        className="aspect-[4/3] w-full rounded-2xl border-0 bg-cream md:aspect-[16/7] lg:aspect-auto lg:min-h-[calc(270*var(--u))] lg:flex-1 lg:rounded-[calc(28*var(--u))]"
       />
     </div>
   )

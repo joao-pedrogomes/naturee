@@ -1,4 +1,5 @@
 import Icon from '@/components/icons/Icon'
+import CardCarousel, { CAROUSEL_CARD } from '@/components/sections/CardCarousel'
 import Heading from '@/components/sections/Heading'
 import Picture from '@/components/sections/Picture'
 import RichText from '@/components/sections/RichText'
@@ -19,13 +20,15 @@ const VARIANTS = {
 function FeatureCards({ cards, variant }: FeatureCardsProps) {
   const tone = VARIANTS[variant]
 
+  // Phones (under 640px): the cards stack. Tablets (640-1365px): a two-card carousel with arrows. Desktop (1366px+): three in a row.
   return (
-    <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-[calc(56*var(--u))]">
+    <CardCarousel trackClassName="grid gap-6 lg:grid-cols-3 lg:gap-[calc(56*var(--u))]">
       {cards.map((card) => (
         <li
           key={card.title}
           className={cn(
-            'flex flex-col overflow-hidden rounded-3xl md:last:col-span-2 md:last:mx-auto md:last:w-[calc(50%-0.75rem)] lg:rounded-[calc(32*var(--u))] lg:last:col-span-1 lg:last:mx-0 lg:last:w-auto',
+            'flex flex-col overflow-hidden rounded-3xl lg:rounded-[calc(32*var(--u))]',
+            CAROUSEL_CARD,
             tone.card,
             'lg:h-[calc(703*var(--u))]',
           )}
@@ -43,7 +46,7 @@ function FeatureCards({ cards, variant }: FeatureCardsProps) {
           </div>
         </li>
       ))}
-    </ul>
+    </CardCarousel>
   )
 }
 
