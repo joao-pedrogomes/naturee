@@ -93,9 +93,9 @@ function Products() {
         </Container>
       </section>
 
-      <section className="bg-sand pb-0 max-sm:bg-[linear-gradient(to_bottom,var(--sand)_calc(100%-24px),var(--teal)_0)] lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(177*var(--u)),var(--teal)_0)] lg:pt-[calc(0*var(--u))]">
+      <section className="bg-sand pb-0 bg-[linear-gradient(to_bottom,var(--sand)_calc(100%-24px),var(--teal)_0)] sm:bg-[linear-gradient(to_bottom,var(--sand)_calc(100%-20px),var(--teal)_0)] lg:bg-[linear-gradient(to_bottom,var(--sand)_calc(177*var(--u)),var(--teal)_0)] lg:pt-[calc(0*var(--u))]">
         <Container>
-          <div className="rounded-3xl bg-olive px-6 py-10 text-center text-sand max-sm:translate-y-[30px] lg:h-[calc(360*var(--u))] lg:rounded-[calc(36*var(--u))] lg:px-[calc(176*var(--u))] lg:py-0 lg:pt-[calc(70*var(--u))]">
+          <div className="rounded-3xl bg-olive px-6 py-10 text-center text-sand translate-y-[30px] sm:translate-y-5 lg:translate-y-0 lg:h-[calc(360*var(--u))] lg:rounded-[calc(36*var(--u))] lg:px-[calc(176*var(--u))] lg:py-0 lg:pt-[calc(70*var(--u))]">
             <SectionLabel tone="cream" className="lg:text-[length:calc(23*var(--u))] lg:font-normal">{page.banner.label}</SectionLabel>
             <Heading text={page.banner.title} className="mt-3 text-display text-teal lg:mt-[calc(12*var(--u))]" />
             <div className="mt-8 lg:mt-[calc(39*var(--u))]">
@@ -104,7 +104,7 @@ function Products() {
           </div>
         </Container>
       </section>
-      <div className="h-8 bg-teal max-sm:-mt-px max-sm:h-[calc(2rem+1px)] lg:h-[calc(56*var(--u))]" aria-hidden="true" />
+      <div className="-mt-px h-[calc(2rem+1px)] bg-teal lg:mt-0 lg:h-[calc(56*var(--u))]" aria-hidden="true" />
     </>
   )
 }

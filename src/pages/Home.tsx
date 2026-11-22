@@ -1,6 +1,7 @@
 import Icon from '@/components/icons/Icon'
 import Marquee from '@/components/sections/Marquee'
 import Container from '@/components/sections/Container'
+import CardCarousel from '@/components/sections/CardCarousel'
 import CtaLink from '@/components/sections/CtaLink'
 import FeatureCards from '@/components/sections/FeatureCards'
 import Heading from '@/components/sections/Heading'
@@ -76,10 +77,10 @@ function Home() {
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             {/* The label stays at the top; the heading, text and button are centred on the photo (326u = its 35u offset + half of its 582u height). */}
-            <div className="max-sm:contents lg:relative lg:self-stretch">
-              <SectionLabel className="max-sm:order-1 max-sm:-mb-2 lg:leading-[1.3]">{page.about.label}</SectionLabel>
-              <div className="max-sm:order-3 lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
-                <Heading text={page.about.title} className="mt-5 max-sm:mt-0 lg:mt-0 text-title leading-[1.02] text-teal lg:leading-[0.985]" />
+            <div className="max-lg:contents lg:relative lg:self-stretch">
+              <SectionLabel className="max-lg:order-1 max-lg:-mb-2 lg:leading-[1.3]">{page.about.label}</SectionLabel>
+              <div className="max-lg:order-3 lg:absolute lg:inset-x-0 lg:top-[calc(326*var(--u))] lg:-translate-y-1/2">
+                <Heading text={page.about.title} className="mt-5 max-lg:mt-0 lg:mt-0 text-title leading-[1.02] text-teal lg:leading-[0.985]" />
                 <div className="mt-6 space-y-4 lg:mt-[calc(31*var(--u))] lg:space-y-[calc(24*var(--u))]">
                   {/* Size and box width tuned at 1920x1080 so the justified lines have no wide word gaps. */}
                   {page.about.paragraphs.map((paragraph, index) => (
@@ -93,7 +94,7 @@ function Home() {
             </div>
             <Picture
               image={page.about.image}
-              className="aspect-[4/3] w-full rounded-2xl object-cover max-sm:order-2 lg:mt-[calc(35*var(--u))] lg:aspect-auto lg:h-[calc(582*var(--u))] lg:w-[calc(690*var(--u))] lg:rounded-[calc(36*var(--u))]"
+              className="aspect-[4/3] w-full rounded-2xl object-cover max-lg:order-2 lg:mt-[calc(35*var(--u))] lg:aspect-auto lg:h-[calc(582*var(--u))] lg:w-[calc(690*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
           </div>
         </Container>
@@ -122,11 +123,11 @@ function Home() {
         <Container>
           <SectionLabel>{page.categories.label}</SectionLabel>
           <Heading text={page.categories.title} className="mt-3 text-title text-teal lg:mt-[calc(18*var(--u))]" />
-          <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:mt-[calc(68*var(--u))] lg:w-[calc(1638*var(--u))] lg:grid-cols-3 lg:justify-items-center lg:gap-0">
+          <CardCarousel arrowTop="top-[calc(50%-40px)]" className="mt-10 lg:mt-[calc(68*var(--u))]" trackClassName="grid gap-8 lg:relative lg:left-1/2 lg:w-[calc(1638*var(--u))] lg:-translate-x-1/2 lg:grid-cols-3 lg:justify-items-center lg:gap-0" label="Categorias mais vendidas">
             {highlighted.map((category) => (
               <HighlightCard key={category.id} category={category} label="Categoria" />
             ))}
-          </ul>
+          </CardCarousel>
           <div className="mt-10 text-center lg:mt-[calc(70*var(--u))]">
             <CtaLink cta={page.categories.cta} variant="teal" size="sm" className="max-sm:w-[210px] lg:h-[calc(42*var(--u))] lg:w-[calc(363*var(--u))]" />
           </div>
@@ -135,17 +136,18 @@ function Home() {
 
       <section className="py-16 lg:pt-[calc(88*var(--u))] lg:pb-[calc(70*var(--u))]">
         <Container>
-          <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
+          <div className="grid items-start gap-10 sm:max-lg:gap-0 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             <Picture
               image={page.logistics.image}
-              className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-auto lg:h-[calc(499*var(--u))] lg:rounded-[calc(36*var(--u))]"
+              className="aspect-[4/3] w-full rounded-2xl object-cover sm:max-lg:order-2 sm:max-lg:mb-10 lg:aspect-auto lg:h-[calc(499*var(--u))] lg:rounded-[calc(36*var(--u))]"
             />
-            <div className="lg:pt-[calc(29*var(--u))]">
-              <SectionLabel>{page.logistics.label}</SectionLabel>
-              <Heading text={page.logistics.title} className="mt-8 text-title text-teal lg:mt-[calc(64*var(--u))] " />
+            {/* Tablet: the label goes above the photo, the title and text below it. */}
+            <div className="sm:max-lg:contents lg:pt-[calc(29*var(--u))]">
+              <SectionLabel className="sm:max-lg:order-1 sm:max-lg:mb-8">{page.logistics.label}</SectionLabel>
+              <Heading text={page.logistics.title} className="mt-8 text-title text-teal sm:max-lg:order-3 sm:max-lg:mt-0 lg:mt-[calc(64*var(--u))] " />
               {/* Box width in em (18.64 x the font size) so the justified lines stay almost gap-free at any screen width. */}
-              <p className={`mt-6 lg:mt-[calc(29*var(--u))] lg:max-w-[18.64em] ${PARAGRAPH} lg:leading-[1.3]`}>{renderRichText(page.logistics.text)}</p>
-              <div className="mt-8 lg:mt-[calc(40*var(--u))]">
+              <p className={`mt-6 sm:max-lg:order-3 lg:mt-[calc(29*var(--u))] lg:max-w-[18.64em] ${PARAGRAPH} lg:leading-[1.3]`}>{renderRichText(page.logistics.text)}</p>
+              <div className="mt-8 sm:max-lg:order-3 lg:mt-[calc(40*var(--u))]">
                 <CtaLink cta={page.logistics.cta} variant="olive" size="sm" className="lg:h-[calc(42*var(--u))] lg:w-[calc(384*var(--u))]" />
               </div>
             </div>
