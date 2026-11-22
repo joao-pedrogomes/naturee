@@ -36,7 +36,7 @@ function SiteFooter() {
       <div className="container-site py-14 lg:w-full lg:pt-[calc(52*var(--u))] lg:pb-[calc(93*var(--u))]">
         <TrustStrip items={trust} />
 
-        <div className="mt-14 grid gap-12 lg:mt-[calc(67*var(--u))] lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
+        <div className="mt-14 grid gap-12 md:grid-cols-[1fr_0.8fr_1.4fr] md:gap-8 lg:mt-[calc(67*var(--u))] lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
           {/* On desktop the tagline's last line shares a baseline with the last quick link, so the block ends level with that list. */}
           <div className="lg:[align-self:last_baseline]">
             <img
