@@ -59,6 +59,10 @@ export type SiteInfo = {
   instagram: string
   instagramUrl: string
   regionLine: string
+  /** Company identification shown in the footer legal note (Decreto 7.962/2013 asks for it on commercial sites). A blank field is left out. */
+  legalName: string
+  cnpj: string
+  legalAddress: string
   catalogPdfUrl: string
   url: string
   ogImage: string
@@ -157,6 +161,17 @@ export type LogisticsPage = {
 
 export type ContactFieldKey = 'name' | 'email' | 'subject' | 'message'
 
+export type PrivacySection = { title: string; text: string; items: string[] }
+
+export type PrivacyPage = {
+  enabled: boolean
+  seo: Seo
+  title: string
+  updated: string
+  intro: string
+  sections: PrivacySection[]
+}
+
 export type ContactPage = {
   enabled: boolean
   seo: Seo
@@ -194,7 +209,20 @@ export type SiteContent = {
   site: SiteInfo
   nav: Link[]
   footerLinks: Link[]
-  footer: { quickLinksTitle: string; contactTitle: string; menuOpen: string; menuClose: string; menuTitle: string; skipLink: string }
+  footer: {
+    quickLinksTitle: string
+    contactTitle: string
+    menuOpen: string
+    menuClose: string
+    menuTitle: string
+    skipLink: string
+    rights: string
+    cookieText: string
+    cookieAccept: string
+    cookieLabel: string
+    cookieMore: string
+    privacyLink: string
+  }
   trust: TrustItem[]
   brands: Brand[]
   categories: Category[]
@@ -204,6 +232,7 @@ export type SiteContent = {
     products: ProductsPage
     logistics: LogisticsPage
     contact: ContactPage
+    privacy: PrivacyPage
   }
   notFound: NotFoundContent
 }

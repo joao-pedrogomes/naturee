@@ -104,6 +104,10 @@ export const defaultContent: SiteContent = {
     instagram: 'natureealimentos',
     instagramUrl: 'https://www.instagram.com/natureealimentos',
     regionLine: 'Atendemos o litoral catarinense,\nde Itajaí a Araranguá.',
+    // Razão social: fill in (admin > configurações) once confirmed; a blank field is left out of the footer.
+    legalName: '',
+    cnpj: '47.567.206/0001-61',
+    legalAddress: 'Rua Manoel Loureiro, 1112, Barreiros, São José/SC, CEP 88117-330',
     catalogPdfUrl: '/catalogoNaturee.pdf',
     url: 'https://natureefoodhub.com.br',
     ogImage: '/ogDefault.jpg',
@@ -129,6 +133,12 @@ export const defaultContent: SiteContent = {
     menuClose: 'Fechar menu',
     menuTitle: 'Navegação',
     skipLink: 'Pular para o conteúdo',
+    rights: 'Todos os direitos reservados.',
+    cookieText: 'Este site usa apenas o armazenamento essencial para funcionar. Não usamos cookies de publicidade nem rastreamos você.',
+    cookieAccept: 'Entendi',
+    cookieLabel: 'Aviso de cookies',
+    cookieMore: 'Política de Privacidade',
+    privacyLink: 'Política de Privacidade',
   },
   trust: [
     { icon: 'package', title: '100% Seguro', text: 'Seus pedidos são processados\ncom total segurança' },
@@ -414,6 +424,89 @@ export const defaultContent: SiteContent = {
         time: '7:00 às 18:00',
       },
       social: { title: 'Siga nosso Instagram' },
+    },
+    privacy: {
+      enabled: true,
+      seo: {
+        title: 'Política de Privacidade',
+        description: 'Saiba quais dados pessoais a Naturee Food Hub coleta pelo site, para que os usa e quais são os seus direitos pela LGPD.',
+      },
+      title: 'Política de Privacidade',
+      updated: 'Última atualização: 22 de novembro de 2026',
+      intro:
+        'Esta política explica, de forma simples, quais dados pessoais a Naturee Food Hub coleta quando você usa este site, para que os usamos e quais são os seus direitos, conforme a Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018).',
+      sections: [
+        {
+          title: 'Quem é o responsável',
+          text: 'O responsável pelo tratamento dos seus dados é a Naturee Food Hub, distribuidora de produtos especiais com sede em São José (SC). Os dados da empresa estão no rodapé do site. Para qualquer assunto sobre privacidade, fale conosco pelo e-mail contato@natureefoodhub.com.br.',
+          items: [],
+        },
+        {
+          title: 'Quais dados coletamos',
+          text: 'Coletamos apenas o que você mesmo informa no formulário da página de Contato:',
+          items: ['Nome', 'E-mail', 'Assunto e mensagem'],
+        },
+        {
+          title: 'Dados técnicos',
+          text: 'Ao enviar o formulário, guardamos também um código gerado a partir do seu endereço IP, que não permite ver o endereço original. Ele serve apenas para evitar envios em excesso e abuso do formulário.',
+          items: [],
+        },
+        {
+          title: 'Para que usamos seus dados',
+          text: 'Usamos seus dados para:',
+          items: [
+            'Responder ao seu contato, pedido de informações ou de orçamento.',
+            'Dar continuidade ao atendimento comercial, por e-mail ou WhatsApp.',
+            'Proteger o formulário contra abuso e spam.',
+          ],
+        },
+        {
+          title: 'Base legal',
+          text: 'O tratamento é feito com base no seu consentimento, dado ao enviar o formulário, e na necessidade de atender ao pedido que você fez, em procedimentos preliminares a um possível contrato.',
+          items: [],
+        },
+        {
+          title: 'Com quem compartilhamos',
+          text: 'Não vendemos nem cedemos seus dados para publicidade. Eles passam apenas por prestadores que nos ajudam a operar o site. Alguns deles podem tratar dados em servidores fora do Brasil, com as salvaguardas previstas na LGPD.',
+          items: [
+            'Cloudflare: hospedagem do site e armazenamento das mensagens recebidas.',
+            'Resend: envio do e-mail que avisa a nossa equipe de um novo contato.',
+            'WhatsApp (Meta): ao enviar o formulário, você pode escolher continuar a conversa pelo WhatsApp; nesse caso valem as regras do próprio WhatsApp.',
+          ],
+        },
+        {
+          title: 'Por quanto tempo guardamos',
+          text: 'Guardamos as mensagens pelo tempo necessário para atender ao seu contato e cumprir obrigações legais. Você pode pedir a exclusão dos seus dados a qualquer momento.',
+          items: [],
+        },
+        {
+          title: 'Cookies e armazenamento',
+          text: 'Este site não usa cookies de publicidade, de análise ou de rastreamento. Guardamos no seu navegador apenas a informação de que você já viu o aviso de cookies, para não mostrá-lo de novo.',
+          items: [],
+        },
+        {
+          title: 'Seus direitos',
+          text: 'Pela LGPD, você pode solicitar, a qualquer momento:',
+          items: [
+            'A confirmação de que tratamos seus dados e o acesso a eles.',
+            'A correção de dados incompletos, inexatos ou desatualizados.',
+            'A anonimização, o bloqueio ou a eliminação de dados desnecessários.',
+            'A portabilidade dos seus dados.',
+            'Informação sobre com quem compartilhamos seus dados.',
+            'A revogação do consentimento e a eliminação dos dados tratados com base nele.',
+          ],
+        },
+        {
+          title: 'Como exercer seus direitos',
+          text: 'Envie um e-mail para contato@natureefoodhub.com.br informando seu nome e o e-mail usado no formulário. Respondemos o mais rápido possível. Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).',
+          items: [],
+        },
+        {
+          title: 'Alterações nesta política',
+          text: 'Podemos atualizar esta política. A data da última atualização aparece no topo desta página.',
+          items: [],
+        },
+      ],
     },
   },
   notFound: {

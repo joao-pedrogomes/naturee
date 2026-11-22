@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import PrivacyNotice from '@/components/layout/PrivacyNotice'
 import SiteFooter from '@/components/layout/SiteFooter'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SkipLink, { MAIN_CONTENT_ID } from '@/components/layout/SkipLink'
@@ -20,6 +21,7 @@ function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <PrivacyNotice />
     </div>
   )
 }

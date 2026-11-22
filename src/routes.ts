@@ -8,6 +8,7 @@ export const ROUTES: RouteDef[] = [
   { key: 'products', path: '/marcas-e-produtos' },
   { key: 'logistics', path: '/logistica' },
   { key: 'contact', path: '/contato' },
+  { key: 'privacy', path: '/privacidade' },
 ]
 
 export function pathFor(key: PageKey): string {

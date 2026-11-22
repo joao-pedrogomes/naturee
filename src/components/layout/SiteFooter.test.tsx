@@ -36,4 +36,10 @@ describe('SiteFooter', () => {
     expect(region.textContent).toBe('Atendemos o litoral catarinense,\nde Itajaí a Araranguá.')
     expect(region).toHaveClass('whitespace-pre-line')
   })
+
+  it('shows the copyright with the current year and the company identification that is filled in', () => {
+    renderFooter()
+    expect(screen.getByText(new RegExp(`© ${new Date().getFullYear()} Naturee Food Hub\\. Todos os direitos reservados\\.`))).toBeInTheDocument()
+    expect(screen.getByText(/CNPJ \d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/)).toBeInTheDocument()
+  })
 })

@@ -4,6 +4,7 @@ const PAGES: Record<string, string> = {
   products: 'Marcas & Produtos',
   logistics: 'Logística',
   contact: 'Contato',
+  privacy: 'Política de Privacidade',
 }
 
 const SECTIONS: Record<string, string> = {
@@ -33,6 +34,15 @@ const SECTIONS: Record<string, string> = {
 }
 
 const SEGMENTS: Record<string, string> = {
+  rights: 'Direitos reservados (rodapé)',
+  cookieMore: 'Aviso de cookies: link da política',
+  privacyLink: 'Link da política de privacidade (rodapé)',
+  updated: 'Data da última atualização',
+  intro: 'Introdução',
+  sections: 'Seções',
+  cookieText: 'Aviso de cookies: texto',
+  cookieAccept: 'Aviso de cookies: botão',
+  cookieLabel: 'Aviso de cookies: nome para leitores de tela',
   title: 'Título',
   text: 'Texto',
   label: 'Rótulo',
@@ -84,6 +94,9 @@ const SITE: Record<string, string> = {
   instagram: 'Instagram (nome exibido)',
   instagramUrl: 'Link do Instagram',
   regionLine: 'Região atendida (rodapé)',
+  legalName: 'Razão social (nota legal do rodapé)',
+  cnpj: 'CNPJ (nota legal do rodapé)',
+  legalAddress: 'Endereço completo (nota legal do rodapé)',
   catalogPdfUrl: 'Link do catálogo em PDF',
 }
 
