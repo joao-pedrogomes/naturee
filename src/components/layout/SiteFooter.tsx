@@ -3,6 +3,7 @@ import { holdLine } from '@/lib/layout'
 import { renderRichText } from '@/lib/richText'
 import TrustStrip from '@/components/sections/TrustStrip'
 import { useSiteContent, visibleLinks } from '@/content/siteContent'
+import { pathFor } from '@/routes'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import footerLogo from '@/assets/logos/natureeSeal.svg'
 import footerMail from '@/assets/icons/footerMail.svg'
@@ -30,10 +31,12 @@ function SiteFooter() {
   const content = useSiteContent()
   const { site, footer, footerLinks, trust } = content
   const links = visibleLinks(content, footerLinks)
+  const privacyEnabled = content.pages.privacy.enabled
+  const identification = [site.legalName, site.cnpj ? `CNPJ ${site.cnpj}` : '', site.legalAddress].filter(Boolean)
 
   return (
     <footer className="bg-teal text-sand shadow-[0_-1px_0_0_var(--teal)]">
-      <div className="container-site py-14 lg:w-full lg:pt-[calc(52*var(--u))] lg:pb-[calc(93*var(--u))]">
+      <div className="container-site py-14 lg:w-full lg:pt-[calc(52*var(--u))] lg:pb-[calc(48*var(--u))]">
         <TrustStrip items={trust} />
 
         <div className="mt-14 grid gap-12 md:grid-cols-[1fr_0.8fr_1.4fr] md:gap-8 lg:mt-[calc(67*var(--u))] lg:mx-auto lg:w-[calc(1431*var(--u))] lg:grid-cols-[calc(745*var(--u))_calc(388*var(--u))_1fr] lg:gap-0">
@@ -106,6 +109,32 @@ function SiteFooter() {
               ) : null}
             </ul>
           </div>
+        </div>
+
+        {/* Legal note: a hairline, then the copyright on the left and the company identification on the right (stacked and centred below the desktop width). */}
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-[0.8125rem] leading-relaxed text-white/60 lg:mx-auto lg:mt-[calc(64*var(--u))] lg:flex lg:w-[calc(1431*var(--u))] lg:items-start lg:justify-between lg:gap-[calc(40*var(--u))] lg:pt-[calc(28*var(--u))] lg:text-left lg:text-[length:clamp(0.75rem,calc(15*var(--u)),1rem)]">
+          <div>
+            <p>
+              © {new Date().getFullYear()} {site.name}. {footer.rights}
+            </p>
+            {privacyEnabled ? (
+              <p className="mt-1">
+                <Link to={pathFor('privacy')} className="underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand">
+                  {footer.privacyLink}
+                </Link>
+              </p>
+            ) : null}
+          </div>
+          {identification.length ? (
+            <p className="mt-2 lg:mt-0 lg:max-w-[calc(900*var(--u))] lg:text-right">
+              {identification.map((part, index) => (
+                <span key={part} className="max-sm:block">
+                  {index > 0 ? <span aria-hidden="true" className="max-sm:hidden"> · </span> : null}
+                  {part}
+                </span>
+              ))}
+            </p>
+          ) : null}
         </div>
       </div>
     </footer>

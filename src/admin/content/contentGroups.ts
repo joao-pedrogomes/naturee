@@ -10,6 +10,7 @@ const PAGE_PATHS: Record<string, string> = {
   products: '/marcas-e-produtos',
   logistics: '/logistica',
   contact: '/contato',
+  privacy: '/privacidade',
 }
 
 function locate(path: string): { page: string; section: string } | null {

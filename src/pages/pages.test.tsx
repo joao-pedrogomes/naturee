@@ -23,6 +23,7 @@ const EXPECTED_H1: Record<string, RegExp> = {
   products: /Uma seleção de boas origens/,
   logistics: /Cuidado em cada rota/,
   contact: /Boas conexões começam com uma conversa/,
+  privacy: /Política de Privacidade/,
 }
 
 describe('pages', () => {

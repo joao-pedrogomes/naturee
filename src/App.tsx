@@ -8,6 +8,7 @@ import Contact from '@/pages/Contact'
 import Home from '@/pages/Home'
 import Logistics from '@/pages/Logistics'
 import NotFound from '@/pages/NotFound'
+import Privacy from '@/pages/Privacy'
 import Products from '@/pages/Products'
 import { ROUTES } from '@/routes'
 
@@ -19,6 +20,7 @@ const PAGES: Record<PageKey, () => React.JSX.Element> = {
   products: Products,
   logistics: Logistics,
   contact: Contact,
+  privacy: Privacy,
 }
 
 function App() {

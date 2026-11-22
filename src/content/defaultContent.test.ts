@@ -72,9 +72,9 @@ describe('defaultContent', () => {
     }
   })
 
-  it('exposes five enabled nav links matching the routes', () => {
+  it('exposes five enabled nav links matching the routes (the privacy page is linked from the footer, not the menu)', () => {
     const enabled = defaultContent.nav.filter((link: Link) => link.enabled)
-    expect(enabled.map((link) => link.href)).toEqual(ROUTES.map((route) => route.path))
+    expect(enabled.map((link) => link.href)).toEqual(ROUTES.filter((route) => route.key !== 'privacy').map((route) => route.path))
   })
 
   it('references existing categories from the home page', () => {
