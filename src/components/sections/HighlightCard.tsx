@@ -1,3 +1,4 @@
+import { CAROUSEL_CARD } from '@/components/sections/CardCarousel'
 import Picture from '@/components/sections/Picture'
 import type { Category } from '@/content/types'
 
@@ -6,10 +7,10 @@ type HighlightCardProps = {
   label: string
 }
 
-// Phones: an olive card with the photo bleeding to its top edge, like the Diferenciais cards. Tablet and desktop keep the bare photo.
+// Phones: an olive card with the photo bleeding to its top edge, like the Diferenciais cards. Tablets (640-1365px): the bare photo, one item of a snap carousel. Desktop: the bare photo in a three-column row.
 function HighlightCard({ category, label }: HighlightCardProps) {
   return (
-    <li className="flex flex-col items-center text-center max-sm:overflow-hidden max-sm:rounded-3xl max-sm:bg-olive">
+    <li className={`flex flex-col items-center text-center ${CAROUSEL_CARD} max-sm:overflow-hidden max-sm:rounded-3xl max-sm:bg-olive`}>
       <Picture
         image={category.image}
         className="aspect-[1.02] w-full rounded-2xl object-cover max-sm:aspect-[4/3] max-sm:rounded-none lg:aspect-auto lg:h-[calc(371*var(--u))] lg:w-[calc(380*var(--u))] lg:rounded-[calc(32*var(--u))]"
