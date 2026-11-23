@@ -97,6 +97,8 @@ const SITE: Record<string, string> = {
   legalName: 'Razão social (nota legal do rodapé)',
   cnpj: 'CNPJ (nota legal do rodapé)',
   legalAddress: 'Endereço completo (nota legal do rodapé)',
+  creditName: 'Crédito do site (rodapé): nome',
+  creditWhatsapp: 'Crédito do site (rodapé): WhatsApp (com DDD)',
   catalogPdfUrl: 'Link do catálogo em PDF',
 }
 

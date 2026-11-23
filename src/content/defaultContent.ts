@@ -108,6 +108,8 @@ export const defaultContent: SiteContent = {
     legalName: '',
     cnpj: '47.567.206/0001-61',
     legalAddress: 'Rua Manoel Loureiro, 1112, Barreiros, São José/SC, CEP 88117-330',
+    creditName: 'Kubo',
+    creditWhatsapp: '55 17 99739-0544',
     catalogPdfUrl: '/catalogoNaturee.pdf',
     url: 'https://natureefoodhub.com.br',
     ogImage: '/ogDefault.jpg',
