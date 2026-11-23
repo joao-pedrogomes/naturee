@@ -15,7 +15,7 @@ const CONTACT_LINK =
   'inline-flex min-h-11 items-center gap-3 rounded py-2 text-sand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand lg:min-h-0 lg:gap-[calc(14*var(--u))] lg:py-0'
 const FOOTER_HEADING =
   'font-sans text-[1.0625rem] font-medium tracking-wide text-olive uppercase lg:text-[length:clamp(1.0625rem,calc(25*var(--u)),2.75rem)] lg:font-normal lg:tracking-normal'
-const CUSTOM_WHATSAPP_CREDIT_MESSAGE = 'Oi, to vindo do site da Naturee, queria solicitar atendimento ou conversar. Pode me ajudar?'
+const CUSTOM_WHATSAPP_CREDIT_MESSAGE = 'Oi, to vindo do site da Naturee. Queria solicitar atendimento ou conversar. Pode me ajudar?'
 
 /** Bolds everything after the first space, whatever format the editor typed. */
 function areaCode(label: string): string {
