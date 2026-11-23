@@ -46,7 +46,9 @@ describe('SiteFooter', () => {
   it('credits the studio with a WhatsApp link that opens in a new tab', () => {
     renderFooter()
     const credit = screen.getByRole('link', { name: 'Kubo' })
-    expect(credit).toHaveAttribute('href', 'https://wa.me/5517997390544')
+    const url = new URL(credit.getAttribute('href') ?? '')
+    expect(`${url.origin}${url.pathname}`).toBe('https://wa.me/5517997390544')
+    expect(url.searchParams.get('text')).toBe('Oi, to vindo do site da Naturee, queria solicitar atendimento ou conversar. Pode me ajudar?')
     expect(credit).toHaveAttribute('target', '_blank')
     expect(credit).toHaveAttribute('rel', 'noopener')
   })
