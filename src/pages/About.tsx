@@ -57,7 +57,7 @@ function About() {
         </Container>
       </section>
 
-      <section className="py-16 lg:py-[calc(118*var(--u))]">
+      <section className="bg-white py-16 lg:py-[calc(118*var(--u))]">
         <Container className="text-center lg:flex lg:flex-col lg:items-center">
           <SectionLabel>{page.history.label}</SectionLabel>
           <Heading text={page.history.title} className="mt-4 text-title text-teal lg:mt-[calc(37*var(--u))]" />

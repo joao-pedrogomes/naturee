@@ -17,7 +17,7 @@ function SiteLayout() {
     <div className="relative flex min-h-svh flex-col">
       <SkipLink />
       <SiteHeader />
-      <main id={MAIN_CONTENT_ID} className="flex-1">
+      <main id={MAIN_CONTENT_ID} className="flex-1 bg-white">
         <Outlet />
       </main>
       <SiteFooter />
