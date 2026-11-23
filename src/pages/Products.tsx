@@ -57,7 +57,7 @@ function Products() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(64*var(--u))] lg:pb-[calc(63*var(--u))]">
+      <section className="bg-white py-16 lg:pt-[calc(64*var(--u))] lg:pb-[calc(63*var(--u))]">
         <Container className="text-center">
           <SectionLabel>{page.brands.label}</SectionLabel>
           <Heading text={page.brands.title} className="mx-auto mt-4 max-w-[26ch] text-title text-teal lg:mt-[calc(30*var(--u))] lg:max-w-none" />

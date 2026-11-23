@@ -73,7 +73,7 @@ function Home() {
         </Marquee>
       </section>
 
-      <section className="py-16 lg:pt-[calc(118*var(--u))] lg:pb-[calc(118*var(--u))]">
+      <section className="bg-white py-16 lg:pt-[calc(118*var(--u))] lg:pb-[calc(118*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             {/* The label stays at the top; the heading, text and button are centred on the photo (326u = its 35u offset + half of its 582u height). */}
@@ -100,7 +100,7 @@ function Home() {
         </Container>
       </section>
 
-      <section className="pb-16 lg:pb-[calc(156*var(--u))]">
+      <section className="bg-white pb-16 lg:pb-[calc(156*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.features.label}</SectionLabel>
           <div className="mt-10 lg:mt-[calc(73*var(--u))]">
@@ -109,7 +109,7 @@ function Home() {
         </Container>
       </section>
 
-      <section className="pb-16 lg:pb-[calc(62*var(--u))]">
+      <section className="bg-white pb-16 lg:pb-[calc(62*var(--u))]">
         <Container>
           <SectionLabel className="text-center">{page.brands.label}</SectionLabel>
           <Heading text={page.brands.title} className="mx-auto mt-4 max-w-[22ch] text-center text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none lg:leading-[1.02]" />
@@ -134,7 +134,7 @@ function Home() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(88*var(--u))] lg:pb-[calc(70*var(--u))]">
+      <section className="bg-white py-16 lg:pt-[calc(88*var(--u))] lg:pb-[calc(70*var(--u))]">
         <Container>
           <div className="grid items-start gap-10 sm:max-lg:gap-0 lg:grid-cols-[calc(648*var(--u))_calc(690*var(--u))] lg:justify-between lg:gap-0">
             <Picture
@@ -155,7 +155,7 @@ function Home() {
         </Container>
       </section>
 
-      <section>
+      <section className="bg-white">
         <div className="mx-auto w-full rounded-t-3xl bg-sand px-4 py-12 sm:px-6 lg:w-[calc(1662*var(--u))] lg:rounded-t-[calc(36*var(--u))] lg:px-0 lg:py-0 lg:h-[calc(710*var(--u))]">
           <div className="grid gap-10 lg:h-full lg:grid-cols-[calc(759*var(--u))_calc(702*var(--u))] lg:gap-0 lg:pl-[calc(104*var(--u))]">
             <div className="lg:pt-[calc(84*var(--u))]">

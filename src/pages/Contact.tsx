@@ -34,7 +34,7 @@ function Contact() {
       </section>
 
       {/* 60 / 40 columns on the header's grid, one uniform gap (60u) between them, below the teal band and above the footer. */}
-      <section className="pb-16 lg:pb-[calc(60*var(--u))]">
+      <section className="flow-root bg-white pb-16 lg:pb-[calc(60*var(--u))]">
         <Container className="-mt-32 lg:-mt-[calc(189*var(--u))]">
           <div className="grid gap-12 lg:grid-cols-[3fr_2fr] lg:gap-x-[calc(60*var(--u))]">
             <div className="rounded-3xl bg-olive px-5 py-10 sm:px-10 lg:rounded-[calc(36*var(--u))] lg:px-[calc(70*var(--u))] lg:pt-[calc(70*var(--u))] lg:pb-[calc(56*var(--u))]">
