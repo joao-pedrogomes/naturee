@@ -29,7 +29,7 @@ function Logistics() {
 
       <section className="relative isolate flex min-h-[26rem] items-center overflow-hidden bg-teal text-sand lg:h-[calc(796*var(--u))] lg:items-start">
         <Picture image={page.hero.image} priority className="absolute inset-0 -z-10 h-full w-full object-cover object-right" />
-        <div className="absolute inset-0 -z-10 bg-linear-to-r from-teal via-teal/70 to-transparent md:to-50% sm:max-lg:hidden" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-r from-teal via-teal/70 to-transparent md:to-50% sm:hidden" aria-hidden="true" />
         <Container className="py-16 lg:py-0 lg:pt-[calc(184*var(--u))]">
           <Heading as="h1" text={page.hero.title} className="text-display text-olive max-sm:brightness-[2.5] lg:leading-[0.935] [&_strong]:font-semibold [&_strong]:italic" />
           <RichText text={page.hero.text} className="mt-5 text-body text-sand md:max-w-[26rem] lg:max-w-none lg:mt-[calc(23*var(--u))] lg:leading-[1.17]" />
@@ -39,7 +39,7 @@ function Logistics() {
         </Container>
       </section>
 
-      <section className="py-16 lg:py-[calc(118*var(--u))]">
+      <section className="bg-white py-16 lg:py-[calc(118*var(--u))]">
         <Container className="text-center">
           <SectionLabel>{page.how.label}</SectionLabel>
           <Heading text={page.how.title} className="mx-auto mt-4 max-w-[26ch] text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none" />
@@ -91,7 +91,7 @@ function Logistics() {
         </Container>
       </section>
 
-      <section className="py-16 lg:pt-[calc(68*var(--u))] lg:pb-[calc(0*var(--u))]">
+      <section className="bg-white py-16 lg:pt-[calc(68*var(--u))] lg:pb-[calc(0*var(--u))]">
         <Container className="text-center">
           <SectionLabel>{page.audience.label}</SectionLabel>
           <Heading text={page.audience.title} className="mx-auto mt-4 max-w-[26ch] text-title text-teal lg:mt-[calc(31*var(--u))] lg:max-w-none" />
@@ -111,7 +111,7 @@ function Logistics() {
         </Container>
       </section>
 
-      <section className="py-16 max-sm:pt-0 lg:py-[calc(97*var(--u))]">
+      <section className="bg-white py-16 max-sm:pt-0 lg:py-[calc(97*var(--u))]">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[calc(819*var(--u))_1fr] lg:gap-0">
             <div className="lg:flex lg:flex-col lg:pl-[calc(4*var(--u))]">
