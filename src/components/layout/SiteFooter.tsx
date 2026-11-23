@@ -125,16 +125,31 @@ function SiteFooter() {
               </p>
             ) : null}
           </div>
-          {identification.length ? (
-            <p className="mt-2 lg:mt-0 lg:max-w-[calc(900*var(--u))] lg:text-right">
-              {identification.map((part, index) => (
-                <span key={part} className="max-sm:block">
-                  {index > 0 ? <span aria-hidden="true" className="max-sm:hidden"> · </span> : null}
-                  {part}
-                </span>
-              ))}
-            </p>
-          ) : null}
+          <div className="mt-2 lg:mt-0 lg:max-w-[calc(900*var(--u))] lg:text-right">
+            {identification.length ? (
+              <p>
+                {identification.map((part, index) => (
+                  <span key={part} className="max-sm:block">
+                    {index > 0 ? <span aria-hidden="true" className="max-sm:hidden"> · </span> : null}
+                    {part}
+                  </span>
+                ))}
+              </p>
+            ) : null}
+            {site.creditName && site.creditWhatsapp ? (
+              <p className={identification.length ? 'mt-1' : undefined}>
+                by{' '}
+                <a
+                  href={buildWhatsAppUrl(site.creditWhatsapp)}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-semibold text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand"
+                >
+                  {site.creditName}
+                </a>
+              </p>
+            ) : null}
+          </div>
         </div>
       </div>
     </footer>

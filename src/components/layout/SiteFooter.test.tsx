@@ -42,4 +42,12 @@ describe('SiteFooter', () => {
     expect(screen.getByText(new RegExp(`© ${new Date().getFullYear()} Naturee Food Hub\\. Todos os direitos reservados\\.`))).toBeInTheDocument()
     expect(screen.getByText(/CNPJ \d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/)).toBeInTheDocument()
   })
+
+  it('credits the studio with a WhatsApp link that opens in a new tab', () => {
+    renderFooter()
+    const credit = screen.getByRole('link', { name: 'Kubo' })
+    expect(credit).toHaveAttribute('href', 'https://wa.me/5517997390544')
+    expect(credit).toHaveAttribute('target', '_blank')
+    expect(credit).toHaveAttribute('rel', 'noopener')
+  })
 })

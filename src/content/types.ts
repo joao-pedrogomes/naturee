@@ -63,6 +63,9 @@ export type SiteInfo = {
   legalName: string
   cnpj: string
   legalAddress: string
+  /** The studio credited in the footer, and the WhatsApp number its link opens. */
+  creditName: string
+  creditWhatsapp: string
   catalogPdfUrl: string
   url: string
   ogImage: string
