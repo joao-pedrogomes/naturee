@@ -48,7 +48,7 @@ describe('SiteFooter', () => {
     const credit = screen.getByRole('link', { name: 'Kubo' })
     const url = new URL(credit.getAttribute('href') ?? '')
     expect(`${url.origin}${url.pathname}`).toBe('https://wa.me/5517997390544')
-    expect(url.searchParams.get('text')).toBe('Oi, to vindo do site da Naturee, queria solicitar atendimento ou conversar. Pode me ajudar?')
+    expect(url.searchParams.get('text')).toBe('Oi, to vindo do site da Naturee. Queria solicitar atendimento ou conversar. Pode me ajudar?')
     expect(credit).toHaveAttribute('target', '_blank')
     expect(credit).toHaveAttribute('rel', 'noopener')
   })
