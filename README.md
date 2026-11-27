@@ -100,7 +100,7 @@ and the Cloudflare token is read from `~/.ssh/naturee_cloudflare_token`.
 
 | Variable | Purpose |
 |---|---|
-| `VITE_BASE` | Base path for a subpath deploy (GitHub Pages uses `/naturee/`) |
+| `VITE_BASE` | Base path for a subpath deploy (default `/`) |
 | `VITE_CONTACT_API_URL` | Contact endpoint; defaults to `/api/contact` |
 
 ## Conventions
