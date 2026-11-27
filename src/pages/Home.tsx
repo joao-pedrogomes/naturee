@@ -33,7 +33,7 @@ function Home() {
 
   return (
     <>
-      <Seo seo={page.seo} path={pathFor('home')} />
+      <Seo seo={page.seo} path={pathFor('home')} organization />
 
       <section className="relative isolate overflow-hidden bg-teal text-sand lg:h-[calc(949*var(--u))]">
         <Picture image={page.hero.image} priority className="absolute inset-0 -z-10 h-full w-full object-cover object-[70%_center] lg:object-[43%_center]" />

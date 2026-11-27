@@ -75,7 +75,20 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   return env.ASSETS.fetch(request)
 }
 
+const APEX_HOST = new URL(defaultContent.site.url).hostname
+
+/** www answers only with a permanent redirect, so search engines index a single host. */
+function wwwRedirect(request: Request): Response | undefined {
+  const url = new URL(request.url)
+  if (url.hostname !== `www.${APEX_HOST}`) return undefined
+  url.hostname = APEX_HOST
+  const keepsMethod = request.method !== 'GET' && request.method !== 'HEAD'
+  return Response.redirect(url.toString(), keepsMethod ? 308 : 301)
+}
+
 async function handle(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  const redirect = wwwRedirect(request)
+  if (redirect) return redirect
   try {
     return await route(request, env, ctx)
   } catch (failure) {

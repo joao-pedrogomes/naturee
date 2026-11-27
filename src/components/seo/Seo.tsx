@@ -1,15 +1,20 @@
 import { useSiteContent } from '@/content/siteContent'
 import type { Seo as SeoContent } from '@/content/types'
 import { absoluteUrl, pageTitle } from '@/lib/seo'
+import { serializeForScript } from '@/lib/serializeContent'
+import { organizationSchema } from '@/lib/structuredData'
 
 type SeoProps = {
   seo: SeoContent
   path: string
   noIndex?: boolean
+  /** Adds the company's schema.org data (JSON-LD); the home page carries it. */
+  organization?: boolean
 }
 
-function Seo({ seo, path, noIndex = false }: SeoProps) {
-  const { site } = useSiteContent()
+function Seo({ seo, path, noIndex = false, organization = false }: SeoProps) {
+  const content = useSiteContent()
+  const { site } = content
   const title = pageTitle(seo.title, site.name)
   const url = absoluteUrl(path, site.url)
   const image = absoluteUrl(site.ogImage, site.url)
@@ -31,6 +36,10 @@ function Seo({ seo, path, noIndex = false }: SeoProps) {
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={seo.description} />
       <meta name="twitter:image" content={image} />
+      {/* Not hoisted into <head> like the tags above; search engines read JSON-LD anywhere in the page. */}
+      {organization ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeForScript(organizationSchema(content)) }} />
+      ) : null}
     </>
   )
 }
